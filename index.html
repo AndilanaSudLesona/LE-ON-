@@ -143,6 +143,8 @@
             background: #1a1a1a;
             z-index: 1000;
             animation: fadeIn 0.3s ease;
+            border-radius: 25px;
+            overflow: hidden;
         }
 
         @keyframes fadeIn {
@@ -151,48 +153,15 @@
         }
 
         #iframe-container.active {
-            display: block;
-        }
-
-        .iframe-header {
-            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
-            color: #d2b48c;
-            padding: 20px 25px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            border-bottom: 1px solid rgba(210, 180, 140, 0.2);
-        }
-
-        .back-btn {
-            background: linear-gradient(135deg, #d2b48c 0%, #c19a6b 100%);
-            color: #1a1a1a;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(210, 180, 140, 0.3);
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(210, 180, 140, 0.5);
-        }
-
-        #lesson-title {
-            font-size: 18px;
-            font-weight: 600;
-            text-shadow: 0 2px 10px rgba(210, 180, 140, 0.3);
+            flex-direction: column;
         }
 
         iframe {
             width: 100%;
-            height: calc(100% - 70px);
+            height: 100%;
             border: none;
+            border-radius: 25px;
         }
 
         @media (max-width: 600px) {
@@ -221,6 +190,14 @@
                 font-size: 22px;
                 margin-right: 10px;
             }
+
+            #iframe-container {
+                border-radius: 15px;
+            }
+
+            iframe {
+                border-radius: 15px;
+            }
         }
     </style>
 </head>
@@ -229,38 +206,31 @@
         <h1>📖 Lesona Sekoly Sabata</h1>
         <p class="subtitle">Safidio ny lesona tiany ianao</p>
         
-        <button class="menu-btn adults" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04', 'Lesona ho an\'ny Lehibe')">
+        <button class="menu-btn adults" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04')">
             <span class="icon">👨‍👩‍👧‍👦</span>
             LESONA HO AN'NY LEHIBE
         </button>
         
-        <button class="menu-btn youth" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq', 'Lesona ho an\'ny Tanora Zokiny')">
+        <button class="menu-btn youth" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq')">
             <span class="icon">🎓</span>
             LESONA HO AN'NY TANORA ZOKINY
         </button>
     </div>
 
     <div id="iframe-container">
-        <div class="iframe-header">
-            <button class="back-btn" onclick="closeLesson()">← Hiverina</button>
-            <span id="lesson-title"></span>
-        </div>
         <iframe id="lesson-iframe" src=""></iframe>
     </div>
 
     <script>
-        function openLesson(url, title) {
-            document.getElementById('menu').style.display = 'none';
-            document.getElementById('iframe-container').classList.add('active');
-            document.getElementById('lesson-iframe').src = url;
-            document.getElementById('lesson-title').textContent = title;
-        }
-
-        function closeLesson() {
-            document.getElementById('menu').style.display = 'flex';
-            document.getElementById('iframe-container').classList.remove('active');
-            document.getElementById('lesson-iframe').src = '';
+        function openLesson(url) {
+            const menu = document.getElementById('menu');
+            const iframeContainer = document.getElementById('iframe-container');
+            const iframe = document.getElementById('lesson-iframe');
+            
+            menu.style.display = 'none';
+            iframeContainer.classList.add('active');
+            iframe.src = url;
         }
     </script>
 </body>
-            </html>
+</html>
