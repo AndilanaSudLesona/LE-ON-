@@ -250,7 +250,7 @@
 </head>
 <body>
     <div class="logo-container">
-        <img src="https://share.google/images/N7nE9rDrOmmReVayi" alt="Logo Sekoly Sabata" class="logo" onerror="this.style.display='none'; console.error('Logo tsy napetraka');">
+        <img src="https://share.google/images/T6mBQxkGt5cski0Py" alt="" class="logo" onerror="this.style.display='none'; console.error('Logo tsy napetraka');">
     </div>
     
     <div class="container" id="menu">
@@ -261,7 +261,7 @@
             </svg>
             Lesona Sekoly Sabata
         </h1>
-        <p class="subtitle">Safidio ny lesona tiany ianao</p>
+        <p class="subtitle">Safidio ny lesona mety aminao</p>
         
         <button class="menu-btn adults" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04')">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -283,7 +283,7 @@
     </div>
 
     <div id="iframe-container">
-        <iframe id="lesson-iframe" src=""></iframe>
+        <iframe id="lesson-iframe" src="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
     </div>
 
     <script>
@@ -295,7 +295,27 @@
             menu.style.display = 'none';
             iframeContainer.classList.add('active');
             iframe.src = url;
+            
+            // Reset viewport amin'ny iframe
+            iframe.onload = function() {
+                try {
+                    // Manandrana manova ny viewport amin'ny iframe
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    let viewport = iframeDoc.querySelector('meta[name="viewport"]');
+                    
+                    if (!viewport) {
+                        viewport = iframeDoc.createElement('meta');
+                        viewport.name = 'viewport';
+                        iframeDoc.head.appendChild(viewport);
+                    }
+                    
+                    viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes';
+                } catch(e) {
+                    // Raha tsy afaka manova noho ny CORS, dia normal ihany
+                    console.log('Iframe loaded successfully');
+                }
+            };
         }
     </script>
 </body>
-            </html>
+</html>
