@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -30,7 +30,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(210, 180, 140, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.15) 0%, transparent 70%);
             animation: pulse 8s ease-in-out infinite;
         }
 
@@ -40,52 +40,71 @@
         }
 
         .container {
-            background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+            background: linear-gradient(145deg, #16213e, #0f1419);
             border-radius: 30px;
             box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            padding: 50px 30px;
-            max-width: 500px;
+                0 30px 80px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(30, 144, 255, 0.2);
+            padding: 70px 40px;
+            max-width: 550px;
             width: 90%;
             text-align: center;
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(210, 180, 140, 0.2);
+            border: 1px solid rgba(30, 144, 255, 0.3);
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin: 0 auto 25px;
+            display: block;
+            filter: drop-shadow(0 4px 12px rgba(30, 144, 255, 0.4));
         }
 
         h1 {
-            color: #d2b48c;
-            margin-bottom: 15px;
-            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 18px;
+            font-size: 32px;
             font-weight: 700;
-            text-shadow: 0 4px 20px rgba(210, 180, 140, 0.3);
-            letter-spacing: 1px;
+            text-shadow: 0 4px 20px rgba(30, 144, 255, 0.5);
+            letter-spacing: 1.2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .book-icon {
+            width: 40px;
+            height: 40px;
         }
 
         .subtitle {
             color: #b8b8b8;
-            margin-bottom: 40px;
-            font-size: 16px;
+            margin-bottom: 50px;
+            font-size: 18px;
             font-weight: 300;
             letter-spacing: 0.5px;
         }
 
         .menu-btn {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
-            padding: 22px 30px;
-            margin: 18px 0;
-            background: linear-gradient(135deg, #d2b48c 0%, #c19a6b 100%);
-            color: #1a1a1a;
+            padding: 28px 35px;
+            margin: 22px 0;
+            background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%);
+            color: #ffffff;
             text-decoration: none;
             border-radius: 18px;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 700;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 
-                0 8px 30px rgba(210, 180, 140, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                0 8px 30px rgba(30, 144, 255, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             border: none;
             cursor: pointer;
             position: relative;
@@ -111,8 +130,9 @@
         .menu-btn:hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 
-                0 15px 50px rgba(210, 180, 140, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+                0 15px 50px rgba(30, 144, 255, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #2fa4ff 0%, #0077dd 100%);
         }
 
         .menu-btn:active {
@@ -120,15 +140,16 @@
         }
 
         .menu-btn.adults {
-            background: linear-gradient(135deg, #d2b48c 0%, #b8956f 100%);
+            background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%);
         }
 
         .menu-btn.youth {
-            background: linear-gradient(135deg, #c19a6b 0%, #a67c52 100%);
+            background: linear-gradient(135deg, #4169e1 0%, #0047ab 100%);
         }
 
-        .icon {
-            font-size: 28px;
+        .btn-icon {
+            width: 32px;
+            height: 32px;
             margin-right: 15px;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
@@ -140,7 +161,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #1a1a1a;
+            background: #0a0a0a;
             z-index: 1000;
             animation: fadeIn 0.3s ease;
             border-radius: 25px;
@@ -166,29 +187,40 @@
 
         @media (max-width: 600px) {
             .container {
-                padding: 40px 25px;
+                padding: 50px 30px;
                 border-radius: 25px;
                 width: 92%;
             }
 
+            .logo {
+                width: 100px;
+                margin-bottom: 20px;
+            }
+
             h1 {
-                font-size: 26px;
+                font-size: 28px;
+            }
+
+            .book-icon {
+                width: 32px;
+                height: 32px;
             }
 
             .subtitle {
-                font-size: 15px;
-                margin-bottom: 35px;
+                font-size: 16px;
+                margin-bottom: 40px;
             }
 
             .menu-btn {
-                font-size: 16px;
-                padding: 20px 25px;
-                margin: 15px 0;
+                font-size: 17px;
+                padding: 24px 28px;
+                margin: 18px 0;
             }
 
-            .icon {
-                font-size: 22px;
-                margin-right: 10px;
+            .btn-icon {
+                width: 28px;
+                height: 28px;
+                margin-right: 12px;
             }
 
             #iframe-container {
@@ -203,16 +235,32 @@
 </head>
 <body>
     <div class="container" id="menu">
-        <h1>📖 Lesona Sekoly Sabata</h1>
+        <img src="https://share.google/images/N7nE9rDrOmmReVayi" alt="Logo" class="logo">
+        
+        <h1>
+            <svg class="book-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 6.5C10.5 4.5 8.5 3.5 6 3.5C4.5 3.5 3.5 4 2.5 5V18.5C3.5 17.5 4.5 17 6 17C8.5 17 10.5 18 12 20C13.5 18 15.5 17 18 17C19.5 17 20.5 17.5 21.5 18.5V5C20.5 4 19.5 3.5 18 3.5C15.5 3.5 13.5 4.5 12 6.5Z" fill="#1e90ff" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 6.5V20" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Lesona Sekoly Sabata
+        </h1>
         <p class="subtitle">Safidio ny lesona tiany ianao</p>
         
         <button class="menu-btn adults" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04')">
-            <span class="icon">👨‍👩‍👧‍👦</span>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="7" r="3" fill="#ffffff"/>
+                <circle cx="15" cy="7" r="3" fill="#ffffff"/>
+                <path d="M9 14C6.5 14 4 15.5 4 18V20H14V18C14 15.5 11.5 14 9 14Z" fill="#ffffff"/>
+                <path d="M15 14C12.5 14 10 15.5 10 18V20H20V18C20 15.5 17.5 14 15 14Z" fill="#ffffff"/>
+            </svg>
             LESONA HO AN'NY LEHIBE
         </button>
         
         <button class="menu-btn youth" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq')">
-            <span class="icon">🎓</span>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L4 7V10C4 15.5 7.5 20.5 12 22C16.5 20.5 20 15.5 20 10V7L12 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+                <path d="M9 12L11 14L15 10" stroke="#0047ab" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             LESONA HO AN'NY TANORA ZOKINY
         </button>
     </div>
@@ -233,4 +281,4 @@
         }
     </script>
 </body>
-        </html>
+</html>
