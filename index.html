@@ -195,6 +195,8 @@
             height: 100%;
             border: none;
             border-radius: 25px;
+            transform: scale(1);
+            transform-origin: 0 0;
         }
 
         @media (max-width: 600px) {
@@ -250,7 +252,7 @@
 </head>
 <body>
     <div class="logo-container">
-        <img src="https://share.google/images/T6mBQxkGt5cski0Py" alt="" class="logo" onerror="this.style.display='none'; console.error('Logo tsy napetraka');">
+        <img src="https://share.google/images/T6mBQxkGt5cski0Py" alt="Logo Sekoly Sabata" class="logo" onerror="this.style.display='none'; console.error('Logo tsy napetraka');">
     </div>
     
     <div class="container" id="menu">
@@ -261,9 +263,9 @@
             </svg>
             Lesona Sekoly Sabata
         </h1>
-        <p class="subtitle">Safidio ny lesona mety aminao</p>
+        <p class="subtitle">Safidio ny lesona tiany ianao</p>
         
-        <button class="menu-btn adults" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04')">
+        <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" target="_blank" class="menu-btn adults">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="9" cy="7" r="3" fill="#ffffff"/>
                 <circle cx="15" cy="7" r="3" fill="#ffffff"/>
@@ -271,51 +273,20 @@
                 <path d="M15 14C12.5 14 10 15.5 10 18V20H20V18C20 15.5 17.5 14 15 14Z" fill="#ffffff"/>
             </svg>
             LESONA HO AN'NY LEHIBE
-        </button>
+        </a>
         
-        <button class="menu-btn youth" onclick="openLesson('https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq')">
+        <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" target="_blank" class="menu-btn youth">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L4 7V10C4 15.5 7.5 20.5 12 22C16.5 20.5 20 15.5 20 10V7L12 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
                 <path d="M9 12L11 14L15 10" stroke="#0047ab" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             LESONA HO AN'NY TANORA ZOKINY
-        </button>
+        </a>
     </div>
 
     <div id="iframe-container">
-        <iframe id="lesson-iframe" src="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        <iframe id="lesson-iframe" src="" allow="geolocation; microphone; camera"></iframe>
     </div>
 
-    <script>
-        function openLesson(url) {
-            const menu = document.getElementById('menu');
-            const iframeContainer = document.getElementById('iframe-container');
-            const iframe = document.getElementById('lesson-iframe');
-            
-            menu.style.display = 'none';
-            iframeContainer.classList.add('active');
-            iframe.src = url;
-            
-            // Reset viewport amin'ny iframe
-            iframe.onload = function() {
-                try {
-                    // Manandrana manova ny viewport amin'ny iframe
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    let viewport = iframeDoc.querySelector('meta[name="viewport"]');
-                    
-                    if (!viewport) {
-                        viewport = iframeDoc.createElement('meta');
-                        viewport.name = 'viewport';
-                        iframeDoc.head.appendChild(viewport);
-                    }
-                    
-                    viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes';
-                } catch(e) {
-                    // Raha tsy afaka manova noho ny CORS, dia normal ihany
-                    console.log('Iframe loaded successfully');
-                }
-            };
-        }
-    </script>
 </body>
 </html>
