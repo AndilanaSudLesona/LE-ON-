@@ -2,10 +2,9 @@
 <html lang="mg">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LESONA SEKOLY SABATA</title>
     <style>
-        /* CSS voalohany mitovy tanteraka */
         * {
             margin: 0;
             padding: 0;
@@ -22,6 +21,9 @@
             padding: 20px;
             position: relative;
             overflow: hidden;
+            /* Fanakanana zoom ho an'ny body */
+            touch-action: pan-x pan-y;
+            -ms-touch-action: pan-x pan-y;
         }
 
         body::before {
@@ -181,6 +183,9 @@
             overflow: hidden;
             padding: 20px;
             backdrop-filter: blur(5px);
+            /* Fanakanana zoom */
+            touch-action: pan-x pan-y;
+            -ms-touch-action: pan-x pan-y;
         }
 
         @keyframes fadeIn {
@@ -199,6 +204,17 @@
             border: none;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            /* Fanakanana zoom ho an'ny iframe */
+            zoom: 1;
+            max-zoom: 1;
+            min-zoom: 1;
+            user-zoom: fixed;
+            -webkit-user-zoom: fixed;
+            -moz-user-zoom: fixed;
+            -ms-user-zoom: fixed;
+            /* Fanakanana ny touch action */
+            touch-action: pan-x pan-y;
+            -ms-touch-action: pan-x pan-y;
         }
 
         .close-btn {
@@ -282,6 +298,13 @@
                 font-size: 18px;
             }
         }
+
+        /* Fanampin'ny CSS mba hanakanana ny zoom tanteraka */
+        html, body {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
     </style>
 </head>
 <body>
@@ -353,6 +376,28 @@
                     this.classList.remove('active');
                     lessonIframe.src = '';
                     document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Fanampin'ny JavaScript mba hanakanana ny zoom
+            document.addEventListener('wheel', function(e) {
+                if (iframeContainer.classList.contains('active')) {
+                    if (e.ctrlKey) {
+                        e.preventDefault();
+                    }
+                }
+            }, { passive: false });
+
+            document.addEventListener('touchmove', function(e) {
+                if (iframeContainer.classList.contains('active') && e.touches.length > 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            // Hanakanana ny keyboard zoom (Ctrl + +/-)
+            document.addEventListener('keydown', function(e) {
+                if (iframeContainer.classList.contains('active') && (e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
+                    e.preventDefault();
                 }
             });
         });
