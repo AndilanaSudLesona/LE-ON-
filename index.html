@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LESONA SEKOLY SABATA</title>
     <style>
+        /* CSS voalohany mitovy tanteraka */
         * {
             margin: 0;
             padding: 0;
@@ -173,11 +174,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0a0a0a;
+            background: rgba(10, 10, 10, 0.95);
             z-index: 1000;
             animation: fadeIn 0.3s ease;
-            border-radius: 25px;
+            border-radius: 0;
             overflow: hidden;
+            padding: 20px;
+            backdrop-filter: blur(5px);
         }
 
         @keyframes fadeIn {
@@ -194,9 +197,32 @@
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 25px;
-            transform: scale(1);
-            transform-origin: 0 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(30, 144, 255, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(30, 144, 255, 1);
+            transform: scale(1.1);
         }
 
         @media (max-width: 600px) {
@@ -241,11 +267,19 @@
             }
 
             #iframe-container {
-                border-radius: 15px;
+                padding: 10px;
             }
 
             iframe {
-                border-radius: 15px;
+                border-radius: 10px;
+            }
+            
+            .close-btn {
+                top: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
             }
         }
     </style>
@@ -265,7 +299,7 @@
         </h1>
         <p class="subtitle">Safidio ny lesona tiany ianao</p>
         
-        <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" target="_blank" class="menu-btn adults">
+        <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="menu-btn adults">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="9" cy="7" r="3" fill="#ffffff"/>
                 <circle cx="15" cy="7" r="3" fill="#ffffff"/>
@@ -275,7 +309,7 @@
             LESONA HO AN'NY LEHIBE
         </a>
         
-        <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" target="_blank" class="menu-btn youth">
+        <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="menu-btn youth">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L4 7V10C4 15.5 7.5 20.5 12 22C16.5 20.5 20 15.5 20 10V7L12 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
                 <path d="M9 12L11 14L15 10" stroke="#0047ab" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -285,8 +319,43 @@
     </div>
 
     <div id="iframe-container">
+        <button class="close-btn">&times;</button>
         <iframe id="lesson-iframe" src="" allow="geolocation; microphone; camera"></iframe>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButtons = document.querySelectorAll('.menu-btn');
+            const iframeContainer = document.getElementById('iframe-container');
+            const lessonIframe = document.getElementById('lesson-iframe');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            menuButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const url = this.getAttribute('href');
+                    lessonIframe.src = url;
+                    
+                    iframeContainer.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                iframeContainer.classList.remove('active');
+                lessonIframe.src = '';
+                document.body.style.overflow = 'auto';
+            });
+            
+            iframeContainer.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    lessonIframe.src = '';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
