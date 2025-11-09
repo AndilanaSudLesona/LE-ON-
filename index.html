@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LESONA SEKOLY SABATA</title>
     <style>
+        :root {
+            --primary: #1e90ff;
+            --primary-dark: #0066cc;
+            --secondary: #4169e1;
+            --secondary-dark: #0047ab;
+            --dark-bg: #0a0a0a;
+            --card-bg: linear-gradient(145deg, #16213e, #0f1419);
+            --text-light: #ffffff;
+            --text-gray: #b8b8b8;
+            --shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,8 +25,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a2e 50%, var(--dark-bg) 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -21,65 +34,126 @@
             padding: 20px;
             position: relative;
             overflow: hidden;
-            /* Fanakanana zoom ho an'ny body */
             touch-action: pan-x pan-y;
-            -ms-touch-action: pan-x pan-y;
         }
 
-        body::before {
-            content: '';
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-element {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(30, 144, 255, 0.15) 0%, transparent 70%);
-            animation: pulse 8s ease-in-out infinite;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.1;
+            animation: float 20s infinite linear;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+        .floating-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -5s;
+            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+        }
+
+        .floating-element:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: -75px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, 50px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 100px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-50px, 50px) rotate(270deg);
+            }
         }
 
         .logo-container {
             text-align: center;
             margin-bottom: 40px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
+        }
+
+        .logo-wrapper {
+            display: inline-block;
+            position: relative;
+            padding: 20px;
+            border-radius: 50%;
+            background: rgba(30, 144, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(30, 144, 255, 0.3);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 0 20px rgba(30, 144, 255, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 40px rgba(30, 144, 255, 0.6);
+            }
         }
 
         .logo {
-            width: 180px;
-            height: auto;
-            display: inline-block;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
             filter: drop-shadow(0 8px 20px rgba(30, 144, 255, 0.6));
             animation: logoFloat 3s ease-in-out infinite;
         }
 
         @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
         }
 
         .container {
-            background: linear-gradient(145deg, #16213e, #0f1419);
+            background: var(--card-bg);
             border-radius: 30px;
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.8),
+            box-shadow: var(--shadow),
                 inset 0 1px 0 rgba(30, 144, 255, 0.2);
-            padding: 70px 40px;
-            max-width: 550px;
+            padding: 60px 40px;
+            max-width: 500px;
             width: 90%;
             text-align: center;
             position: relative;
-            z-index: 1;
+            z-index: 2;
             border: 1px solid rgba(30, 144, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         h1 {
-            color: #ffffff;
-            margin-bottom: 18px;
+            color: var(--text-light);
+            margin-bottom: 20px;
             font-size: 32px;
             font-weight: 700;
             text-shadow: 0 4px 20px rgba(30, 144, 255, 0.5);
@@ -93,14 +167,33 @@
         .book-icon {
             width: 40px;
             height: 40px;
+            filter: drop-shadow(0 2px 8px rgba(30, 144, 255, 0.6));
         }
 
         .subtitle {
-            color: #b8b8b8;
+            color: var(--text-gray);
             margin-bottom: 50px;
             font-size: 18px;
             font-weight: 300;
             letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .menu-btn {
@@ -108,15 +201,14 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 28px 35px;
-            margin: 22px 0;
-            background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%);
-            color: #ffffff;
+            padding: 25px 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
             text-decoration: none;
-            border-radius: 18px;
+            border-radius: 20px;
             font-size: 18px;
             font-weight: 700;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: var(--transition);
             box-shadow: 
                 0 8px 30px rgba(30, 144, 255, 0.5),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -135,7 +227,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
+            transition: left 0.6s;
         }
 
         .menu-btn:hover::before {
@@ -145,26 +237,30 @@
         .menu-btn:hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 
-                0 15px 50px rgba(30, 144, 255, 0.7),
+                0 15px 40px rgba(30, 144, 255, 0.7),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            background: linear-gradient(135deg, #2fa4ff 0%, #0077dd 100%);
         }
 
         .menu-btn:active {
             transform: translateY(-2px) scale(1);
         }
 
-        .menu-btn.adults {
-            background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%);
+        .menu-btn.youth {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            box-shadow: 
+                0 8px 30px rgba(65, 105, 225, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
-        .menu-btn.youth {
-            background: linear-gradient(135deg, #4169e1 0%, #0047ab 100%);
+        .menu-btn.youth:hover {
+            box-shadow: 
+                0 15px 40px rgba(65, 105, 225, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .btn-icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             margin-right: 15px;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
@@ -176,21 +272,25 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(10, 10, 10, 0.98);
             z-index: 1000;
-            animation: fadeIn 0.3s ease;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border-radius: 0;
             overflow: hidden;
             padding: 20px;
-            backdrop-filter: blur(5px);
-            /* Fanakanana zoom */
+            backdrop-filter: blur(10px);
             touch-action: pan-x pan-y;
-            -ms-touch-action: pan-x pan-y;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         #iframe-container.active {
@@ -198,66 +298,70 @@
             flex-direction: column;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            /* Fanakanana zoom ho an'ny iframe */
-            zoom: 1;
-            max-zoom: 1;
-            min-zoom: 1;
-            user-zoom: fixed;
-            -webkit-user-zoom: fixed;
-            -moz-user-zoom: fixed;
-            -ms-user-zoom: fixed;
-            /* Fanakanana ny touch action */
-            touch-action: pan-x pan-y;
-            -ms-touch-action: pan-x pan-y;
+        .iframe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(30, 144, 255, 0.1);
+            border-radius: 15px 15px 0 0;
+            margin-bottom: 0;
+        }
+
+        .iframe-title {
+            color: var(--text-light);
+            font-size: 18px;
+            font-weight: 600;
         }
 
         .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
             background: rgba(30, 144, 255, 0.8);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             font-size: 20px;
             cursor: pointer;
-            z-index: 1001;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         .close-btn:hover {
             background: rgba(30, 144, 255, 1);
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        iframe {
+            width: 100%;
+            height: calc(100% - 80px);
+            border: none;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            touch-action: pan-x pan-y;
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 50px 30px;
+                padding: 40px 25px;
                 border-radius: 25px;
-                width: 92%;
+                width: 95%;
             }
 
-            .logo-container {
-                margin-bottom: 30px;
+            .logo-wrapper {
+                padding: 15px;
             }
 
             .logo {
-                width: 140px;
+                width: 100px;
+                height: 100px;
             }
 
             h1 {
-                font-size: 28px;
+                font-size: 26px;
             }
 
             .book-icon {
@@ -271,14 +375,13 @@
             }
 
             .menu-btn {
-                font-size: 17px;
-                padding: 24px 28px;
-                margin: 18px 0;
+                font-size: 16px;
+                padding: 22px 25px;
             }
 
             .btn-icon {
-                width: 28px;
-                height: 28px;
+                width: 24px;
+                height: 24px;
                 margin-right: 12px;
             }
 
@@ -286,20 +389,18 @@
                 padding: 10px;
             }
 
-            iframe {
-                border-radius: 10px;
+            .iframe-header {
+                padding: 15px;
             }
-            
+
             .close-btn {
-                top: 10px;
-                right: 10px;
-                width: 35px;
-                height: 35px;
+                width: 40px;
+                height: 40px;
                 font-size: 18px;
             }
         }
 
-        /* Fanampin'ny CSS mba hanakanana ny zoom tanteraka */
+        /* Fanakanana zoom */
         html, body {
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
@@ -308,41 +409,54 @@
     </style>
 </head>
 <body>
+    <div class="background-animation">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    
     <div class="logo-container">
-        <img src="https://share.google/images/T6mBQxkGt5cski0Py" alt="Logo Sekoly Sabata" class="logo" onerror="this.style.display='none'; console.error('Logo tsy napetraka');">
+        <div class="logo-wrapper">
+            <img src="https://share.google/images/T6mBQxkGt5cski0Py" alt="Logo Sekoly Sabata" class="logo" onerror="this.style.display='none'">
+        </div>
     </div>
     
     <div class="container" id="menu">
         <h1>
             <svg class="book-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 6.5C10.5 4.5 8.5 3.5 6 3.5C4.5 3.5 3.5 4 2.5 5V18.5C3.5 17.5 4.5 17 6 17C8.5 17 10.5 18 12 20C13.5 18 15.5 17 18 17C19.5 17 20.5 17.5 21.5 18.5V5C20.5 4 19.5 3.5 18 3.5C15.5 3.5 13.5 4.5 12 6.5Z" fill="#1e90ff" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 6.5V20" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 6.5C10.5 4.5 8.5 3.5 6 3.5C4.5 3.5 3.5 4 2.5 5V18.5C3.5 17.5 4.5 17 6 17C8.5 17 10.5 18 12 20C13.5 18 15.5 17 18 17C19.5 17 20.5 17.5 21.5 18.5V5C20.5 4 19.5 3.5 18 3.5C15.5 3.5 13.5 4.5 12 6.5Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 6.5V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             Lesona Sekoly Sabata
         </h1>
         <p class="subtitle">Safidio ny lesona tiany ianao</p>
         
-        <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="menu-btn adults">
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="9" cy="7" r="3" fill="#ffffff"/>
-                <circle cx="15" cy="7" r="3" fill="#ffffff"/>
-                <path d="M9 14C6.5 14 4 15.5 4 18V20H14V18C14 15.5 11.5 14 9 14Z" fill="#ffffff"/>
-                <path d="M15 14C12.5 14 10 15.5 10 18V20H20V18C20 15.5 17.5 14 15 14Z" fill="#ffffff"/>
-            </svg>
-            LESONA HO AN'NY LEHIBE
-        </a>
-        
-        <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="menu-btn youth">
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L4 7V10C4 15.5 7.5 20.5 12 22C16.5 20.5 20 15.5 20 10V7L12 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
-                <path d="M9 12L11 14L15 10" stroke="#0047ab" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            LESONA HO AN'NY TANORA ZOKINY
-        </a>
+        <div class="menu-grid">
+            <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="menu-btn">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="7" r="3" fill="currentColor"/>
+                    <circle cx="15" cy="7" r="3" fill="currentColor"/>
+                    <path d="M9 14C6.5 14 4 15.5 4 18V20H14V18C14 15.5 11.5 14 9 14Z" fill="currentColor"/>
+                    <path d="M15 14C12.5 14 10 15.5 10 18V20H20V18C20 15.5 17.5 14 15 14Z" fill="currentColor"/>
+                </svg>
+                LESONA HO AN'NY LEHIBE
+            </a>
+            
+            <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="menu-btn youth">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4 7V10C4 15.5 7.5 20.5 12 22C16.5 20.5 20 15.5 20 10V7L12 2Z" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                LESONA HO AN'NY TANORA ZOKINY
+            </a>
+        </div>
     </div>
 
     <div id="iframe-container">
-        <button class="close-btn">&times;</button>
+        <div class="iframe-header">
+            <div class="iframe-title">Lesona Sekoly Sabata</div>
+            <button class="close-btn">&times;</button>
+        </div>
         <iframe id="lesson-iframe" src="" allow="geolocation; microphone; camera"></iframe>
     </div>
 
@@ -352,13 +466,17 @@
             const iframeContainer = document.getElementById('iframe-container');
             const lessonIframe = document.getElementById('lesson-iframe');
             const closeBtn = document.querySelector('.close-btn');
+            const iframeTitle = document.querySelector('.iframe-title');
             
             menuButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     
                     const url = this.getAttribute('href');
+                    const buttonText = this.textContent.trim();
+                    
                     lessonIframe.src = url;
+                    iframeTitle.textContent = buttonText;
                     
                     iframeContainer.classList.add('active');
                     document.body.style.overflow = 'hidden';
@@ -367,24 +485,26 @@
             
             closeBtn.addEventListener('click', function() {
                 iframeContainer.classList.remove('active');
-                lessonIframe.src = '';
+                setTimeout(() => {
+                    lessonIframe.src = '';
+                }, 400);
                 document.body.style.overflow = 'auto';
             });
             
             iframeContainer.addEventListener('click', function(e) {
                 if (e.target === this) {
                     this.classList.remove('active');
-                    lessonIframe.src = '';
+                    setTimeout(() => {
+                        lessonIframe.src = '';
+                    }, 400);
                     document.body.style.overflow = 'auto';
                 }
             });
 
-            // Fanampin'ny JavaScript mba hanakanana ny zoom
+            // Fanakanana ny zoom
             document.addEventListener('wheel', function(e) {
-                if (iframeContainer.classList.contains('active')) {
-                    if (e.ctrlKey) {
-                        e.preventDefault();
-                    }
+                if (iframeContainer.classList.contains('active') && e.ctrlKey) {
+                    e.preventDefault();
                 }
             }, { passive: false });
 
@@ -394,7 +514,6 @@
                 }
             }, { passive: false });
 
-            // Hanakanana ny keyboard zoom (Ctrl + +/-)
             document.addEventListener('keydown', function(e) {
                 if (iframeContainer.classList.contains('active') && (e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
                     e.preventDefault();
