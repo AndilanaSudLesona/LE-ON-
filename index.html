@@ -95,47 +95,6 @@
             }
         }
 
-        .logo-container {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .logo-wrapper {
-            display: inline-block;
-            position: relative;
-            padding: 20px;
-            border-radius: 50%;
-            background: rgba(30, 144, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(30, 144, 255, 0.3);
-            animation: logoGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes logoGlow {
-            0% {
-                box-shadow: 0 0 20px rgba(30, 144, 255, 0.3);
-            }
-            100% {
-                box-shadow: 0 0 40px rgba(30, 144, 255, 0.6);
-            }
-        }
-
-        .logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            filter: drop-shadow(0 8px 20px rgba(30, 144, 255, 0.6));
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-10px) scale(1.05); }
-        }
-
         .container {
             background: var(--card-bg);
             border-radius: 30px;
@@ -351,15 +310,6 @@
                 width: 95%;
             }
 
-            .logo-wrapper {
-                padding: 15px;
-            }
-
-            .logo {
-                width: 100px;
-                height: 100px;
-            }
-
             h1 {
                 font-size: 26px;
             }
@@ -400,7 +350,6 @@
             }
         }
 
-        /* Fanakanana zoom */
         html, body {
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
@@ -413,12 +362,6 @@
         <div class="floating-element"></div>
         <div class="floating-element"></div>
         <div class="floating-element"></div>
-    </div>
-    
-    <div class="logo-container">
-        <div class="logo-wrapper">
-            <img src="https://share.google/images/T6mBQxkGt5cski0Py" alt="Logo Sekoly Sabata" class="logo" onerror="this.style.display='none'">
-        </div>
     </div>
     
     <div class="container" id="menu">
@@ -501,7 +444,6 @@
                 }
             });
 
-            // Fanakanana ny zoom
             document.addEventListener('wheel', function(e) {
                 if (iframeContainer.classList.contains('active') && e.ctrlKey) {
                     e.preventDefault();
