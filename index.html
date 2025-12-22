@@ -158,16 +158,16 @@
 
         .menu-btn {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             width: 100%;
-            padding: 28px;
+            padding: 20px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: var(--text-light);
             text-decoration: none;
             border-radius: 24px;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 700;
             transition: var(--transition);
             box-shadow: 
@@ -178,6 +178,7 @@
             position: relative;
             overflow: hidden;
             letter-spacing: 0.5px;
+            gap: 20px;
         }
 
         .menu-btn::before {
@@ -220,13 +221,20 @@
         }
 
         .menu-img {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
+            min-width: 110px;
             border-radius: 16px;
-            margin-bottom: 16px;
             object-fit: cover;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
             border: 3px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .menu-text {
+            flex: 1;
+            text-align: left;
+            line-height: 1.4;
         }
 
         .btn-icon {
@@ -298,15 +306,20 @@
             }
 
             .menu-btn {
-                font-size: 15px;
-                padding: 24px 20px;
+                font-size: 16px;
+                padding: 18px;
+                gap: 16px;
             }
 
             .menu-img {
-                width: 80px;
-                height: 80px;
+                width: 90px;
+                height: 90px;
+                min-width: 90px;
                 border-radius: 12px;
-                margin-bottom: 12px;
+            }
+
+            .menu-text {
+                font-size: 16px;
             }
 
             .btn-icon {
@@ -343,12 +356,12 @@
         <div class="menu-grid">
             <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="menu-btn">
                 <img src="images/lehibe.png" alt="Lehibe" class="menu-img">
-                LESONA HO AN'NY LEHIBE
+                <span class="menu-text">LESONA HO AN'NY LEHIBE</span>
             </a>
             
             <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="menu-btn youth">
                 <img src="images/tanora.png" alt="Tanora" class="menu-img">
-                LESONA HO AN'NY TANORA ZOKINY
+                <span class="menu-text">LESONA HO AN'NY TANORA ZOKINY</span>
             </a>
         </div>
     </div>
@@ -376,13 +389,15 @@
                     menu.style.display = 'none';
                     document.body.style.overflow = 'hidden';
                     
+                    // Add to history for back button
+                    history.pushState({page: 'iframe'}, '', '#lesson');
+                    
                     // Inject CSS to hide header after iframe loads
                     lessonIframe.onload = function() {
                         try {
                             const iframeDoc = lessonIframe.contentDocument || lessonIframe.contentWindow.document;
                             const style = iframeDoc.createElement('style');
                             style.textContent = `
-                                /* Hide Sabbath School header and menu */
                                 header,
                                 nav[role="navigation"],
                                 [class*="header"],
@@ -393,15 +408,12 @@
                                 .ss-header,
                                 #header,
                                 .site-header,
-                                /* Hide logo and title section */
                                 [class*="logo"],
                                 [class*="Logo"],
                                 h1:first-of-type,
                                 .title-section,
-                                /* Hide Sabbath School and Personal Ministries text */
                                 div:has(> img[alt*="Sabbath"]),
                                 div:has(> img[alt*="sabbath"]),
-                                /* Specific selectors for adventech.io */
                                 body > div:first-child > div:first-child,
                                 body > header:first-of-type,
                                 body > nav:first-of-type {
@@ -411,13 +423,11 @@
                                     overflow: hidden !important;
                                 }
                                 
-                                /* Remove top padding/margin */
                                 body, main, #main, .main-content, [role="main"] {
                                     padding-top: 0 !important;
                                     margin-top: 0 !important;
                                 }
                                 
-                                /* Ensure full viewport usage */
                                 html, body {
                                     height: 100% !important;
                                     overflow-y: auto !important;
@@ -425,7 +435,6 @@
                             `;
                             iframeDoc.head.appendChild(style);
                         } catch (e) {
-                            // CORS restriction - cannot modify iframe content
                             console.log('Cannot inject CSS due to CORS policy');
                         }
                     };
@@ -433,7 +442,7 @@
             });
             
             // Back button handling
-            window.addEventListener('popstate', function() {
+            window.addEventListener('popstate', function(e) {
                 if (iframeContainer.classList.contains('active')) {
                     iframeContainer.classList.remove('active');
                     menu.style.display = 'flex';
