@@ -2,227 +2,379 @@
 <html lang="mg">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesona Kristianina</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Lesona</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-image: url('images/lesonabackground.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #000000;
+            color: #ffffff;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
+            max-width: 100%;
+            min-height: 100vh;
+            padding: 20px 16px 32px;
+        }
+        
+        .header {
+            padding: 48px 0 24px;
+            text-align: center;
         }
         
         .main-title {
-            font-size: 2rem;
-            font-weight: bold;
-            text-align: center;
-            color: #1f2937;
-            margin-bottom: 2rem;
-        }
-        
-        .lessons-container {
-            position: relative;
+            font-size: 28px;
+            font-weight: 700;
+            font-family: 'Lora', serif;
+            color: #ffffff;
+            letter-spacing: 0.5px;
         }
         
         .lessons-list {
-            position: relative;
-            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
         }
         
         .lesson-item {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            padding: 0.75rem;
-            margin-bottom: 0.75rem;
+            background: #000000;
+            border: 1px solid #222222;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.15s ease, opacity 0.15s ease;
         }
         
-        .lesson-item:hover {
-            background: rgba(255, 255, 255, 0.85);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transform: translateY(-1px);
+        .lesson-item:active {
+            transform: scale(0.97);
+            opacity: 0.6;
         }
         
         .lesson-left {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 12px;
         }
         
-        .cross-icon {
-            width: 2.75rem;
-            height: 2.75rem;
-            background: #eab308;
+        .lesson-number {
+            width: 32px;
+            height: 32px;
+            background: #ffffff;
+            color: #000000;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
             flex-shrink: 0;
         }
         
-        .cross-icon svg {
-            width: 1.5rem;
-            height: 1.5rem;
-            color: #a16207;
-        }
-        
         .lesson-title {
-            font-size: 1rem;
+            font-size: 16px;
             font-weight: 600;
-            color: #1f2937;
+            color: #ffffff;
+            font-family: 'Lora', serif;
+            letter-spacing: 0.3px;
         }
         
         .chevron {
-            color: #9ca3af;
-            transition: color 0.2s;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            opacity: 0.4;
         }
         
-        .lesson-item:hover .chevron {
-            color: #4b5563;
-        }
-        
+        /* Detail View */
         .lesson-detail {
             display: none;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 100;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            transition: background 0.3s ease, color 0.3s ease;
         }
         
         .lesson-detail.active {
             display: block;
         }
         
+        .lesson-detail.light-mode {
+            background: #ffffff;
+        }
+        
+        .lesson-detail.light-mode .detail-header {
+            background: #ffffff;
+            border-bottom-color: #e5e5e5;
+        }
+        
+        .lesson-detail.light-mode .back-button,
+        .lesson-detail.light-mode .theme-toggle {
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        .lesson-detail.light-mode .lesson-content h1 {
+            color: #000000;
+        }
+        
+        .lesson-detail.light-mode .lesson-text {
+            color: #333333;
+        }
+        
+        .lesson-detail.light-mode .lesson-text h2 {
+            color: #000000;
+        }
+        
+        .lesson-detail.light-mode .lesson-text p,
+        .lesson-detail.light-mode .lesson-text ul,
+        .lesson-detail.light-mode .lesson-text ol {
+            color: #333333;
+        }
+        
+        .lesson-detail.light-mode .lesson-text strong {
+            color: #000000;
+        }
+        
+        .lesson-detail.light-mode .verse {
+            background: #f5f5f5;
+            border-left-color: #000000;
+            color: #000000;
+        }
+        
+        .detail-header {
+            position: sticky;
+            top: 0;
+            background: #000000;
+            padding: 16px;
+            border-bottom: 1px solid #222222;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
         .back-button {
-            width: 3rem;
-            height: 3rem;
-            background: white;
+            width: 36px;
+            height: 36px;
+            background: #ffffff;
+            color: #000000;
             border: none;
             border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            color: #374151;
             cursor: pointer;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: transform 0.15s ease;
         }
         
-        .back-button:hover {
-            background: #f3f4f6;
-            transform: scale(1.05);
+        .back-button:active {
+            transform: scale(0.9);
+        }
+        
+        .theme-toggle {
+            width: 36px;
+            height: 36px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease;
+        }
+        
+        .theme-toggle:active {
+            transform: scale(0.9);
         }
         
         .lesson-content {
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 2rem;
+            padding: 24px 20px;
+            max-width: 100%;
         }
         
         .lesson-content h1 {
-            font-size: 1.875rem;
-            font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Lora', serif;
+            color: #ffffff;
+            margin-bottom: 20px;
+            letter-spacing: 0.3px;
+            line-height: 1.3;
         }
         
         .lesson-image {
             width: 100%;
-            max-height: 300px;
+            max-height: 240px;
             object-fit: cover;
-            border-radius: 0.75rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
         
-        /* OVAY ETO NY STYLE HO AN'NY VOTOATIN'NY LESONA */
         .lesson-text {
-            color: #374151;
-            line-height: 1.75;
-            font-size: 1.125rem;
+            color: #cccccc;
+            line-height: 1.7;
+            font-size: 16px;
         }
         
         .lesson-text h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Lora', serif;
+            color: #ffffff;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
         }
         
         .lesson-text p {
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
+            color: #cccccc;
         }
         
         .lesson-text strong {
             font-weight: 600;
-            color: #1f2937;
-        }
-        
-        .lesson-text em {
-            font-style: italic;
-            color: #4b5563;
+            color: #ffffff;
         }
         
         .lesson-text ul, .lesson-text ol {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
+            margin-left: 20px;
+            margin-bottom: 16px;
+            color: #cccccc;
         }
         
         .lesson-text li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
+            line-height: 1.6;
         }
         
         .verse {
-            background: #fef3c7;
-            border-left: 4px solid #eab308;
-            padding: 1rem;
-            margin: 1rem 0;
+            background: #1a1a1a;
+            border-left: 3px solid #ffffff;
+            padding: 16px;
+            margin: 16px 0;
             font-style: italic;
+            color: #ffffff;
+            line-height: 1.7;
+        }
+        
+        @media (max-width: 375px) {
+            .container {
+                padding: 16px 12px 28px;
+            }
+            
+            .header {
+                padding: 40px 0 20px;
+            }
+            
+            .main-title {
+                font-size: 24px;
+            }
+            
+            .lesson-item {
+                padding: 10px 14px;
+            }
+            
+            .lesson-number {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+            
+            .lesson-title {
+                font-size: 15px;
+            }
+            
+            .lesson-content {
+                padding: 20px 16px;
+            }
+            
+            .lesson-content h1 {
+                font-size: 22px;
+            }
+            
+            .lesson-text {
+                font-size: 15px;
+            }
+            
+            .lesson-text h2 {
+                font-size: 18px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 480px;
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
 <body>
     <div id="main-view" class="container">
-        <h1 class="main-title">Lesona Kristianina</h1>
-        
-        <div class="lessons-container">
-            <div class="lessons-list" id="lessons-list"></div>
+        <div class="header">
+            <h1 class="main-title">LESONA KRISTIANINA</h1>
         </div>
+        
+        <div class="lessons-list" id="lessons-list"></div>
     </div>
 
-    <div id="lesson-detail" class="lesson-detail"></div>
+    <div id="lesson-detail" class="lesson-detail">
+        <div class="detail-header">
+            <button class="back-button" onclick="showMainView()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+        <div id="lesson-content-area" class="lesson-content"></div>
+    </div>
 
     <script>
-        // OVAY ETO NY VOTOATINY ISAKIN'NY LESONA
         const lessonsData = [
             {
                 id: 1,
-                title: "Lesson 1: Ny Fitiavan'Andriamanitra",
-                image: "images/lesson1.jpg", // Ovay ny anarana sary eto
+                title: "Ny Fitiavan'Andriamanitra",
+                image: "images/lesson1.jpg",
                 content: `
                     <h2>Tanjona</h2>
                     <p>Hianatra ny amin'ny fitiavan'Andriamanitra tsy misy fetra ho antsika.</p>
@@ -245,8 +397,8 @@
             },
             {
                 id: 2,
-                title: "Lesson 2: Ny Vavaka",
-                image: "images/lesson2.jpg", // Ovay ny anarana sary eto
+                title: "Ny Vavaka",
+                image: "images/lesson2.jpg",
                 content: `
                     <h2>Tanjona</h2>
                     <p>Hahafantatra ny maha-zava-dehibe ny vavaka eo amin'ny fiainantsika kristianina.</p>
@@ -270,76 +422,72 @@
             },
             {
                 id: 3,
-                title: "Lesson 3",
-                image: "images/lesson3.jpg", // Ovay ny anarana sary eto
-                content: `
-                    <h2>Votoatiny Lesona 3</h2>
-                    <p>Apetraho eto ny votoatiny ho an'ny lesona fahatelo.</p>
-                `
+                title: "Lesona 3",
+                image: "images/lesson3.jpg",
+                content: `<h2>Votoatiny Lesona 3</h2><p>Apetraho eto ny votoatiny ho an'ny lesona fahatelo.</p>`
             },
             {
                 id: 4,
-                title: "Lesson 4",
+                title: "Lesona 4",
                 image: "images/lesson4.jpg",
                 content: `<h2>Votoatiny Lesona 4</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 5,
-                title: "Lesson 5",
+                title: "Lesona 5",
                 image: "images/lesson5.jpg",
                 content: `<h2>Votoatiny Lesona 5</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 6,
-                title: "Lesson 6",
+                title: "Lesona 6",
                 image: "images/lesson6.jpg",
                 content: `<h2>Votoatiny Lesona 6</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 7,
-                title: "Lesson 7",
+                title: "Lesona 7",
                 image: "images/lesson7.jpg",
                 content: `<h2>Votoatiny Lesona 7</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 8,
-                title: "Lesson 8",
+                title: "Lesona 8",
                 image: "images/lesson8.jpg",
                 content: `<h2>Votoatiny Lesona 8</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 9,
-                title: "Lesson 9",
+                title: "Lesona 9",
                 image: "images/lesson9.jpg",
                 content: `<h2>Votoatiny Lesona 9</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 10,
-                title: "Lesson 10",
+                title: "Lesona 10",
                 image: "images/lesson10.jpg",
                 content: `<h2>Votoatiny Lesona 10</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 11,
-                title: "Lesson 11",
+                title: "Lesona 11",
                 image: "images/lesson11.jpg",
                 content: `<h2>Votoatiny Lesona 11</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 12,
-                title: "Lesson 12",
+                title: "Lesona 12",
                 image: "images/lesson12.jpg",
                 content: `<h2>Votoatiny Lesona 12</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
                 id: 13,
-                title: "Lesson 13",
+                title: "Lesona 13",
                 image: "images/lesson13.jpg",
                 content: `<h2>Votoatiny Lesona 13</h2><p>Apetraho eto ny votoatiny...</p>`
             }
         ];
 
-        // Generate lessons list
         function renderLessonsList() {
             const listContainer = document.getElementById('lessons-list');
             listContainer.innerHTML = '';
@@ -351,17 +499,11 @@
                 
                 lessonDiv.innerHTML = `
                     <div class="lesson-left">
-                        <div class="cross-icon">
-                            <svg viewBox="0 0 24 24" width="32" height="32">
-                                <path d="M12 2 L12 9 M12 9 L12 22 M12 9 L5 9 M12 9 L19 9"
-                                    stroke="currentColor" stroke-width="2.5" 
-                                    stroke-linecap="round" fill="none"/>
-                            </svg>
-                        </div>
+                        <div class="lesson-number">${lesson.id}</div>
                         <span class="lesson-title">${lesson.title}</span>
                     </div>
-                    <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
+                    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18L15 12L9 6"/>
                     </svg>
                 `;
                 
@@ -377,29 +519,40 @@
             const detailView = document.getElementById('lesson-detail');
             detailView.className = 'lesson-detail active';
             
-            detailView.innerHTML = `
-                <button class="back-button" onclick="showMainView()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <div class="lesson-content">
-                    <img src="${lesson.image}" alt="${lesson.title}" class="lesson-image" onerror="this.style.display='none'">
-                    <h1>${lesson.title}</h1>
-                    <div class="lesson-text">
-                        ${lesson.content}
-                    </div>
+            const contentArea = document.getElementById('lesson-content-area');
+            contentArea.innerHTML = `
+                <img src="${lesson.image}" alt="" class="lesson-image" onerror="this.style.display='none'">
+                <h1>${lesson.title}</h1>
+                <div class="lesson-text">
+                    ${lesson.content}
                 </div>
             `;
+            
+            detailView.scrollTop = 0;
         }
 
         function showMainView() {
             document.getElementById('main-view').style.display = 'block';
             document.getElementById('lesson-detail').className = 'lesson-detail';
         }
+        
+        function toggleTheme() {
+            const detailView = document.getElementById('lesson-detail');
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+            
+            if (detailView.classList.contains('light-mode')) {
+                detailView.classList.remove('light-mode');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                detailView.classList.add('light-mode');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
 
-        // Initialize
         renderLessonsList();
     </script>
 </body>
-  </html>
+    </html> 
