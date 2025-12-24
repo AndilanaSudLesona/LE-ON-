@@ -3,176 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LESONA SEKOLY SABATA</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Lesona</title>
     <style>
-        :root {
-            --primary: #1e90ff;
-            --primary-dark: #0066cc;
-            --secondary: #4169e1;
-            --dark-bg: #0a0a0a;
-            --text-light: #ffffff;
-            --text-gray: #b8b8b8;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: #0a0a0a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 100%;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            touch-action: pan-x pan-y;
+            flex-direction: column;
         }
 
-        /* Simplified background - 2 elements only */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
+        /* Header */
+        .header {
+            padding: 56px 24px 32px;
+            background: #000000;
         }
 
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.08;
-            will-change: transform;
-        }
-
-        .floating-element:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: -150px;
-            left: -150px;
-            background: radial-gradient(circle, var(--primary) 0%, transparent 60%);
-            animation: float1 25s infinite ease-in-out;
-        }
-
-        .floating-element:nth-child(2) {
-            width: 250px;
-            height: 250px;
-            bottom: -125px;
-            right: -125px;
-            background: radial-gradient(circle, var(--secondary) 0%, transparent 60%);
-            animation: float2 30s infinite ease-in-out;
-        }
-
-        @keyframes float1 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(40px, 60px); }
-        }
-
-        @keyframes float2 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-40px, -60px); }
-        }
-
-        .container {
-            background: linear-gradient(145deg, #16213e, #0f1419);
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            padding: 35px 25px;
-            max-width: 650px;
-            width: 98%;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            border: 1px solid rgba(30, 144, 255, 0.2);
-        }
-
-        h1 {
-            color: var(--text-light);
-            margin-bottom: 15px;
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 1px;
+        .logo-section {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .app-title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+
+        .app-subtitle {
+            font-size: 15px;
+            font-weight: 400;
+            color: #888888;
+            margin-top: 4px;
+            letter-spacing: -0.2px;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 0 16px 32px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666666;
+            padding: 0 8px 12px;
+        }
+
+        .lessons-list {
+            display: flex;
+            flex-direction: column;
             gap: 12px;
         }
 
-        .book-icon {
-            width: 36px;
-            height: 36px;
-        }
-
-        .subtitle {
-            color: var(--text-gray);
-            margin-bottom: 35px;
-            font-size: 17px;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-
-        .menu-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .menu-btn {
+        .lesson-card {
+            background: #ffffff;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--text-light);
+            gap: 16px;
+            padding: 12px;
             text-decoration: none;
-            border-radius: 20px;
-            font-size: 18px;
-            font-weight: 700;
-            transition: transform 0.2s ease;
-            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.3);
-            border: none;
+            transition: transform 0.15s ease, opacity 0.15s ease;
             cursor: pointer;
-            letter-spacing: 0.5px;
-            gap: 20px;
-            will-change: transform;
         }
 
-        .menu-btn:active {
-            transform: scale(0.97);
+        .lesson-card:active {
+            transform: scale(0.98);
+            opacity: 0.7;
         }
 
-        .menu-btn.youth {
-            background: linear-gradient(135deg, var(--secondary), #0047ab);
-            box-shadow: 0 6px 20px rgba(65, 105, 225, 0.3);
-        }
-
-        .menu-btn.teens {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.3);
-        }
-
-        .menu-img {
-            width: 110px;
-            height: 110px;
-            min-width: 110px;
-            border-radius: 16px;
+        .lesson-image {
+            width: 88px;
+            height: 88px;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.2);
             flex-shrink: 0;
+            background: #f0f0f0;
         }
 
-        .menu-text {
+        .lesson-info {
             flex: 1;
-            text-align: left;
-            line-height: 1.4;
+            min-width: 0;
         }
 
+        .lesson-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .lesson-subtitle {
+            font-size: 13px;
+            color: #666666;
+            font-weight: 400;
+            letter-spacing: -0.1px;
+        }
+
+        .lesson-arrow {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            opacity: 0.3;
+        }
+
+        /* Iframe Container */
         #iframe-container {
             display: none;
             position: fixed;
@@ -181,104 +145,116 @@
             width: 100%;
             height: 100%;
             background: #ffffff;
-            z-index: 1000;
-            touch-action: pan-x pan-y;
+            z-index: 9999;
         }
 
         #iframe-container.active {
             display: block;
-            animation: fadeIn 0.2s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            touch-action: pan-x pan-y;
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 5px;
+        /* Responsive adjustments */
+        @media (max-width: 375px) {
+            .header {
+                padding: 48px 20px 28px;
             }
 
-            .container {
-                padding: 30px 20px;
-                border-radius: 25px;
-            }
-
-            h1 {
+            .app-title {
                 font-size: 24px;
-                gap: 10px;
             }
 
-            .book-icon {
-                width: 30px;
-                height: 30px;
+            .logo {
+                width: 36px;
+                height: 36px;
             }
 
-            .subtitle {
+            .content {
+                padding: 0 12px 28px;
+            }
+
+            .lesson-card {
+                padding: 10px;
+                gap: 14px;
+            }
+
+            .lesson-image {
+                width: 76px;
+                height: 76px;
+            }
+
+            .lesson-title {
                 font-size: 15px;
-                margin-bottom: 30px;
             }
 
-            .menu-btn {
-                font-size: 16px;
-                padding: 18px;
-                gap: 16px;
-                border-radius: 16px;
-            }
-
-            .menu-img {
-                width: 90px;
-                height: 90px;
-                min-width: 90px;
-                border-radius: 12px;
+            .lesson-subtitle {
+                font-size: 12px;
             }
         }
 
-        html, body {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 480px;
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="background-animation">
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-    </div>
-    
-    <div class="container" id="menu">
-        <h1>
-            <svg class="book-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 6.5C10.5 4.5 8.5 3.5 6 3.5C4.5 3.5 3.5 4 2.5 5V18.5C3.5 17.5 4.5 17 6 17C8.5 17 10.5 18 12 20C13.5 18 15.5 17 18 17C19.5 17 20.5 17.5 21.5 18.5V5C20.5 4 19.5 3.5 18 3.5C15.5 3.5 13.5 4.5 12 6.5Z" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M12 6.5V20" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-            Lesona Sekoly Sabata
-        </h1>
-        <p class="subtitle">Safidio ny lesona mifanaraka amin'ny taonanao</p>
-        
-        <div class="menu-grid">
-            <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="menu-btn">
-                <img src="images/lehibe.png" alt="Lehibe" class="menu-img">
-                <span class="menu-text">LESONA HO AN'NY LEHIBE</span>
-            </a>
+    <div class="app-container" id="menu">
+        <div class="header">
+            <div class="logo-section">
+                <svg class="logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="4" width="16" height="16" stroke="#ffffff" stroke-width="2"/>
+                    <line x1="12" y1="4" x2="12" y2="20" stroke="#ffffff" stroke-width="2"/>
+                    <line x1="4" y1="12" x2="20" y2="12" stroke="#ffffff" stroke-width="2"/>
+                </svg>
+                <h1 class="app-title">Lesona</h1>
+            </div>
+            <p class="app-subtitle">Sekoly Sabata</p>
+        </div>
+
+        <div class="content">
+            <h2 class="section-title">Safidio ny kilasy</h2>
             
-            <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="menu-btn youth">
-                <img src="images/tanora.png" alt="Tanora" class="menu-img">
-                <span class="menu-text">LESONA HO AN'NY TANORA ZOKINY</span>
-            </a>
-            
-            <a href="https://AndilanaSudLesona.github.io/SDA/Zatovo/" class="menu-btn teens">
-                <img src="images/zatovo.png" alt="Zatovo" class="menu-img">
-                <span class="menu-text">LESONA HO AN'NY ZATOVO</span>
-            </a>
+            <div class="lessons-list">
+                <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="lesson-card">
+                    <img src="images/lehibe.png" alt="" class="lesson-image">
+                    <div class="lesson-info">
+                        <div class="lesson-title">Lehibe</div>
+                        <div class="lesson-subtitle">Olon-dehibe</div>
+                    </div>
+                    <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+
+                <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="lesson-card">
+                    <img src="images/tanora.png" alt="" class="lesson-image">
+                    <div class="lesson-info">
+                        <div class="lesson-title">Tanora Zokiny</div>
+                        <div class="lesson-subtitle">19-35 taona</div>
+                    </div>
+                    <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+
+                <a href="https://AndilanaSudLesona.github.io/SDA/Zatovo/" class="lesson-card">
+                    <img src="images/zatovo.png" alt="" class="lesson-image">
+                    <div class="lesson-info">
+                        <div class="lesson-title">Zatovo</div>
+                        <div class="lesson-subtitle">Tanora zandriny</div>
+                    </div>
+                    <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -287,38 +263,36 @@
     </div>
 
     <script>
-        const menuButtons = document.querySelectorAll('.menu-btn');
+        const cards = document.querySelectorAll('.lesson-card');
         const iframeContainer = document.getElementById('iframe-container');
-        const lessonIframe = document.getElementById('lesson-iframe');
+        const iframe = document.getElementById('lesson-iframe');
         const menu = document.getElementById('menu');
         
-        menuButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                lessonIframe.src = this.getAttribute('href');
+                iframe.src = this.getAttribute('href');
                 iframeContainer.classList.add('active');
                 menu.style.display = 'none';
                 
-                history.pushState({page: 'iframe'}, '', '#lesson');
+                history.pushState({page: 'lesson'}, '', '#lesson');
             });
         });
         
         window.addEventListener('popstate', function() {
             if (iframeContainer.classList.contains('active')) {
                 iframeContainer.classList.remove('active');
-                menu.style.display = 'flex';
-                lessonIframe.src = '';
+                menu.style.display = 'block';
+                iframe.src = '';
             }
         });
 
         document.addEventListener('keydown', function(e) {
             if (iframeContainer.classList.contains('active') && e.key === 'Escape') {
-                iframeContainer.classList.remove('active');
-                menu.style.display = 'flex';
-                lessonIframe.src = '';
+                history.back();
             }
         });
     </script>
 </body>
-        </html> 
+    </html> 
