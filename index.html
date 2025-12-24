@@ -9,15 +9,9 @@
             --primary: #1e90ff;
             --primary-dark: #0066cc;
             --secondary: #4169e1;
-            --secondary-dark: #0047ab;
-            --accent: #ff6b6b;
-            --accent-dark: #ff4757;
             --dark-bg: #0a0a0a;
-            --card-bg: linear-gradient(145deg, #16213e, #0f1419);
             --text-light: #ffffff;
             --text-gray: #b8b8b8;
-            --shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         * {
@@ -27,19 +21,17 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a2e 50%, var(--dark-bg) 100%);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0a;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 10px;
-            position: relative;
-            overflow: hidden;
             touch-action: pan-x pan-y;
         }
 
+        /* Simplified background - 2 elements only */
         .background-animation {
             position: fixed;
             top: 0;
@@ -48,14 +40,14 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
+            pointer-events: none;
         }
 
         .floating-element {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-            opacity: 0.1;
-            animation: float 20s infinite linear;
+            opacity: 0.08;
+            will-change: transform;
         }
 
         .floating-element:nth-child(1) {
@@ -63,63 +55,40 @@
             height: 300px;
             top: -150px;
             left: -150px;
-            animation-delay: 0s;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 60%);
+            animation: float1 25s infinite ease-in-out;
         }
 
         .floating-element:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            bottom: -100px;
-            right: -100px;
-            animation-delay: -5s;
-            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+            width: 250px;
+            height: 250px;
+            bottom: -125px;
+            right: -125px;
+            background: radial-gradient(circle, var(--secondary) 0%, transparent 60%);
+            animation: float2 30s infinite ease-in-out;
         }
 
-        .floating-element:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            top: 50%;
-            right: -75px;
-            animation-delay: -10s;
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(40px, 60px); }
         }
 
-        .floating-element:nth-child(4) {
-            width: 180px;
-            height: 180px;
-            bottom: 20%;
-            left: -90px;
-            animation-delay: -15s;
-            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(50px, 50px) rotate(90deg);
-            }
-            50% {
-                transform: translate(0, 100px) rotate(180deg);
-            }
-            75% {
-                transform: translate(-50px, 50px) rotate(270deg);
-            }
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-40px, -60px); }
         }
 
         .container {
-            background: var(--card-bg);
+            background: linear-gradient(145deg, #16213e, #0f1419);
             border-radius: 30px;
-            box-shadow: var(--shadow),
-                inset 0 1px 0 rgba(30, 144, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             padding: 35px 25px;
             max-width: 650px;
             width: 98%;
             text-align: center;
             position: relative;
             z-index: 2;
-            border: 1px solid rgba(30, 144, 255, 0.3);
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(30, 144, 255, 0.2);
         }
 
         h1 {
@@ -127,8 +96,7 @@
             margin-bottom: 15px;
             font-size: 28px;
             font-weight: 700;
-            text-shadow: 0 4px 20px rgba(30, 144, 255, 0.5);
-            letter-spacing: 1.2px;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -138,7 +106,6 @@
         .book-icon {
             width: 36px;
             height: 36px;
-            filter: drop-shadow(0 2px 8px rgba(30, 144, 255, 0.6));
         }
 
         .subtitle {
@@ -147,18 +114,6 @@
             font-size: 17px;
             font-weight: 300;
             letter-spacing: 0.5px;
-            position: relative;
-        }
-
-        .subtitle::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         .menu-grid {
@@ -169,87 +124,46 @@
 
         .menu-btn {
             display: flex;
-            flex-direction: row;
             align-items: center;
             justify-content: flex-start;
             width: 100%;
             padding: 20px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--text-light);
             text-decoration: none;
-            border-radius: 24px;
+            border-radius: 20px;
             font-size: 18px;
             font-weight: 700;
-            transition: var(--transition);
-            box-shadow: 
-                0 8px 30px rgba(30, 144, 255, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease;
+            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.3);
             border: none;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
             letter-spacing: 0.5px;
             gap: 20px;
+            will-change: transform;
         }
 
-        .menu-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s;
-        }
-
-        .menu-btn:hover::before {
-            left: 100%;
-        }
-
-        .menu-btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 
-                0 15px 40px rgba(30, 144, 255, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
         .menu-btn:active {
-            transform: translateY(-2px) scale(1);
+            transform: scale(0.97);
         }
 
         .menu-btn.youth {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-            box-shadow: 
-                0 8px 30px rgba(65, 105, 225, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, var(--secondary), #0047ab);
+            box-shadow: 0 6px 20px rgba(65, 105, 225, 0.3);
         }
 
-        .menu-btn.youth:hover {
-            box-shadow: 
-                0 15px 40px rgba(65, 105, 225, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        .menu-btn.teens {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.3);
         }
 
-          .menu-btn.teens {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        box-shadow: 
-            0 8px 30px rgba(30, 144, 255, 0.5),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .menu-btn.teens:hover {
-        box-shadow: 
-            0 15px 40px rgba(30, 144, 255, 0.7),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
         .menu-img {
             width: 110px;
             height: 110px;
             min-width: 110px;
             border-radius: 16px;
             object-fit: cover;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             flex-shrink: 0;
         }
 
@@ -257,13 +171,6 @@
             flex: 1;
             text-align: left;
             line-height: 1.4;
-        }
-
-        .btn-icon {
-            width: 27px;
-            height: 27px;
-            margin-right: 14px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         #iframe-container {
@@ -275,23 +182,17 @@
             height: 100%;
             background: #ffffff;
             z-index: 1000;
-            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             touch-action: pan-x pan-y;
-        }
-
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         #iframe-container.active {
             display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         iframe {
@@ -309,7 +210,6 @@
             .container {
                 padding: 30px 20px;
                 border-radius: 25px;
-                width: 98%;
             }
 
             h1 {
@@ -331,6 +231,7 @@
                 font-size: 16px;
                 padding: 18px;
                 gap: 16px;
+                border-radius: 16px;
             }
 
             .menu-img {
@@ -339,21 +240,10 @@
                 min-width: 90px;
                 border-radius: 12px;
             }
-
-            .menu-text {
-                font-size: 16px;
-            }
-
-            .btn-icon {
-                width: 23px;
-                height: 23px;
-                margin-right: 10px;
-            }
         }
 
         html, body {
             -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
             text-size-adjust: 100%;
         }
     </style>
@@ -362,15 +252,13 @@
     <div class="background-animation">
         <div class="floating-element"></div>
         <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
     </div>
     
     <div class="container" id="menu">
         <h1>
             <svg class="book-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 6.5C10.5 4.5 8.5 3.5 6 3.5C4.5 3.5 3.5 4 2.5 5V18.5C3.5 17.5 4.5 17 6 17C8.5 17 10.5 18 12 20C13.5 18 15.5 17 18 17C19.5 17 20.5 17.5 21.5 18.5V5C20.5 4 19.5 3.5 18 3.5C15.5 3.5 13.5 4.5 12 6.5Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 6.5V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 6.5C10.5 4.5 8.5 3.5 6 3.5C4.5 3.5 3.5 4 2.5 5V18.5C3.5 17.5 4.5 17 6 17C8.5 17 10.5 18 12 20C13.5 18 15.5 17 18 17C19.5 17 20.5 17.5 21.5 18.5V5C20.5 4 19.5 3.5 18 3.5C15.5 3.5 13.5 4.5 12 6.5Z" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M12 6.5V20" stroke="currentColor" stroke-width="1.5"/>
             </svg>
             Lesona Sekoly Sabata
         </h1>
@@ -395,120 +283,42 @@
     </div>
 
     <div id="iframe-container">
-        <iframe id="lesson-iframe" src="" allow="geolocation; microphone; camera"></iframe>
+        <iframe id="lesson-iframe" src=""></iframe>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuButtons = document.querySelectorAll('.menu-btn');
-            const iframeContainer = document.getElementById('iframe-container');
-            const lessonIframe = document.getElementById('lesson-iframe');
-            const menu = document.getElementById('menu');
-            
-            menuButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const url = this.getAttribute('href');
-                    
-                    lessonIframe.src = url;
-                    
-                    iframeContainer.classList.add('active');
-                    menu.style.display = 'none';
-                    document.body.style.overflow = 'hidden';
-                    
-                    // Add to history for back button
-                    history.pushState({page: 'iframe'}, '', '#lesson');
-                    
-                    // Inject CSS to hide header after iframe loads
-                    lessonIframe.onload = function() {
-                        try {
-                            const iframeDoc = lessonIframe.contentDocument || lessonIframe.contentWindow.document;
-                            const style = iframeDoc.createElement('style');
-                            style.textContent = `
-                                header,
-                                nav[role="navigation"],
-                                [class*="header"],
-                                [class*="Header"],
-                                [class*="navbar"],
-                                [class*="Navbar"],
-                                [class*="menu-top"],
-                                .ss-header,
-                                #header,
-                                .site-header,
-                                [class*="logo"],
-                                [class*="Logo"],
-                                h1:first-of-type,
-                                .title-section,
-                                div:has(> img[alt*="Sabbath"]),
-                                div:has(> img[alt*="sabbath"]),
-                                body > div:first-child > div:first-child,
-                                body > header:first-of-type,
-                                body > nav:first-of-type {
-                                    display: none !important;
-                                    visibility: hidden !important;
-                                    height: 0 !important;
-                                    overflow: hidden !important;
-                                }
-                                
-                                body, main, #main, .main-content, [role="main"] {
-                                    padding-top: 0 !important;
-                                    margin-top: 0 !important;
-                                }
-                                
-                                html, body {
-                                    height: 100% !important;
-                                    overflow-y: auto !important;
-                                }
-                            `;
-                            iframeDoc.head.appendChild(style);
-                        } catch (e) {
-                            console.log('Cannot inject CSS due to CORS policy');
-                        }
-                    };
-                });
+        const menuButtons = document.querySelectorAll('.menu-btn');
+        const iframeContainer = document.getElementById('iframe-container');
+        const lessonIframe = document.getElementById('lesson-iframe');
+        const menu = document.getElementById('menu');
+        
+        menuButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                lessonIframe.src = this.getAttribute('href');
+                iframeContainer.classList.add('active');
+                menu.style.display = 'none';
+                
+                history.pushState({page: 'iframe'}, '', '#lesson');
             });
-            
-            // Back button handling
-            window.addEventListener('popstate', function(e) {
-                if (iframeContainer.classList.contains('active')) {
-                    iframeContainer.classList.remove('active');
-                    menu.style.display = 'flex';
-                    lessonIframe.src = '';
-                    document.body.style.overflow = 'auto';
-                }
-            });
+        });
+        
+        window.addEventListener('popstate', function() {
+            if (iframeContainer.classList.contains('active')) {
+                iframeContainer.classList.remove('active');
+                menu.style.display = 'flex';
+                lessonIframe.src = '';
+            }
+        });
 
-            // Prevent zoom on iframe
-            document.addEventListener('wheel', function(e) {
-                if (iframeContainer.classList.contains('active') && e.ctrlKey) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-
-            document.addEventListener('touchmove', function(e) {
-                if (iframeContainer.classList.contains('active') && e.touches.length > 1) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-
-            document.addEventListener('keydown', function(e) {
-                if (iframeContainer.classList.contains('active')) {
-                    // Prevent zoom
-                    if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
-                        e.preventDefault();
-                    }
-                    
-                    // Back with Escape key
-                    if (e.key === 'Escape') {
-                        iframeContainer.classList.remove('active');
-                        menu.style.display = 'flex';
-                        lessonIframe.src = '';
-                        document.body.style.overflow = 'auto';
-                    }
-                }
-            });
+        document.addEventListener('keydown', function(e) {
+            if (iframeContainer.classList.contains('active') && e.key === 'Escape') {
+                iframeContainer.classList.remove('active');
+                menu.style.display = 'flex';
+                lessonIframe.src = '';
+            }
         });
     </script>
 </body>
-            </html> 
+        </html> 
