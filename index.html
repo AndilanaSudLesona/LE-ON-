@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>Lesona</title>
+    <meta name="theme-color" content="#000000">
+    <title>Lesona SDA</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
+    <link rel="apple-touch-icon" href="images/icon-512.png">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -33,7 +44,6 @@
             flex-direction: column;
         }
 
-        /* Content */
         .content {
             flex: 1;
             padding: 72px 16px 32px;
@@ -54,6 +64,7 @@
             text-decoration: none;
             transition: transform 0.15s ease, opacity 0.15s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .lesson-card:active {
@@ -91,6 +102,25 @@
             opacity: 0.4;
         }
 
+        /* Offline indicator */
+        .offline-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #4CAF50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .lesson-card.cached .offline-badge {
+            opacity: 1;
+        }
+
         /* Iframe Container */
         #iframe-container {
             display: none;
@@ -113,7 +143,35 @@
             border: none;
         }
 
-        /* Responsive adjustments */
+        /* Loading indicator */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10000;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
         @media (max-width: 375px) {
             .content {
                 padding: 64px 12px 28px;
@@ -141,17 +199,66 @@
                 margin: 0 auto;
             }
         }
+
+        /* Install prompt */
+        .install-prompt {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .install-prompt.show {
+            display: block;
+        }
+
+        .install-prompt h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .install-prompt p {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .install-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .install-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-install {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-dismiss {
+            background: #333;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="app-container" id="menu">
-        <div class="header">
-            <img src="images/logosda.png" alt="" class="logo-sda">
-        </div>
-
         <div class="content">
             <div class="lessons-list">
-                <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="lesson-card">
+                <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="lesson-card" data-lesson="lehibe">
                     <img src="images/lehibe.png" alt="" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">LEHIBE</div>
@@ -159,9 +266,10 @@
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
+                    <div class="offline-badge">✓ Offline</div>
                 </a>
 
-                <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="lesson-card">
+                <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="lesson-card" data-lesson="tanora">
                     <img src="images/tanora.png" alt="" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">TANORA ZOKINY</div>
@@ -169,9 +277,10 @@
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
+                    <div class="offline-badge">✓ Offline</div>
                 </a>
 
-                <a href="https://AndilanaSudLesona.github.io/SDA/Zatovo/" class="lesson-card">
+                <a href="https://AndilanaSudLesona.github.io/SDA/Zatovo/" class="lesson-card" data-lesson="zatovo">
                     <img src="images/zatovo.png" alt="" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">ZATOVO</div>
@@ -179,28 +288,120 @@
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
+                    <div class="offline-badge">✓ Offline</div>
                 </a>
             </div>
         </div>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p style="margin-top: 16px; color: #fff;">Mamorona cache...</p>
     </div>
 
     <div id="iframe-container">
         <iframe id="lesson-iframe" src=""></iframe>
     </div>
 
+    <!-- Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <h3>📱 Installer Lesona</h3>
+        <p>Installer l'application mba hahafahana mampiasa offline</p>
+        <div class="install-buttons">
+            <button class="btn-install" id="btnInstall">Installer</button>
+            <button class="btn-dismiss" id="btnDismiss">Aoriana</button>
+        </div>
+    </div>
+
     <script>
+        // Service Worker registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('✓ Service Worker registered:', registration.scope);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            console.log('Service Worker update found!');
+                        });
+                    })
+                    .catch(error => {
+                        console.log('✗ Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // PWA Install prompt
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const btnInstall = document.getElementById('btnInstall');
+        const btnDismiss = document.getElementById('btnDismiss');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install prompt after 3 seconds
+            setTimeout(() => {
+                if (!localStorage.getItem('installDismissed')) {
+                    installPrompt.classList.add('show');
+                }
+            }, 3000);
+        });
+
+        btnInstall.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response: ${outcome}`);
+                deferredPrompt = null;
+            }
+            installPrompt.classList.remove('show');
+        });
+
+        btnDismiss.addEventListener('click', () => {
+            localStorage.setItem('installDismissed', 'true');
+            installPrompt.classList.remove('show');
+        });
+
+        // Check cached lessons and update badges
+        async function checkCachedLessons() {
+            if ('caches' in window) {
+                const cache = await caches.open('lesona-runtime-v1');
+                const cards = document.querySelectorAll('.lesson-card');
+                
+                for (const card of cards) {
+                    const url = card.getAttribute('href');
+                    const cachedResponse = await cache.match(url);
+                    if (cachedResponse) {
+                        card.classList.add('cached');
+                    }
+                }
+            }
+        }
+
+        // Iframe handling
         const cards = document.querySelectorAll('.lesson-card');
         const iframeContainer = document.getElementById('iframe-container');
         const iframe = document.getElementById('lesson-iframe');
         const menu = document.getElementById('menu');
+        const loading = document.getElementById('loading');
         
         cards.forEach(card => {
             card.addEventListener('click', function(e) {
                 e.preventDefault();
                 
+                loading.classList.add('active');
+                
                 iframe.src = this.getAttribute('href');
-                iframeContainer.classList.add('active');
-                menu.style.display = 'none';
+                
+                iframe.onload = () => {
+                    loading.classList.remove('active');
+                    iframeContainer.classList.add('active');
+                    menu.style.display = 'none';
+                    checkCachedLessons();
+                };
                 
                 history.pushState({page: 'lesson'}, '', '#lesson');
             });
@@ -211,14 +412,21 @@
                 iframeContainer.classList.remove('active');
                 menu.style.display = 'block';
                 iframe.src = '';
+                loading.classList.remove('active');
             }
         });
 
-        document.addEventListener('keydown', function(e) {
-            if (iframeContainer.classList.contains('active') && e.key === 'Escape') {
-                history.back();
-            }
+        // Check cached lessons on load
+        checkCachedLessons();
+
+        // Online/Offline status
+        window.addEventListener('online', () => {
+            console.log('✓ Online');
+        });
+
+        window.addEventListener('offline', () => {
+            console.log('✗ Offline - using cache');
         });
     </script>
 </body>
-</html> 
+    </html> 
