@@ -1,395 +1,273 @@
-const CACHE_VERSION = 'lesona-v4.0';
-const CACHE_STATIC = 'lesona-static-v4';
-const CACHE_LESSONS = 'lesona-lessons-v4';
-const CACHE_RESOURCES = 'lesona-resources-v4';
+// Service Worker for SDA Lesona App
+// Version 2.0 - Silent Offline Support with Aggressive Caching
 
-const STATIC_ASSETS = [
+const CACHE_NAME = 'sda-lesona-v2';
+const RUNTIME_CACHE = 'sda-runtime-v2';
+const IMAGE_CACHE = 'sda-images-v2';
+
+// Files to cache immediately on install (App Shell)
+const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/manifest.json',
-  'https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap'
+  '/offline.html',
+  // Add your main CSS/JS files here if you have them
 ];
 
-const IMAGE_ASSETS = [
-  '/images/lehibe.png',
-  '/images/tanora.png',
-  '/images/zatovo.png',
-  '/images/icon-192.png',
-  '/images/icon-512.png'
-];
+// Maximum cache sizes
+const MAX_RUNTIME_CACHE_SIZE = 100;
+const MAX_IMAGE_CACHE_SIZE = 60;
 
-self.addEventListener('install', (event) => {
-  console.log('[SW] Installation v4.0...');
+// Cache timeout for network requests (5 seconds)
+const CACHE_TIMEOUT = 5000;
+
+// Install event - cache app shell
+self.addEventListener('install', event => {
+  console.log('[ServiceWorker] Installing...');
   
   event.waitUntil(
-    (async () => {
-      try {
-        const staticCache = await caches.open(CACHE_STATIC);
-        
-        for (const asset of STATIC_ASSETS) {
-          try {
-            const request = new Request(asset, { cache: 'reload' });
-            const response = await fetch(request);
-            if (response && response.ok) {
-              await staticCache.put(asset, response);
-              console.log('[SW] Cached:', asset);
-            }
-          } catch (err) {
-            console.warn('[SW] Failed to cache:', asset);
-          }
-        }
-        
-        for (const img of IMAGE_ASSETS) {
-          try {
-            const request = new Request(img, { cache: 'reload' });
-            const response = await fetch(request);
-            if (response && response.ok) {
-              await staticCache.put(img, response);
-              console.log('[SW] Image cached:', img);
-            }
-          } catch (err) {
-            console.warn('[SW] Failed to cache image:', img);
-          }
-        }
-        
-        console.log('[SW] Installation terminée');
-      } catch (error) {
-        console.error('[SW] Installation error:', error);
-      }
-    })()
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('[ServiceWorker] Caching app shell');
+        return cache.addAll(PRECACHE_URLS);
+      })
+      .then(() => {
+        console.log('[ServiceWorker] Installation complete');
+        return self.skipWaiting();
+      })
+      .catch(error => {
+        console.error('[ServiceWorker] Installation failed:', error);
+      })
   );
-  
-  self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  console.log('[SW] Activation...');
+// Activate event - clean up old caches
+self.addEventListener('activate', event => {
+  console.log('[ServiceWorker] Activating...');
   
   event.waitUntil(
-    (async () => {
-      const cacheNames = await caches.keys();
-      const validCaches = [CACHE_STATIC, CACHE_LESSONS, CACHE_RESOURCES, CACHE_VERSION];
-      
-      const oldCaches = cacheNames.filter(name => 
-        name.startsWith('lesona-') && !validCaches.includes(name)
-      );
-      
-      await Promise.all(
-        oldCaches.map(name => {
-          console.log('[SW] Deleting old cache:', name);
-          return caches.delete(name);
-        })
-      );
-      
-      console.log('[SW] Activation complete');
-    })()
+    caches.keys()
+      .then(cacheNames => {
+        return Promise.all(
+          cacheNames
+            .filter(cacheName => {
+              return cacheName.startsWith('sda-') && 
+                     cacheName !== CACHE_NAME &&
+                     cacheName !== RUNTIME_CACHE &&
+                     cacheName !== IMAGE_CACHE;
+            })
+            .map(cacheName => {
+              console.log('[ServiceWorker] Deleting old cache:', cacheName);
+              return caches.delete(cacheName);
+            })
+        );
+      })
+      .then(() => {
+        console.log('[ServiceWorker] Activation complete');
+        return self.clients.claim();
+      })
   );
-  
-  return self.clients.claim();
 });
 
-self.addEventListener('fetch', (event) => {
+// Fetch event - network first, fallback to cache
+self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
-  
+
+  // Skip non-GET requests
   if (request.method !== 'GET') {
     return;
   }
-  
+
+  // Skip chrome extensions and other protocols
   if (!url.protocol.startsWith('http')) {
     return;
   }
-  
-  if (url.origin === location.origin) {
-    event.respondWith(handleLocalResource(request));
+
+  // Handle different types of requests with appropriate strategies
+  if (isImageRequest(request)) {
+    event.respondWith(handleImageRequest(request));
+  } else if (isHTMLRequest(request)) {
+    event.respondWith(handleHTMLRequest(request));
   } else {
-    event.respondWith(handleExternalResource(request));
+    event.respondWith(handleRuntimeRequest(request));
   }
 });
 
-async function handleLocalResource(request) {
-  const url = request.url;
+// Strategy for images: Cache first, then network
+async function handleImageRequest(request) {
+  const cache = await caches.open(IMAGE_CACHE);
+  const cached = await cache.match(request);
   
+  if (cached) {
+    return cached;
+  }
+
   try {
-    const cached = await caches.match(request);
-    if (cached) {
-      console.log('[SW] Local cache hit:', url);
-      return cached;
-    }
-    
-    console.log('[SW] Fetching local:', url);
-    const response = await fetch(request);
+    const response = await fetchWithTimeout(request, CACHE_TIMEOUT);
     
     if (response && response.ok) {
-      const cache = await caches.open(CACHE_STATIC);
-      await cache.put(request, response.clone());
-      console.log('[SW] Local cached:', url);
+      // Clone and cache the response
+      cache.put(request, response.clone());
+      
+      // Clean up old images if cache is too large
+      trimCache(IMAGE_CACHE, MAX_IMAGE_CACHE_SIZE);
     }
     
     return response;
   } catch (error) {
-    console.error('[SW] Local resource error:', url, error);
+    console.log('[ServiceWorker] Image fetch failed:', error);
     
-    const cached = await caches.match(request);
-    if (cached) {
-      console.log('[SW] Returning stale cache:', url);
-      return cached;
-    }
-    
-    return new Response('Resource unavailable', { 
+    // Return a placeholder or cached version if available
+    const fallback = await cache.match(request);
+    return fallback || new Response('Image not available offline', {
       status: 503,
-      headers: { 'Content-Type': 'text/plain' }
+      statusText: 'Service Unavailable'
     });
   }
 }
 
-async function handleExternalResource(request) {
-  const url = request.url;
-  const isLesson = isLessonUrl(url);
-  const cacheName = isLesson ? CACHE_LESSONS : CACHE_RESOURCES;
-  
+// Strategy for HTML: Network first, fallback to cache
+async function handleHTMLRequest(request) {
   try {
-    const cached = await caches.match(request, { ignoreSearch: false });
-    
-    if (cached) {
-      console.log('[SW] External cache hit:', url);
-      
-      if (self.navigator.onLine) {
-        updateCacheInBackground(request, cacheName);
-      }
-      
-      return cached;
-    }
-    
-    console.log('[SW] Fetching external:', url);
-    
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
-    
-    const response = await fetch(request, {
-      signal: controller.signal,
-      mode: 'cors',
-      credentials: 'omit',
-      cache: 'no-store'
-    });
-    
-    clearTimeout(timeoutId);
+    const response = await fetchWithTimeout(request, CACHE_TIMEOUT);
     
     if (response && response.ok) {
-      const cache = await caches.open(cacheName);
-      
-      const responseToCache = response.clone();
-      
-      await cache.put(request, responseToCache);
-      console.log('[SW] External resource cached:', url);
-      
-      notifyClients({ action: 'cached', url: url });
-      
-      return response;
+      const cache = await caches.open(RUNTIME_CACHE);
+      cache.put(request, response.clone());
     }
     
     return response;
-    
   } catch (error) {
-    console.error('[SW] External fetch error:', url, error.name);
+    console.log('[ServiceWorker] HTML fetch failed, using cache');
     
-    const cached = await caches.match(request, { ignoreSearch: false });
+    const cached = await caches.match(request);
     if (cached) {
-      console.log('[SW] Returning cached after error:', url);
       return cached;
     }
     
-    if (isLesson) {
-      return createOfflineErrorPage(url);
-    }
-    
-    return new Response('Resource unavailable offline', {
+    // Return offline page if available
+    const offlinePage = await caches.match('/offline.html');
+    return offlinePage || new Response('Offline', {
       status: 503,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+      statusText: 'Service Unavailable'
     });
   }
 }
 
-async function updateCacheInBackground(request, cacheName) {
+// Strategy for runtime requests: Network first, fallback to cache
+async function handleRuntimeRequest(request) {
+  const cache = await caches.open(RUNTIME_CACHE);
+  
   try {
-    const response = await fetch(request, {
-      cache: 'reload',
-      mode: 'cors',
-      credentials: 'omit'
-    });
+    const response = await fetchWithTimeout(request, CACHE_TIMEOUT);
     
     if (response && response.ok) {
-      const cache = await caches.open(cacheName);
-      await cache.put(request, response);
-      console.log('[SW] Background update complete:', request.url);
+      cache.put(request, response.clone());
+      trimCache(RUNTIME_CACHE, MAX_RUNTIME_CACHE_SIZE);
     }
+    
+    return response;
   } catch (error) {
-    console.log('[SW] Background update failed:', request.url);
-  }
-}
-
-function notifyClients(message) {
-  self.clients.matchAll({ type: 'window', includeUncontrolled: true })
-    .then(clients => {
-      clients.forEach(client => {
-        client.postMessage(message);
+    console.log('[ServiceWorker] Runtime fetch failed, using cache');
+    
+    const cached = await cache.match(request);
+    if (cached) {
+      return cached;
+    }
+    
+    // If it's a navigation request, return offline page
+    if (request.mode === 'navigate') {
+      const offlinePage = await caches.match('/offline.html');
+      return offlinePage || new Response('Offline', {
+        status: 503,
+        statusText: 'Service Unavailable'
       });
-    });
-}
-
-function isLessonUrl(url) {
-  return url.includes('sabbath-school.adventech.io') ||
-         url.includes('AndilanaSudLesona.github.io') ||
-         url.includes('SDA/Zatovo');
-}
-
-function createOfflineErrorPage(url) {
-  const html = `
-    <!DOCTYPE html>
-    <html lang="mg">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Tsy misy connexion</title>
-      <style>
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        body {
-          font-family: 'Lora', -apple-system, BlinkMacSystemFont, sans-serif;
-          background: #000;
-          color: #fff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 100vh;
-          padding: 24px;
-          text-align: center;
-        }
-        .container {
-          max-width: 400px;
-        }
-        .icon {
-          font-size: 64px;
-          margin-bottom: 24px;
-        }
-        h1 {
-          font-size: 24px;
-          margin-bottom: 16px;
-          font-weight: 600;
-        }
-        p {
-          opacity: 0.8;
-          line-height: 1.6;
-          margin-bottom: 32px;
-          font-size: 15px;
-        }
-        button {
-          padding: 14px 32px;
-          background: #4CAF50;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 16px;
-          cursor: pointer;
-          font-family: inherit;
-        }
-        button:active {
-          transform: scale(0.95);
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="icon">📡</div>
-        <h1>Tsy misy connexion</h1>
-        <p>Ity lesona ity tsy mbola voatahiry ho offline. Mila connexion internet ianao mba haka azy amin'ny voalohany.</p>
-        <button onclick="window.history.back()">← Hiverina</button>
-      </div>
-    </body>
-    </html>
-  `;
-  
-  return new Response(html, {
-    status: 503,
-    headers: { 
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'no-store, no-cache, must-revalidate'
     }
-  });
+    
+    return new Response('Not available offline', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
+  }
 }
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.action === 'skipWaiting') {
-    console.log('[SW] skipWaiting requested');
+// Helper: Fetch with timeout
+function fetchWithTimeout(request, timeout) {
+  return Promise.race([
+    fetch(request),
+    new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Network timeout')), timeout)
+    )
+  ]);
+}
+
+// Helper: Check if request is for an image
+function isImageRequest(request) {
+  const url = new URL(request.url);
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.ico'];
+  
+  return imageExtensions.some(ext => url.pathname.toLowerCase().endsWith(ext)) ||
+         request.destination === 'image';
+}
+
+// Helper: Check if request is for HTML
+function isHTMLRequest(request) {
+  const url = new URL(request.url);
+  return request.destination === 'document' || 
+         url.pathname.endsWith('.html') ||
+         (url.pathname.endsWith('/') && request.mode === 'navigate');
+}
+
+// Helper: Trim cache to max size
+async function trimCache(cacheName, maxItems) {
+  const cache = await caches.open(cacheName);
+  const keys = await cache.keys();
+  
+  if (keys.length > maxItems) {
+    const toDelete = keys.slice(0, keys.length - maxItems);
+    await Promise.all(toDelete.map(key => cache.delete(key)));
+    console.log(`[ServiceWorker] Trimmed ${cacheName}: deleted ${toDelete.length} items`);
+  }
+}
+
+// Message handler for cache management
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
   
-  if (event.data && event.data.action === 'clearCache') {
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
     event.waitUntil(
-      caches.keys().then(names => {
+      caches.keys().then(cacheNames => {
         return Promise.all(
-          names.filter(name => name.startsWith('lesona-'))
-               .map(name => {
-                 console.log('[SW] Clearing cache:', name);
-                 return caches.delete(name);
-               })
+          cacheNames.map(cacheName => caches.delete(cacheName))
         );
       }).then(() => {
-        console.log('[SW] All caches cleared');
-        notifyClients({ action: 'cacheCleared' });
+        console.log('[ServiceWorker] All caches cleared');
+        return self.clients.matchAll();
+      }).then(clients => {
+        clients.forEach(client => {
+          client.postMessage({ type: 'CACHE_CLEARED' });
+        });
       })
     );
   }
+});
+
+// Background sync for offline actions (if supported)
+self.addEventListener('sync', event => {
+  console.log('[ServiceWorker] Background sync:', event.tag);
   
-  if (event.data && event.data.action === 'getCacheStatus') {
-    event.waitUntil(
-      (async () => {
-        const cache = await caches.open(CACHE_LESSONS);
-        const keys = await cache.keys();
-        const urls = keys.map(req => req.url);
-        
-        event.source.postMessage({
-          action: 'cacheStatus',
-          cachedUrls: urls
-        });
-      })()
-    );
+  if (event.tag === 'sync-data') {
+    event.waitUntil(syncData());
   }
 });
 
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'update-cache') {
-    event.waitUntil(updateAllCaches());
-  }
-});
-
-async function updateAllCaches() {
-  console.log('[SW] Background sync: updating caches...');
-  
-  try {
-    const lessonsCache = await caches.open(CACHE_LESSONS);
-    const requests = await lessonsCache.keys();
-    
-    for (const request of requests) {
-      try {
-        const response = await fetch(request, { cache: 'reload' });
-        if (response && response.ok) {
-          await lessonsCache.put(request, response);
-          console.log('[SW] Updated:', request.url);
-        }
-      } catch (error) {
-        console.log('[SW] Failed to update:', request.url);
-      }
-    }
-    
-    console.log('[SW] Cache update complete');
-  } catch (error) {
-    console.error('[SW] Cache update error:', error);
-  }
+async function syncData() {
+  console.log('[ServiceWorker] Syncing data...');
+  // Add your sync logic here
+  return Promise.resolve();
 }
 
-console.log('[SW] Service Worker loaded - Version', CACHE_VERSION); 
+console.log('[ServiceWorker] Loaded successfully');
