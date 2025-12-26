@@ -1,33 +1,157 @@
 {
-  "name": "Lesona SDA - Offline Ready",
-  "short_name": "Lesona SDA",
-  "description": "Lesona Sabata ho an'ny SDA - Afaka mampiasa offline",
+  "name": "SDA Lesona - Seventh-day Adventist Lessons",
+  "short_name": "SDA Lesona",
+  "description": "Application pour apprendre les leçons de l'École du Sabbat de manière interactive et hors ligne",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
   "orientation": "portrait-primary",
+  "theme_color": "#2196F3",
+  "background_color": "#FFFFFF",
+  "lang": "fr-MG",
+  "dir": "ltr",
+  "categories": ["education", "lifestyle", "books"],
+  
   "icons": [
     {
-      "src": "/images/icon-192.png",
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/images/icon-512.png",
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": [
-    "education",
-    "lifestyle"
+  
+  "shortcuts": [
+    {
+      "name": "Leçon du jour",
+      "short_name": "Aujourd'hui",
+      "description": "Ouvrir la leçon du jour",
+      "url": "/?shortcut=today",
+      "icons": [
+        {
+          "src": "/icons/shortcut-today.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Toutes les leçons",
+      "short_name": "Leçons",
+      "description": "Voir toutes les leçons disponibles",
+      "url": "/?shortcut=lessons",
+      "icons": [
+        {
+          "src": "/icons/shortcut-lessons.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
   ],
-  "lang": "mg",
-  "dir": "ltr",
+  
+  "screenshots": [
+    {
+      "src": "/screenshots/screenshot-1.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Page d'accueil avec liste des leçons"
+    },
+    {
+      "src": "/screenshots/screenshot-2.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Vue de lecture d'une leçon"
+    },
+    {
+      "src": "/screenshots/screenshot-wide-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Page d'accueil sur tablette"
+    }
+  ],
+  
+  "related_applications": [],
   "prefer_related_applications": false,
-  "scope": "/",
-  "screenshots": []
+  
+  "serviceworker": {
+    "src": "/service-worker.js",
+    "scope": "/",
+    "update_via_cache": "none"
+  },
+  
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  
+  "protocol_handlers": [],
+  
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  
+  "file_handlers": []
 }
