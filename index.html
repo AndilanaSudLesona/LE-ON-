@@ -40,82 +40,9 @@
             flex-direction: column;
         }
 
-        .offline-banner {
-            background: linear-gradient(135deg, #1E3A1E, #2E5A2E);
-            padding: 12px 16px;
-            text-align: center;
-            display: none;
-            border-bottom: 2px solid #4CAF50;
-        }
-
-        .offline-banner.show {
-            display: block;
-        }
-
-        .offline-banner.online {
-            background: linear-gradient(135deg, #1A237E, #283593);
-            border-bottom-color: #2196F3;
-        }
-
-        .offline-banner p {
-            font-size: 14px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
         .content {
             flex: 1;
             padding: 32px 16px 32px;
-        }
-
-        .info-card {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 24px;
-            border: 1px solid #333;
-        }
-
-        .info-card h2 {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: #4CAF50;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-card p {
-            font-size: 14px;
-            line-height: 1.6;
-            opacity: 0.85;
-        }
-
-        .cache-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid #333;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #4CAF50;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.6;
-            margin-top: 4px;
         }
 
         .lessons-list {
@@ -181,37 +108,15 @@
             border-radius: 12px;
             font-size: 11px;
             font-weight: 600;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 4px;
-        }
-
-        .status-badge.cached {
             background: #4CAF50;
             color: white;
         }
 
-        .status-badge.not-cached {
-            background: #666;
-            color: white;
-        }
-
-        .status-badge.downloading {
-            background: #FF9800;
-            color: white;
-        }
-
-        .status-badge .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: currentColor;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .status-badge.show {
+            display: flex;
         }
 
         #iframe-container {
@@ -235,14 +140,14 @@
             border: none;
         }
 
-        .first-launch {
+        .loading-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #000;
+            background: rgba(0, 0, 0, 0.95);
             z-index: 10000;
             flex-direction: column;
             align-items: center;
@@ -251,48 +156,32 @@
             text-align: center;
         }
 
-        .first-launch.active {
+        .loading-overlay.active {
             display: flex;
         }
 
-        .first-launch h1 {
-            font-size: 28px;
+        .loading-overlay h2 {
+            font-size: 24px;
             margin-bottom: 16px;
-            font-weight: 700;
         }
 
-        .first-launch p {
+        .loading-overlay p {
             opacity: 0.7;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             line-height: 1.6;
-            max-width: 400px;
         }
 
-        .progress-container {
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 16px;
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #333;
+            border-top-color: #4CAF50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #333;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            margin-top: 12px;
-            font-size: 14px;
-            opacity: 0.6;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 375px) {
@@ -418,38 +307,14 @@
     </style>
 </head>
 <body>
-    <div class="first-launch" id="firstLaunch">
-        <h1>📚 Lesona SDA</h1>
-        <p>Manomana ny lesona rehetra ho anao mba hampiasana offline...<br><br>Mila internet fotsiny amin'ity fotoana ity!</p>
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="progress-text" id="progressText">Manomboka...</div>
-        </div>
+    <div class="loading-overlay" id="loadingOverlay">
+        <h2>📚 Manomana...</h2>
+        <p id="loadingText">Manokatra ny lesona...</p>
+        <div class="spinner"></div>
     </div>
 
     <div class="app-container" id="menu">
-        <div class="offline-banner" id="offlineBanner">
-            <p><span id="connectionIcon">📡</span> <span id="connectionText">Offline - Mampiasa cache</span></p>
-        </div>
-
         <div class="content">
-            <div class="info-card" id="infoCard">
-                <h2>💡 Toro-hevitra</h2>
-                <p id="infoText">Tsidiho daholo ny lesona 1 hatramin'ny 3 mba hahatonga anao tsy hampiasa internet intsony amin'ny manaraka. Rehefa vita izany dia afaka mamaky tsy misy internet ianao!</p>
-                <div class="cache-stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="cachedCount">0</div>
-                        <div class="stat-label">Lesona en cache</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="totalCount">3</div>
-                        <div class="stat-label">Total lesona</div>
-                    </div>
-                </div>
-            </div>
-
             <div class="lessons-list">
                 <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="lesson-card" data-lesson="lehibe">
                     <img src="images/lehibe.png" alt="LEHIBE" class="lesson-image">
@@ -459,7 +324,7 @@
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <div class="status-badge not-cached">⏳ Tsy mbola cache</div>
+                    <div class="status-badge">✓ Offline</div>
                 </a>
 
                 <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="lesson-card" data-lesson="tanora">
@@ -470,7 +335,7 @@
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <div class="status-badge not-cached">⏳ Tsy mbola cache</div>
+                    <div class="status-badge">✓ Offline</div>
                 </a>
 
                 <a href="https://AndilanaSudLesona.github.io/SDA/Zatovo/" class="lesson-card" data-lesson="zatovo">
@@ -481,7 +346,7 @@
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <div class="status-badge not-cached">⏳ Tsy mbola cache</div>
+                    <div class="status-badge">✓ Offline</div>
                 </a>
             </div>
         </div>
@@ -507,146 +372,42 @@
     </div>
 
     <script>
-        const firstLaunch = document.getElementById('firstLaunch');
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
         const cards = document.querySelectorAll('.lesson-card');
-        const offlineBanner = document.getElementById('offlineBanner');
-        const connectionIcon = document.getElementById('connectionIcon');
-        const connectionText = document.getElementById('connectionText');
-        const infoText = document.getElementById('infoText');
-        const infoCard = document.getElementById('infoCard');
-        const cachedCount = document.getElementById('cachedCount');
-        const totalCount = document.getElementById('totalCount');
         
         let swRegistration = null;
-        let isFirstLaunch = !localStorage.getItem('hasLaunched');
-
-        totalCount.textContent = cards.length;
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', async () => {
                 try {
                     swRegistration = await navigator.serviceWorker.register('/service-worker.js');
-                    console.log('✓ Service Worker registered');
+                    console.log('✓ Service Worker enregistré');
 
-                    if (isFirstLaunch) {
-                        await performFirstLaunch();
-                    } else {
-                        await checkCachedLessons();
-                        updateConnectionStatus();
-                        checkForUpdates();
-                    }
+                    updateBadges();
+                    checkForUpdates();
+
+                    navigator.serviceWorker.addEventListener('message', (event) => {
+                        if (event.data && event.data.action === 'cached') {
+                            updateBadges();
+                        }
+                    });
 
                 } catch (error) {
-                    console.error('✗ Service Worker registration failed:', error);
-                    await checkCachedLessons();
+                    console.error('✗ Erreur Service Worker:', error);
                 }
             });
         }
 
-        async function performFirstLaunch() {
-            firstLaunch.classList.add('active');
-            
-            const lessonUrls = Array.from(cards).map(card => card.getAttribute('href'));
-            const totalSteps = lessonUrls.length;
-            let completed = 0;
-
-            progressText.textContent = 'Mamaky ny lesona...';
-
-            for (let i = 0; i < lessonUrls.length; i++) {
-                const url = lessonUrls[i];
-                const lessonName = cards[i].dataset.lesson.toUpperCase();
+        function updateBadges() {
+            cards.forEach(card => {
+                const lessonKey = 'lesson_visited_' + card.dataset.lesson;
+                const badge = card.querySelector('.status-badge');
                 
-                progressText.textContent = `Mamaky ${lessonName}... (${i + 1}/${totalSteps})`;
-                
-                const badge = cards[i].querySelector('.status-badge');
-                badge.className = 'status-badge downloading';
-                badge.innerHTML = '<span class="dot"></span><span>Cache...</span>';
-                
-                try {
-                    const response = await fetch(url, { 
-                        mode: 'no-cors',
-                        cache: 'reload'
-                    });
-                    
-                    completed++;
-                    const progress = (completed / totalSteps) * 100;
-                    progressFill.style.width = progress + '%';
-                    
-                    badge.className = 'status-badge cached';
-                    badge.innerHTML = '✓ Cached';
-                    
-                    await new Promise(resolve => setTimeout(resolve, 800));
-                } catch (error) {
-                    console.error('Failed to cache:', url, error);
-                    badge.className = 'status-badge not-cached';
-                    badge.innerHTML = '✗ Echec';
+                if (localStorage.getItem(lessonKey)) {
+                    badge.classList.add('show');
                 }
-            }
-
-            progressText.textContent = '✓ Vita! Vonona hampiasa offline izao';
-            progressFill.style.width = '100%';
-            
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            localStorage.setItem('hasLaunched', 'true');
-            firstLaunch.classList.remove('active');
-            
-            await checkCachedLessons();
-            updateConnectionStatus();
-        }
-
-        async function checkCachedLessons() {
-            if (!('caches' in window)) return;
-
-            try {
-                const cache = await caches.open('lesona-lessons-v2');
-                let cachedLessonsCount = 0;
-                
-                for (const card of cards) {
-                    const url = card.getAttribute('href');
-                    const badge = card.querySelector('.status-badge');
-                    const cachedResponse = await cache.match(url);
-                    
-                    if (cachedResponse) {
-                        badge.className = 'status-badge cached';
-                        badge.innerHTML = '✓ Offline';
-                        cachedLessonsCount++;
-                    } else {
-                        badge.className = 'status-badge not-cached';
-                        badge.innerHTML = '⏳ Tsy mbola cache';
-                    }
-                }
-                
-                cachedCount.textContent = cachedLessonsCount;
-                
-                if (cachedLessonsCount === cards.length) {
-                    infoCard.style.background = 'linear-gradient(135deg, #1E3A1E, #2E5A2E)';
-                    infoCard.style.borderColor = '#4CAF50';
-                    infoText.innerHTML = '✅ Soa ihany! Vita ny lesona rehetra. <strong>Tsy mila internet intsony ianao!</strong> Afaka mamaky offline tanteraka izao.';
-                } else {
-                    const remaining = cards.length - cachedLessonsCount;
-                    infoText.innerHTML = `Tsidiho ny lesona rehetra (${cachedLessonsCount}/${cards.length} vita). Mbola mila mijery ${remaining} lesona hafa mba ho offline tanteraka.`;
-                }
-            } catch (error) {
-                console.error('Error checking cache:', error);
-            }
-        }
-
-        function updateConnectionStatus() {
-            const isOnline = navigator.onLine;
-            
-            if (isOnline) {
-                offlineBanner.classList.add('show', 'online');
-                connectionIcon.textContent = '✅';
-                connectionText.textContent = 'Misy connexion - Mahazo vaovao';
-            } else {
-                offlineBanner.classList.add('show');
-                offlineBanner.classList.remove('online');
-                connectionIcon.textContent = '📡';
-                connectionText.textContent = 'Offline - Mampiasa cache';
-            }
+            });
         }
 
         function checkForUpdates() {
@@ -687,7 +448,7 @@
             deferredPrompt = e;
             
             setTimeout(() => {
-                if (!localStorage.getItem('installDismissed') && localStorage.getItem('hasLaunched')) {
+                if (!localStorage.getItem('installDismissed')) {
                     installPrompt.classList.add('show');
                 }
             }, 5000);
@@ -715,15 +476,23 @@
             card.addEventListener('click', async function(e) {
                 e.preventDefault();
                 const url = this.getAttribute('href');
+                const lessonKey = 'lesson_visited_' + this.dataset.lesson;
+                
+                loadingOverlay.classList.add('active');
+                loadingText.textContent = 'Manokatra ny lesona...';
                 
                 iframe.src = url;
-                iframeContainer.classList.add('active');
-                menu.style.display = 'none';
-                history.pushState({page: 'lesson'}, '', '#lesson');
                 
-                setTimeout(async () => {
-                    await checkCachedLessons();
-                }, 2000);
+                localStorage.setItem(lessonKey, 'true');
+                
+                setTimeout(() => {
+                    loadingOverlay.classList.remove('active');
+                    iframeContainer.classList.add('active');
+                    menu.style.display = 'none';
+                    history.pushState({page: 'lesson'}, '', '#lesson');
+                    
+                    updateBadges();
+                }, 1500);
             });
         });
         
@@ -732,19 +501,20 @@
                 iframeContainer.classList.remove('active');
                 menu.style.display = 'block';
                 iframe.src = '';
-                checkCachedLessons();
             }
         });
 
-        window.addEventListener('online', () => {
-            console.log('✓ Online');
-            updateConnectionStatus();
-        });
-
-        window.addEventListener('offline', () => {
-            console.log('✗ Offline - using cache');
-            updateConnectionStatus();
+        window.addEventListener('beforeunload', () => {
+            if (iframe.src) {
+                const currentCard = Array.from(cards).find(card => 
+                    iframe.src.startsWith(card.getAttribute('href'))
+                );
+                if (currentCard) {
+                    const lessonKey = 'lesson_visited_' + currentCard.dataset.lesson;
+                    localStorage.setItem(lessonKey, 'true');
+                }
+            }
         });
     </script>
 </body>
-    </html> 
+</html>
