@@ -1,9 +1,9 @@
-// service-worker.js
-const CACHE_VERSION = 'lesona-v2';
-const RUNTIME_CACHE = 'lesona-runtime-v2';
-const LESSON_CACHE = 'lesona-lessons-v2';
+const CACHE_VERSION = 'lesona-v2.1';
+const CACHE_ASSETS = 'lesona-assets-v2';
+const CACHE_LESSONS = 'lesona-lessons-v2';
+const CACHE_IMAGES = 'lesona-images-v2';
 
-// Static assets - cached automatically
+// Assets statiques à mettre en cache immédiatement
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -12,214 +12,328 @@ const STATIC_ASSETS = [
   '/images/tanora.png',
   '/images/zatovo.png',
   '/images/icon-192.png',
-  '/images/icon-512.png',
-  'https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap',
-  'https://fonts.gstatic.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787weuxJBkqg.woff2'
+  '/images/icon-512.png'
 ];
 
-// Lesson URLs - pre-cache anatin'ny première visite
+// URLs des leçons à mettre en cache de manière agressive
 const LESSON_URLS = [
   'https://sabbath-school.adventech.io/resources/mg/ss/2025-04',
   'https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq',
   'https://AndilanaSudLesona.github.io/SDA/Zatovo/'
 ];
 
-// Installation - cache everything
+// Installation - Cache les assets statiques
 self.addEventListener('install', (event) => {
-  console.log('[SW] Installing Service Worker...');
+  console.log('[SW] Installation...');
+  
   event.waitUntil(
-    Promise.all([
-      // Cache static assets
-      caches.open(CACHE_VERSION).then((cache) => {
-        console.log('[SW] Caching static assets');
-        return cache.addAll(STATIC_ASSETS).catch(err => {
-          console.error('[SW] Failed to cache static assets:', err);
-        });
-      }),
-      // Pre-cache lesson pages (ny principale)
-      caches.open(LESSON_CACHE).then((cache) => {
-        console.log('[SW] Pre-caching lesson pages');
-        return Promise.all(
-          LESSON_URLS.map(url => {
-            return fetch(url, { mode: 'no-cors' })
-              .then(response => {
-                if (response.ok || response.type === 'opaque') {
-                  return cache.put(url, response);
-                }
-              })
-              .catch(err => console.log('[SW] Failed to pre-cache:', url));
-          })
-        );
-      })
-    ]).then(() => {
-      console.log('[SW] Installation complete');
-      return self.skipWaiting();
+    caches.open(CACHE_ASSETS).then((cache) => {
+      console.log('[SW] Mise en cache des assets statiques');
+      return cache.addAll(STATIC_ASSETS.map(url => new Request(url, {cache: 'reload'})));
+    }).catch((error) => {
+      console.error('[SW] Erreur lors de la mise en cache:', error);
     })
   );
+  
+  // Force l'activation immédiate
+  self.skipWaiting();
 });
 
-// Activation - clean old caches
+// Activation - Nettoie les anciens caches
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating Service Worker...');
+  console.log('[SW] Activation...');
+  
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_VERSION && 
-              cacheName !== RUNTIME_CACHE && 
-              cacheName !== LESSON_CACHE) {
-            console.log('[SW] Deleting old cache:', cacheName);
+        cacheNames
+          .filter((cacheName) => {
+            return cacheName.startsWith('lesona-') && 
+                   cacheName !== CACHE_VERSION &&
+                   cacheName !== CACHE_ASSETS &&
+                   cacheName !== CACHE_LESSONS &&
+                   cacheName !== CACHE_IMAGES;
+          })
+          .map((cacheName) => {
+            console.log('[SW] Suppression ancien cache:', cacheName);
             return caches.delete(cacheName);
-          }
-        })
+          })
       );
-    }).then(() => {
-      console.log('[SW] Activation complete');
-      return self.clients.claim();
     })
   );
+  
+  // Prend le contrôle immédiatement
+  return self.clients.claim();
 });
 
-// Fetch Strategy: Cache First, Network Fallback
+// Fetch - Stratégie cache-first avec fallback réseau
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
-
-  // Ignore non-HTTP requests
-  if (!request.url.startsWith('http')) {
+  
+  // Ignorer les requêtes non-GET
+  if (request.method !== 'GET') {
     return;
   }
-
+  
+  // Ignorer les requêtes chrome-extension et autres protocoles
+  if (!url.protocol.startsWith('http')) {
+    return;
+  }
+  
+  // Stratégie pour les leçons (cache-first, puis réseau)
+  if (isLessonUrl(url.href)) {
+    event.respondWith(handleLessonRequest(request));
+    return;
+  }
+  
+  // Stratégie pour les images (cache-first, très long cache)
+  if (isImageRequest(request)) {
+    event.respondWith(handleImageRequest(request));
+    return;
+  }
+  
+  // Stratégie pour les assets statiques (cache-first)
+  if (isStaticAsset(url.href)) {
+    event.respondWith(handleStaticAssetRequest(request));
+    return;
+  }
+  
+  // Autres requêtes - network-first avec fallback cache
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      // Raha misy cache, miverina azy AVY HATRANY
-      if (cachedResponse) {
-        console.log('[SW] Serving from cache:', url.pathname);
-        
-        // Background update (tsy miandry)
-        fetchAndCache(request).catch(() => {});
-        
-        return cachedResponse;
-      }
-
-      // Tsy misy cache - fetch sy cache
-      console.log('[SW] Fetching from network:', url.pathname);
-      return fetchAndCache(request);
-    }).catch(() => {
-      // Error handling - offline message
-      if (request.destination === 'document') {
-        return new Response(
-          createOfflineHTML(),
-          { headers: { 'Content-Type': 'text/html' } }
-        );
-      }
-    })
+    fetch(request)
+      .then((response) => {
+        if (response && response.status === 200) {
+          const responseClone = response.clone();
+          caches.open(CACHE_VERSION).then((cache) => {
+            cache.put(request, responseClone);
+          });
+        }
+        return response;
+      })
+      .catch(() => {
+        return caches.match(request);
+      })
   );
 });
 
-// Helper: Fetch and cache
-function fetchAndCache(request) {
-  return fetch(request).then((response) => {
-    // Tsy cache raha error
-    if (!response || response.status !== 200 && response.type !== 'opaque') {
-      return response;
+// Gestion des requêtes de leçons
+async function handleLessonRequest(request) {
+  try {
+    // Essayer le cache d'abord
+    const cachedResponse = await caches.match(request);
+    
+    if (cachedResponse) {
+      console.log('[SW] Leçon trouvée en cache:', request.url);
+      
+      // Mettre à jour le cache en arrière-plan si en ligne
+      if (navigator.onLine) {
+        fetchAndCache(request, CACHE_LESSONS).catch(() => {});
+      }
+      
+      return cachedResponse;
     }
-
-    // Clone response ho an'ny cache
-    const responseClone = response.clone();
-
-    // Determine cache name
-    const url = new URL(request.url);
-    const isLesson = LESSON_URLS.some(lessonUrl => request.url.startsWith(lessonUrl));
-    const cacheName = isLesson ? LESSON_CACHE : RUNTIME_CACHE;
-
-    // Cache asynchronously
-    caches.open(cacheName).then((cache) => {
-      cache.put(request, responseClone).catch(err => {
-        console.error('[SW] Failed to cache:', err);
-      });
+    
+    // Sinon, essayer le réseau
+    console.log('[SW] Téléchargement leçon:', request.url);
+    const networkResponse = await fetch(request, {
+      mode: 'no-cors',
+      cache: 'no-cache'
     });
-
-    return response;
-  });
-}
-
-// Create offline HTML page
-function createOfflineHTML() {
-  return `
-    <!DOCTYPE html>
-    <html lang="mg">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Offline</title>
-      <style>
-        body {
-          font-family: system-ui, -apple-system, sans-serif;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 100vh;
-          margin: 0;
-          background: #000;
-          color: #fff;
-          padding: 20px;
-          text-align: center;
-        }
-        .container {
-          max-width: 400px;
-        }
-        h1 {
-          font-size: 48px;
-          margin-bottom: 16px;
-        }
-        h2 {
-          font-size: 24px;
-          margin-bottom: 16px;
-          font-weight: 600;
-        }
-        p {
-          opacity: 0.7;
-          line-height: 1.6;
-          margin-bottom: 24px;
-        }
-        button {
-          padding: 12px 32px;
-          background: #fff;
-          color: #000;
-          border: none;
-          border-radius: 8px;
-          font-size: 16px;
-          font-weight: 600;
-          cursor: pointer;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <h1>📱</h1>
-        <h2>Tsy misy connexion</h2>
-        <p>Tsy mbola nisy cache io pejy io. Mila connexion internet voalohany mba hamaky azy.</p>
-        <button onclick="location.reload()">Hamerina</button>
-      </div>
-    </body>
-    </html>
-  `;
-}
-
-// Message handling ho an'ny manual updates
-self.addEventListener('message', (event) => {
-  if (event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
-  
-  if (event.data.action === 'clearCache') {
-    event.waitUntil(
-      caches.keys().then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => caches.delete(cacheName))
-        );
-      })
+    
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = await caches.open(CACHE_LESSONS);
+      cache.put(request, networkResponse.clone());
+      console.log('[SW] Leçon mise en cache:', request.url);
+    }
+    
+    return networkResponse;
+    
+  } catch (error) {
+    console.error('[SW] Erreur requête leçon:', error);
+    
+    // Essayer de retourner n'importe quelle version en cache
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    
+    // Retourner une page d'erreur simple
+    return new Response(
+      `<!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pas de connexion</title>
+        <style>
+          body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+          }
+          .container {
+            max-width: 400px;
+          }
+          h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+          }
+          p {
+            opacity: 0.7;
+            line-height: 1.6;
+          }
+          button {
+            margin-top: 24px;
+            padding: 12px 24px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>📡</h1>
+          <h2>Pas de connexion</h2>
+          <p>Cette leçon n'est pas encore disponible hors ligne. Connectez-vous à internet pour la charger une première fois.</p>
+          <button onclick="window.history.back()">← Retour</button>
+        </div>
+      </body>
+      </html>`,
+      {
+        headers: { 'Content-Type': 'text/html' },
+        status: 503
+      }
     );
   }
+}
+
+// Gestion des requêtes d'images
+async function handleImageRequest(request) {
+  const cachedResponse = await caches.match(request);
+  
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+  
+  try {
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = await caches.open(CACHE_IMAGES);
+      cache.put(request, networkResponse.clone());
+    }
+    
+    return networkResponse;
+  } catch (error) {
+    // Retourner un placeholder SVG si l'image n'est pas disponible
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+      <rect width="200" height="200" fill="#1a1a1a"/>
+      <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#666" font-size="16">Image non disponible</text>
+    </svg>`;
+    
+    return new Response(svg, {
+      headers: { 'Content-Type': 'image/svg+xml' }
+    });
+  }
+}
+
+// Gestion des assets statiques
+async function handleStaticAssetRequest(request) {
+  const cachedResponse = await caches.match(request);
+  
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+  
+  try {
+    return await fetchAndCache(request, CACHE_ASSETS);
+  } catch (error) {
+    return cachedResponse || new Response('Asset not found', { status: 404 });
+  }
+}
+
+// Fonction utilitaire pour fetch et cache
+async function fetchAndCache(request, cacheName) {
+  const response = await fetch(request);
+  
+  if (response && response.status === 200) {
+    const cache = await caches.open(cacheName);
+    cache.put(request, response.clone());
+  }
+  
+  return response;
+}
+
+// Vérifier si c'est une URL de leçon
+function isLessonUrl(url) {
+  return LESSON_URLS.some(lessonUrl => url.startsWith(lessonUrl)) ||
+         url.includes('sabbath-school.adventech.io') ||
+         url.includes('AndilanaSudLesona.github.io');
+}
+
+// Vérifier si c'est une requête d'image
+function isImageRequest(request) {
+  const url = new URL(request.url);
+  return /\.(jpg|jpeg|png|gif|webp|svg|ico)$/i.test(url.pathname) ||
+         request.destination === 'image';
+}
+
+// Vérifier si c'est un asset statique
+function isStaticAsset(url) {
+  return STATIC_ASSETS.some(asset => url.endsWith(asset));
+}
+
+// Message handler pour skipWaiting
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.action === 'skipWaiting') {
+    console.log('[SW] skipWaiting demandé');
+    self.skipWaiting();
+  }
 });
+
+// Background sync pour mettre à jour les leçons
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'update-lessons') {
+    event.waitUntil(updateLessonsCache());
+  }
+});
+
+async function updateLessonsCache() {
+  console.log('[SW] Mise à jour des leçons en arrière-plan...');
+  
+  try {
+    const cache = await caches.open(CACHE_LESSONS);
+    
+    await Promise.all(
+      LESSON_URLS.map(async (url) => {
+        try {
+          const response = await fetch(url, { cache: 'reload' });
+          if (response && response.status === 200) {
+            await cache.put(url, response);
+            console.log('[SW] Leçon mise à jour:', url);
+          }
+        } catch (error) {
+          console.error('[SW] Erreur mise à jour:', url, error);
+        }
+      })
+    );
+    
+    console.log('[SW] Mise à jour terminée');
+  } catch (error) {
+    console.error('[SW] Erreur mise à jour cache:', error);
+  }
+}
+
+console.log('[SW] Service Worker chargé'); 
