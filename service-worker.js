@@ -1,9 +1,10 @@
 // Service Worker for SDA Lesona App
-// Version 2.0 - Silent Offline Support with Aggressive Caching
+// Version 2.1 - Enhanced offline support with proper external content handling
 
-const CACHE_NAME = 'sda-lesona-v2';
-const RUNTIME_CACHE = 'sda-runtime-v2';
-const IMAGE_CACHE = 'sda-images-v2';
+const CACHE_NAME = 'sda-lesona-v2.1';
+const RUNTIME_CACHE = 'sda-runtime-v2.1';
+const IMAGE_CACHE = 'sda-images-v2.1';
+const EXTERNAL_CACHE = 'sda-external-v2.1';
 
 // Files to cache immediately on install (App Shell)
 const PRECACHE_URLS = [
@@ -11,25 +12,29 @@ const PRECACHE_URLS = [
   '/index.html',
   '/manifest.json',
   '/offline.html',
-  // Add your main CSS/JS files here if you have them
+  '/images/lehibe.png',
+  '/images/tanora.png',
+  '/images/zatovo.png'
 ];
 
 // Maximum cache sizes
-const MAX_RUNTIME_CACHE_SIZE = 100;
-const MAX_IMAGE_CACHE_SIZE = 60;
+const MAX_RUNTIME_CACHE_SIZE = 150;
+const MAX_IMAGE_CACHE_SIZE = 80;
+const MAX_EXTERNAL_CACHE_SIZE = 200;
 
-// Cache timeout for network requests (5 seconds)
-const CACHE_TIMEOUT = 5000;
+// Cache timeout for network requests (8 seconds for external content)
+const CACHE_TIMEOUT = 8000;
+const EXTERNAL_TIMEOUT = 12000;
 
 // Install event - cache app shell
 self.addEventListener('install', event => {
-  console.log('[ServiceWorker] Installing...');
+  console.log('[ServiceWorker] Installing v2.1...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('[ServiceWorker] Caching app shell');
-        return cache.addAll(PRECACHE_URLS);
+        return cache.addAll(PRECACHE_URLS.map(url => new Request(url, {cache: 'reload'})));
       })
       .then(() => {
         console.log('[ServiceWorker] Installation complete');
@@ -43,7 +48,7 @@ self.addEventListener('install', event => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', event => {
-  console.log('[ServiceWorker] Activating...');
+  console.log('[ServiceWorker] Activating v2.1...');
   
   event.waitUntil(
     caches.keys()
@@ -54,7 +59,8 @@ self.addEventListener('activate', event => {
               return cacheName.startsWith('sda-') && 
                      cacheName !== CACHE_NAME &&
                      cacheName !== RUNTIME_CACHE &&
-                     cacheName !== IMAGE_CACHE;
+                     cacheName !== IMAGE_CACHE &&
+                     cacheName !== EXTERNAL_CACHE;
             })
             .map(cacheName => {
               console.log('[ServiceWorker] Deleting old cache:', cacheName);
@@ -69,7 +75,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch event - network first, fallback to cache
+// Fetch event - intelligent caching strategy
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
@@ -84,8 +90,10 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Handle different types of requests with appropriate strategies
-  if (isImageRequest(request)) {
+  // Handle different types of requests
+  if (isExternalContent(url)) {
+    event.respondWith(handleExternalContent(request));
+  } else if (isImageRequest(request)) {
     event.respondWith(handleImageRequest(request));
   } else if (isHTMLRequest(request)) {
     event.respondWith(handleHTMLRequest(request));
@@ -93,6 +101,79 @@ self.addEventListener('fetch', event => {
     event.respondWith(handleRuntimeRequest(request));
   }
 });
+
+// Check if request is for external content (sabbath-school.adventech.io)
+function isExternalContent(url) {
+  return url.hostname === 'sabbath-school.adventech.io' ||
+         url.hostname === 'andilanasudlesona.github.io';
+}
+
+// Strategy for external content: Cache-First with network update
+async function handleExternalContent(request) {
+  const cache = await caches.open(EXTERNAL_CACHE);
+  
+  // Try cache first for offline capability
+  const cachedResponse = await cache.match(request);
+  
+  // If offline or cached, return cached version
+  if (cachedResponse) {
+    console.log('[ServiceWorker] Serving external content from cache:', request.url);
+    
+    // Update cache in background if online
+    fetchAndUpdateCache(request, cache, EXTERNAL_TIMEOUT);
+    
+    return cachedResponse;
+  }
+
+  // If not in cache, fetch from network
+  try {
+    console.log('[ServiceWorker] Fetching external content:', request.url);
+    const response = await fetchWithTimeout(request, EXTERNAL_TIMEOUT);
+    
+    if (response && response.ok) {
+      // Clone and cache the response
+      cache.put(request, response.clone());
+      
+      // Clean up old entries
+      trimCache(EXTERNAL_CACHE, MAX_EXTERNAL_CACHE_SIZE);
+      
+      // Notify clients that content was cached
+      notifyClients({ action: 'cached', url: request.url });
+    }
+    
+    return response;
+  } catch (error) {
+    console.log('[ServiceWorker] External fetch failed:', error);
+    
+    // Return offline page for navigation requests
+    if (request.mode === 'navigate') {
+      const offlinePage = await cache.match('/offline.html');
+      return offlinePage || new Response('Offline - Content not available', {
+        status: 503,
+        statusText: 'Service Unavailable',
+        headers: { 'Content-Type': 'text/html' }
+      });
+    }
+    
+    return new Response('Offline - Content not cached', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
+  }
+}
+
+// Fetch and update cache in background
+async function fetchAndUpdateCache(request, cache, timeout) {
+  try {
+    const response = await fetchWithTimeout(request, timeout);
+    if (response && response.ok) {
+      cache.put(request, response.clone());
+      console.log('[ServiceWorker] Updated cache:', request.url);
+    }
+  } catch (error) {
+    console.log('[ServiceWorker] Background update failed:', error.message);
+  }
+}
 
 // Strategy for images: Cache first, then network
 async function handleImageRequest(request) {
@@ -107,10 +188,7 @@ async function handleImageRequest(request) {
     const response = await fetchWithTimeout(request, CACHE_TIMEOUT);
     
     if (response && response.ok) {
-      // Clone and cache the response
       cache.put(request, response.clone());
-      
-      // Clean up old images if cache is too large
       trimCache(IMAGE_CACHE, MAX_IMAGE_CACHE_SIZE);
     }
     
@@ -118,22 +196,22 @@ async function handleImageRequest(request) {
   } catch (error) {
     console.log('[ServiceWorker] Image fetch failed:', error);
     
-    // Return a placeholder or cached version if available
     const fallback = await cache.match(request);
-    return fallback || new Response('Image not available offline', {
+    return fallback || new Response('', {
       status: 503,
-      statusText: 'Service Unavailable'
+      statusText: 'Image not available offline'
     });
   }
 }
 
 // Strategy for HTML: Network first, fallback to cache
 async function handleHTMLRequest(request) {
+  const cache = await caches.open(RUNTIME_CACHE);
+  
   try {
     const response = await fetchWithTimeout(request, CACHE_TIMEOUT);
     
     if (response && response.ok) {
-      const cache = await caches.open(RUNTIME_CACHE);
       cache.put(request, response.clone());
     }
     
@@ -141,16 +219,17 @@ async function handleHTMLRequest(request) {
   } catch (error) {
     console.log('[ServiceWorker] HTML fetch failed, using cache');
     
-    const cached = await caches.match(request);
+    const cached = await cache.match(request);
     if (cached) {
       return cached;
     }
     
-    // Return offline page if available
+    // Return offline page
     const offlinePage = await caches.match('/offline.html');
     return offlinePage || new Response('Offline', {
       status: 503,
-      statusText: 'Service Unavailable'
+      statusText: 'Service Unavailable',
+      headers: { 'Content-Type': 'text/html' }
     });
   }
 }
@@ -174,15 +253,6 @@ async function handleRuntimeRequest(request) {
     const cached = await cache.match(request);
     if (cached) {
       return cached;
-    }
-    
-    // If it's a navigation request, return offline page
-    if (request.mode === 'navigate') {
-      const offlinePage = await caches.match('/offline.html');
-      return offlinePage || new Response('Offline', {
-        status: 503,
-        statusText: 'Service Unavailable'
-      });
     }
     
     return new Response('Not available offline', {
@@ -231,7 +301,16 @@ async function trimCache(cacheName, maxItems) {
   }
 }
 
-// Message handler for cache management
+// Helper: Notify clients
+function notifyClients(message) {
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+      client.postMessage(message);
+    });
+  });
+}
+
+// Message handler
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
@@ -245,17 +324,17 @@ self.addEventListener('message', event => {
         );
       }).then(() => {
         console.log('[ServiceWorker] All caches cleared');
-        return self.clients.matchAll();
-      }).then(clients => {
-        clients.forEach(client => {
-          client.postMessage({ type: 'CACHE_CLEARED' });
-        });
+        notifyClients({ type: 'CACHE_CLEARED' });
       })
     );
   }
+  
+  if (event.data && event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });
 
-// Background sync for offline actions (if supported)
+// Background sync
 self.addEventListener('sync', event => {
   console.log('[ServiceWorker] Background sync:', event.tag);
   
@@ -266,8 +345,8 @@ self.addEventListener('sync', event => {
 
 async function syncData() {
   console.log('[ServiceWorker] Syncing data...');
-  // Add your sync logic here
   return Promise.resolve();
 }
 
-console.log('[ServiceWorker] Loaded successfully');
+console.log('[ServiceWorker] v2.1 loaded successfully');
+ 
