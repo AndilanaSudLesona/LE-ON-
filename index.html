@@ -102,23 +102,41 @@
             opacity: 0.4;
         }
 
-        /* Offline indicator */
-        .offline-badge {
+        /* Status badge */
+        .status-badge {
             position: absolute;
             top: 8px;
             right: 8px;
-            background: #4CAF50;
-            color: white;
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 12px;
             font-size: 11px;
             font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .lesson-card.cached .offline-badge {
-            opacity: 1;
+        .status-badge.cached {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-badge.downloading {
+            background: #FF9800;
+            color: white;
+        }
+
+        .status-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         /* Iframe Container */
@@ -143,32 +161,64 @@
             border: none;
         }
 
-        /* Loading indicator */
-        .loading {
+        /* First launch screen */
+        .first-launch {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
             z-index: 10000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            text-align: center;
         }
 
-        .loading.active {
-            display: block;
+        .first-launch.active {
+            display: flex;
         }
 
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s linear infinite;
+        .first-launch h1 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            font-weight: 700;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .first-launch p {
+            opacity: 0.7;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 16px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            margin-top: 12px;
+            font-size: 14px;
+            opacity: 0.6;
         }
 
         /* Responsive */
@@ -252,51 +302,108 @@
             background: #333;
             color: white;
         }
+
+        /* Update notification */
+        .update-notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .update-notification.show {
+            display: block;
+        }
+
+        .update-notification h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .update-notification p {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .update-notification button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #2196F3;
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <!-- First Launch Screen -->
+    <div class="first-launch" id="firstLaunch">
+        <h1>📚 Lesona SDA</h1>
+        <p>Manomana ny lesona ho anao...<br>Vonona hampiasa offline aorian'izay!</p>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Manomboka...</div>
+        </div>
+    </div>
+
+    <!-- Main App -->
     <div class="app-container" id="menu">
         <div class="content">
             <div class="lessons-list">
                 <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="lesson-card" data-lesson="lehibe">
-                    <img src="images/lehibe.png" alt="" class="lesson-image">
+                    <img src="images/lehibe.png" alt="LEHIBE" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">LEHIBE</div>
                     </div>
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <div class="offline-badge">✓ Offline</div>
+                    <div class="status-badge downloading">
+                        <span class="dot"></span>
+                        <span>Téléchargement...</span>
+                    </div>
                 </a>
 
                 <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="lesson-card" data-lesson="tanora">
-                    <img src="images/tanora.png" alt="" class="lesson-image">
+                    <img src="images/tanora.png" alt="TANORA ZOKINY" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">TANORA ZOKINY</div>
                     </div>
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <div class="offline-badge">✓ Offline</div>
+                    <div class="status-badge downloading">
+                        <span class="dot"></span>
+                        <span>Téléchargement...</span>
+                    </div>
                 </a>
 
                 <a href="https://AndilanaSudLesona.github.io/SDA/Zatovo/" class="lesson-card" data-lesson="zatovo">
-                    <img src="images/zatovo.png" alt="" class="lesson-image">
+                    <img src="images/zatovo.png" alt="ZATOVO" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">ZATOVO</div>
                     </div>
                     <svg class="lesson-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <div class="offline-badge">✓ Offline</div>
+                    <div class="status-badge downloading">
+                        <span class="dot"></span>
+                        <span>Téléchargement...</span>
+                    </div>
                 </a>
             </div>
         </div>
-    </div>
-
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p style="margin-top: 16px; color: #fff;">Mamorona cache...</p>
     </div>
 
     <div id="iframe-container">
@@ -313,22 +420,139 @@
         </div>
     </div>
 
+    <!-- Update Notification -->
+    <div class="update-notification" id="updateNotification">
+        <h3>🔄 Mise à jour disponible</h3>
+        <p>Misy version vaovao. Click mba hanovana.</p>
+        <button id="btnUpdate">Mettre à jour</button>
+    </div>
+
     <script>
+        const firstLaunch = document.getElementById('firstLaunch');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const cards = document.querySelectorAll('.lesson-card');
+        
+        let swRegistration = null;
+        let isFirstLaunch = !localStorage.getItem('hasLaunched');
+
         // Service Worker registration
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(registration => {
-                        console.log('✓ Service Worker registered:', registration.scope);
-                        
-                        // Check for updates
-                        registration.addEventListener('updatefound', () => {
-                            console.log('Service Worker update found!');
-                        });
-                    })
-                    .catch(error => {
-                        console.log('✗ Service Worker registration failed:', error);
-                    });
+            window.addEventListener('load', async () => {
+                try {
+                    swRegistration = await navigator.serviceWorker.register('/service-worker.js');
+                    console.log('✓ Service Worker registered');
+
+                    // Raha première fois
+                    if (isFirstLaunch) {
+                        await performFirstLaunch();
+                    } else {
+                        await checkCachedLessons();
+                        checkForUpdates();
+                    }
+
+                } catch (error) {
+                    console.error('✗ Service Worker registration failed:', error);
+                }
+            });
+        }
+
+        // First launch - pre-cache everything
+        async function performFirstLaunch() {
+            firstLaunch.classList.add('active');
+            
+            const lessonUrls = Array.from(cards).map(card => card.getAttribute('href'));
+            const totalSteps = lessonUrls.length;
+            let completed = 0;
+
+            progressText.textContent = 'Mamaky ny lesona...';
+
+            for (let i = 0; i < lessonUrls.length; i++) {
+                const url = lessonUrls[i];
+                const lessonName = cards[i].dataset.lesson.toUpperCase();
+                
+                progressText.textContent = `Mamaky ${lessonName}... (${i + 1}/${totalSteps})`;
+                
+                try {
+                    // Force fetch mba hi-cache
+                    await fetch(url, { mode: 'no-cors' });
+                    completed++;
+                    
+                    const progress = (completed / totalSteps) * 100;
+                    progressFill.style.width = progress + '%';
+                    
+                    // Attendre 500ms eo anelanelan'ny request mba tsy overload
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                } catch (error) {
+                    console.error('Failed to cache:', url, error);
+                }
+            }
+
+            progressText.textContent = '✓ Vita! Vonona hampiasa offline';
+            progressFill.style.width = '100%';
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Mark as launched
+            localStorage.setItem('hasLaunched', 'true');
+            firstLaunch.classList.remove('active');
+            
+            // Update badges
+            await checkCachedLessons();
+        }
+
+        // Check cached lessons
+        async function checkCachedLessons() {
+            if (!('caches' in window)) return;
+
+            try {
+                const cache = await caches.open('lesona-lessons-v2');
+                
+                for (const card of cards) {
+                    const url = card.getAttribute('href');
+                    const badge = card.querySelector('.status-badge');
+                    const cachedResponse = await cache.match(url);
+                    
+                    if (cachedResponse) {
+                        badge.className = 'status-badge cached';
+                        badge.innerHTML = '✓ Offline';
+                    } else {
+                        badge.className = 'status-badge downloading';
+                        badge.innerHTML = '<span class="dot"></span><span>En attente...</span>';
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking cache:', error);
+            }
+        }
+
+        // Check for updates
+        function checkForUpdates() {
+            if (!swRegistration) return;
+
+            swRegistration.addEventListener('updatefound', () => {
+                const newWorker = swRegistration.installing;
+                
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        showUpdateNotification();
+                    }
+                });
+            });
+        }
+
+        // Show update notification
+        function showUpdateNotification() {
+            const updateNotification = document.getElementById('updateNotification');
+            const btnUpdate = document.getElementById('btnUpdate');
+            
+            updateNotification.classList.add('show');
+            
+            btnUpdate.addEventListener('click', () => {
+                if (swRegistration && swRegistration.waiting) {
+                    swRegistration.waiting.postMessage({ action: 'skipWaiting' });
+                }
+                window.location.reload();
             });
         }
 
@@ -342,9 +566,8 @@
             e.preventDefault();
             deferredPrompt = e;
             
-            // Show install prompt after 3 seconds
             setTimeout(() => {
-                if (!localStorage.getItem('installDismissed')) {
+                if (!localStorage.getItem('installDismissed') && localStorage.getItem('hasLaunched')) {
                     installPrompt.classList.add('show');
                 }
             }, 3000);
@@ -354,7 +577,6 @@
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response: ${outcome}`);
                 deferredPrompt = null;
             }
             installPrompt.classList.remove('show');
@@ -365,44 +587,17 @@
             installPrompt.classList.remove('show');
         });
 
-        // Check cached lessons and update badges
-        async function checkCachedLessons() {
-            if ('caches' in window) {
-                const cache = await caches.open('lesona-runtime-v1');
-                const cards = document.querySelectorAll('.lesson-card');
-                
-                for (const card of cards) {
-                    const url = card.getAttribute('href');
-                    const cachedResponse = await cache.match(url);
-                    if (cachedResponse) {
-                        card.classList.add('cached');
-                    }
-                }
-            }
-        }
-
         // Iframe handling
-        const cards = document.querySelectorAll('.lesson-card');
         const iframeContainer = document.getElementById('iframe-container');
         const iframe = document.getElementById('lesson-iframe');
         const menu = document.getElementById('menu');
-        const loading = document.getElementById('loading');
         
         cards.forEach(card => {
             card.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                loading.classList.add('active');
-                
                 iframe.src = this.getAttribute('href');
-                
-                iframe.onload = () => {
-                    loading.classList.remove('active');
-                    iframeContainer.classList.add('active');
-                    menu.style.display = 'none';
-                    checkCachedLessons();
-                };
-                
+                iframeContainer.classList.add('active');
+                menu.style.display = 'none';
                 history.pushState({page: 'lesson'}, '', '#lesson');
             });
         });
@@ -412,14 +607,10 @@
                 iframeContainer.classList.remove('active');
                 menu.style.display = 'block';
                 iframe.src = '';
-                loading.classList.remove('active');
             }
         });
 
-        // Check cached lessons on load
-        checkCachedLessons();
-
-        // Online/Offline status
+        // Online/Offline indicators
         window.addEventListener('online', () => {
             console.log('✓ Online');
         });
@@ -429,4 +620,4 @@
         });
     </script>
 </body>
-    </html>
+    </html> 
