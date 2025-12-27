@@ -3,42 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-    <!-- PWA Meta Tags -->
-    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Lesona SDA">
-    <meta name="application-name" content="Lesona SDA">
-    <meta name="format-detection" content="telephone=no">
-    
-    <!-- SEO Meta Tags -->
-    <title>Lesona SDA - Leçons de l'École du Sabbat</title>
-    <meta name="description" content="Application pour les leçons de l'École du Sabbat - Lehibe, Tanora Zokiny, Zatovo. Disponible hors ligne.">
-    <meta name="keywords" content="SDA, Adventiste, Sabbat, Lesona, Madagascar, Offline">
-    <meta name="author" content="Finoana Ephraim">
-    
-    <!-- Theme Colors -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
-    <meta name="msapplication-TileColor" content="#000000">
-    <meta name="msapplication-navbutton-color" content="#000000">
+    <title>Lesona SDA</title>
     
-    <!-- Icons -->
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
     <link rel="apple-touch-icon" href="images/icon-512.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
     
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Lesona SDA - Leçons de l'École du Sabbat">
-    <meta property="og:description" content="Application pour les leçons de l'École du Sabbat hors ligne">
-    <meta property="og:image" content="images/icon-512.png">
-    <meta property="og:locale" content="mg_MG">
-    
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
@@ -51,27 +24,36 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Lora', serif;
             background: #000000;
             color: #ffffff;
-            min-height: 100vh;
-            padding: 0;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
         .app-container {
-            max-width: 100%;
-            min-height: 100vh;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         .content {
             flex: 1;
-            padding: 32px 16px 32px;
+            padding: 110px 16px 32px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .lessons-list {
@@ -194,56 +176,34 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Network indicator - minimalist and discrete */
-        .network-indicator {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 152, 0, 0.95);
-            color: #ffffff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: none;
-            align-items: center;
-            gap: 6px;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .network-indicator.show {
-            display: flex;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translate(-50%, 60px);
-                opacity: 0;
+        @media (max-width: 375px) {
+            .content {
+                padding: 100px 12px 28px;
             }
-            to {
-                transform: translate(-50%, 0);
-                opacity: 1;
+
+            .lesson-card {
+                padding: 14px;
+                gap: 16px;
+            }
+
+            .lesson-image {
+                width: 104px;
+                height: 104px;
+                border-radius: 14px;
+            }
+
+            .lesson-title {
+                font-size: 19px;
             }
         }
 
-        .network-dot {
-            width: 6px;
-            height: 6px;
-            background: #ffffff;
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 480px;
+                margin: 0 auto;
+            }
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        /* Install prompt */
         .install-prompt {
             display: none;
             position: fixed;
@@ -260,7 +220,6 @@
 
         .install-prompt.show {
             display: block;
-            animation: slideUp 0.3s ease;
         }
 
         .install-prompt h3 {
@@ -286,7 +245,6 @@
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
         }
 
         .btn-install {
@@ -294,20 +252,11 @@
             color: white;
         }
 
-        .btn-install:active {
-            transform: scale(0.97);
-        }
-
         .btn-dismiss {
             background: #333;
             color: white;
         }
 
-        .btn-dismiss:active {
-            transform: scale(0.97);
-        }
-
-        /* Update notification */
         .update-notification {
             display: none;
             position: fixed;
@@ -324,18 +273,6 @@
 
         .update-notification.show {
             display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-80px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
 
         .update-notification h3 {
@@ -358,63 +295,21 @@
             cursor: pointer;
             background: #2196F3;
             color: white;
-            transition: all 0.2s ease;
-        }
-
-        .update-notification button:active {
-            transform: scale(0.97);
-        }
-
-        @media (max-width: 375px) {
-            .content {
-                padding: 28px 12px 28px;
-            }
-
-            .lesson-card {
-                padding: 14px;
-                gap: 16px;
-            }
-
-            .lesson-image {
-                width: 104px;
-                height: 104px;
-                border-radius: 14px;
-            }
-
-            .lesson-title {
-                font-size: 19px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .app-container {
-                max-width: 480px;
-                margin: 0 auto;
-            }
-
-            .install-prompt,
-            .update-notification {
-                left: 50%;
-                transform: translateX(-50%);
-                max-width: 440px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Loading overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <h2>📚 Manomana...</h2>
         <p id="loadingText">Manokatra ny lesona...</p>
         <div class="spinner"></div>
     </div>
 
-    <!-- Main menu -->
     <div class="app-container" id="menu">
         <div class="content">
             <div class="lessons-list">
                 <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" class="lesson-card" data-lesson="lehibe">
-                    <img src="images/lehibe.png" alt="LEHIBE" class="lesson-image" loading="lazy">
+                    <img src="images/lehibe.png" alt="LEHIBE" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">LEHIBE</div>
                     </div>
@@ -424,7 +319,7 @@
                 </a>
 
                 <a href="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" class="lesson-card" data-lesson="tanora">
-                    <img src="images/tanora.png" alt="TANORA ZOKINY" class="lesson-image" loading="lazy">
+                    <img src="images/tanora.png" alt="TANORA ZOKINY" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">TANORA ZOKINY</div>
                     </div>
@@ -434,7 +329,7 @@
                 </a>
 
                 <a href="https://AndilanaSudLesona.github.io/SDA/Zatovo/" class="lesson-card" data-lesson="zatovo">
-                    <img src="images/zatovo.png" alt="ZATOVO" class="lesson-image" loading="lazy">
+                    <img src="images/zatovo.png" alt="ZATOVO" class="lesson-image">
                     <div class="lesson-info">
                         <div class="lesson-title">ZATOVO</div>
                     </div>
@@ -446,20 +341,12 @@
         </div>
     </div>
 
-    <!-- Iframe container -->
     <div id="iframe-container">
-        <iframe id="lesson-iframe" src="" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        <iframe id="lesson-iframe" src=""></iframe>
     </div>
 
-    <!-- Network indicator (minimalist) -->
-    <div class="network-indicator" id="networkIndicator">
-        <span class="network-dot"></span>
-        <span id="networkText">Mode hors ligne</span>
-    </div>
-
-    <!-- Install prompt -->
     <div class="install-prompt" id="installPrompt">
-        <h3>📱 Installer Lesona SDA</h3>
+        <h3>📱 Installer Lesona</h3>
         <p>Installer l'application mba hahafahana mampiasa offline tsara kokoa</p>
         <div class="install-buttons">
             <button class="btn-install" id="btnInstall">Installer</button>
@@ -467,7 +354,6 @@
         </div>
     </div>
 
-    <!-- Update notification -->
     <div class="update-notification" id="updateNotification">
         <h3>🔄 Mise à jour disponible</h3>
         <p>Misy version vaovao. Cliquer mba hanovana izao.</p>
@@ -475,124 +361,125 @@
     </div>
 
     <script>
-        // Configuration
-        const CONFIG = {
-            serviceWorkerPath: '/service-worker.js',
-            networkCheckInterval: 30000,
-            loadingDelay: 1500,
-            installPromptDelay: 30000
-        };
-
-        // DOM Elements
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const cards = document.querySelectorAll('.lesson-card');
+        
+        let swRegistration = null;
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    swRegistration = await navigator.serviceWorker.register('/service-worker.js');
+                    console.log('✓ Service Worker enregistré');
+
+                    checkForUpdates();
+
+                    navigator.serviceWorker.addEventListener('message', (event) => {
+                        if (event.data && event.data.action === 'cached') {
+                            console.log('✓ Ressource mise en cache');
+                        }
+                    });
+
+                } catch (error) {
+                    console.error('✗ Erreur Service Worker:', error);
+                }
+            });
+        }
+
+        function checkForUpdates() {
+            if (!swRegistration) return;
+
+            swRegistration.addEventListener('updatefound', () => {
+                const newWorker = swRegistration.installing;
+                
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        showUpdateNotification();
+                    }
+                });
+            });
+        }
+
+        function showUpdateNotification() {
+            const updateNotification = document.getElementById('updateNotification');
+            const btnUpdate = document.getElementById('btnUpdate');
+            
+            updateNotification.classList.add('show');
+            
+            btnUpdate.addEventListener('click', () => {
+                if (swRegistration && swRegistration.waiting) {
+                    swRegistration.waiting.postMessage({ action: 'skipWaiting' });
+                }
+                window.location.reload();
+            });
+        }
+
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const btnInstall = document.getElementById('btnInstall');
+        const btnDismiss = document.getElementById('btnDismiss');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            setTimeout(() => {
+                if (!localStorage.getItem('installDismissed')) {
+                    installPrompt.classList.add('show');
+                }
+            }, 5000);
+        });
+
+        btnInstall.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+            }
+            installPrompt.classList.remove('show');
+        });
+
+        btnDismiss.addEventListener('click', () => {
+            localStorage.setItem('installDismissed', 'true');
+            installPrompt.classList.remove('show');
+        });
+
         const iframeContainer = document.getElementById('iframe-container');
         const iframe = document.getElementById('lesson-iframe');
         const menu = document.getElementById('menu');
-        const networkIndicator = document.getElementById('networkIndicator');
-        const networkText = document.getElementById('networkText');
-        const installPrompt = document.getElementById('installPrompt');
-        const updateNotification = document.getElementById('updateNotification');
-
-        // State
-        let swRegistration = null;
-        let deferredPrompt = null;
-        let isOnline = navigator.onLine;
-
-        // Initialize app
-        async function init() {
-            console.log('[App] Initializing SDA Lesona...');
-            
-            // Register service worker
-            if ('serviceWorker' in navigator) {
-                try {
-                    swRegistration = await navigator.serviceWorker.register(CONFIG.serviceWorkerPath);
-                    console.log('[App] Service Worker registered successfully');
-                    
-                    // Check for updates
-                    swRegistration.addEventListener('updatefound', handleUpdate);
-                    
-                    // Listen for controller change
-                    navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange);
-                    
-                    // Check for update immediately
-                    swRegistration.update();
-                } catch (error) {
-                    console.error('[App] Service Worker registration failed:', error);
-                }
-            }
-
-            // Setup event listeners
-            setupEventListeners();
-            
-            // Setup network monitoring
-            setupNetworkMonitoring();
-            
-            console.log('[App] Initialization complete');
-        }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Lesson cards
-            cards.forEach(card => {
-                card.addEventListener('click', handleLessonClick);
+        
+        cards.forEach(card => {
+            card.addEventListener('click', async function(e) {
+                e.preventDefault();
+                const url = this.getAttribute('href');
+                const lessonKey = 'lesson_visited_' + this.dataset.lesson;
+                
+                loadingOverlay.classList.add('active');
+                loadingText.textContent = 'Manokatra ny lesona...';
+                
+                iframe.src = url;
+                
+                localStorage.setItem(lessonKey, 'true');
+                
+                setTimeout(() => {
+                    loadingOverlay.classList.remove('active');
+                    iframeContainer.classList.add('active');
+                    menu.style.display = 'none';
+                    history.pushState({page: 'lesson'}, '', '#lesson');
+                }, 1500);
             });
-
-            // History navigation
-            window.addEventListener('popstate', handlePopState);
-
-            // Before unload
-            window.addEventListener('beforeunload', handleBeforeUnload);
-
-            // Install prompt
-            window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-            document.getElementById('btnInstall')?.addEventListener('click', handleInstall);
-            document.getElementById('btnDismiss')?.addEventListener('click', handleDismissInstall);
-
-            // Update notification
-            document.getElementById('btnUpdate')?.addEventListener('click', handleUpdateClick);
-
-            // App installed
-            window.addEventListener('appinstalled', handleAppInstalled);
-        }
-
-        // Handle lesson card click
-        async function handleLessonClick(e) {
-            e.preventDefault();
-            const url = this.getAttribute('href');
-            const lessonKey = 'lesson_visited_' + this.dataset.lesson;
-            
-            // Show loading
-            loadingOverlay.classList.add('active');
-            loadingText.textContent = 'Manokatra ny lesona...';
-            
-            // Load iframe
-            iframe.src = url;
-            
-            // Mark as visited
-            localStorage.setItem(lessonKey, 'true');
-            
-            // Show iframe after delay
-            setTimeout(() => {
-                loadingOverlay.classList.remove('active');
-                iframeContainer.classList.add('active');
-                menu.style.display = 'none';
-                history.pushState({page: 'lesson'}, '', '#lesson');
-            }, CONFIG.loadingDelay);
-        }
-
-        // Handle popstate
-        function handlePopState() {
+        });
+        
+        window.addEventListener('popstate', function() {
             if (iframeContainer.classList.contains('active')) {
                 iframeContainer.classList.remove('active');
                 menu.style.display = 'block';
                 iframe.src = '';
             }
-        }
+        });
 
-        // Handle before unload
-        function handleBeforeUnload() {
+        window.addEventListener('beforeunload', () => {
             if (iframe.src) {
                 const currentCard = Array.from(cards).find(card => 
                     iframe.src.startsWith(card.getAttribute('href'))
@@ -602,152 +489,7 @@
                     localStorage.setItem(lessonKey, 'true');
                 }
             }
-        }
-
-        // Setup network monitoring
-        function setupNetworkMonitoring() {
-            window.addEventListener('online', handleOnline);
-            window.addEventListener('offline', handleOffline);
-            
-            // Initial status
-            updateNetworkStatus();
-            
-            // Periodic check
-            setInterval(checkConnection, CONFIG.networkCheckInterval);
-        }
-
-        // Handle online
-        function handleOnline() {
-            isOnline = true;
-            updateNetworkStatus();
-            console.log('[App] Online');
-        }
-
-        // Handle offline
-        function handleOffline() {
-            isOnline = false;
-            updateNetworkStatus();
-            console.log('[App] Offline');
-        }
-
-        // Update network status
-        function updateNetworkStatus() {
-            if (isOnline) {
-                networkIndicator.classList.remove('show');
-            } else {
-                networkIndicator.classList.add('show');
-                networkText.textContent = 'Mode hors ligne';
-            }
-        }
-
-        // Check connection
-        async function checkConnection() {
-            try {
-                const response = await fetch('/manifest.json', {
-                    method: 'HEAD',
-                    cache: 'no-cache'
-                });
-                if (response.ok && !isOnline) {
-                    isOnline = true;
-                    handleOnline();
-                }
-            } catch (error) {
-                if (isOnline) {
-                    isOnline = false;
-                    handleOffline();
-                }
-            }
-        }
-
-        // Handle before install prompt
-        function handleBeforeInstallPrompt(e) {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // Show install prompt after delay
-            setTimeout(() => {
-                if (!localStorage.getItem('installDismissed') && !isInstalled()) {
-                    installPrompt.classList.add('show');
-                }
-            }, CONFIG.installPromptDelay);
-        }
-
-        // Handle install
-        async function handleInstall() {
-            if (!deferredPrompt) return;
-            
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            
-            console.log('[App] Install outcome:', outcome);
-            
-            deferredPrompt = null;
-            installPrompt.classList.remove('show');
-        }
-
-        // Handle dismiss install
-        function handleDismissInstall() {
-            localStorage.setItem('installDismissed', 'true');
-            installPrompt.classList.remove('show');
-        }
-
-        // Handle app installed
-        function handleAppInstalled() {
-            console.log('[App] PWA installed successfully');
-            installPrompt.classList.remove('show');
-            deferredPrompt = null;
-        }
-
-        // Check if installed
-        function isInstalled() {
-            return window.matchMedia('(display-mode: standalone)').matches ||
-                   window.navigator.standalone === true;
-        }
-
-        // Handle update
-        function handleUpdate() {
-            const newWorker = swRegistration.installing;
-            
-            newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                    showUpdateNotification();
-                }
-            });
-        }
-
-        // Show update notification
-        function showUpdateNotification() {
-            updateNotification.classList.add('show');
-        }
-
-        // Handle update click
-        function handleUpdateClick() {
-            if (swRegistration && swRegistration.waiting) {
-                swRegistration.waiting.postMessage({ type: 'SKIP_WAITING' });
-            }
-        }
-
-        // Handle controller change
-        function handleControllerChange() {
-            console.log('[App] Controller changed, reloading...');
-            window.location.reload();
-        }
-
-        // Start the app
-        init();
-
-        // Expose API
-        window.SDALesona = {
-            isOnline: () => isOnline,
-            isInstalled: isInstalled,
-            clearCache: async () => {
-                if (swRegistration && swRegistration.active) {
-                    swRegistration.active.postMessage({ type: 'CLEAR_CACHE' });
-                }
-            }
-        };
-
-        console.log('[App] SDA Lesona ready');
+        });
     </script>
 </body>
-</html>
+    </html> 
