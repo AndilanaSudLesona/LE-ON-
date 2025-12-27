@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Lesona</title>
+    <meta name="theme-color" content="#000000">
+    <title>Lesona Kristianina</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap" rel="stylesheet">
@@ -22,25 +23,27 @@
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
         
         .container {
             max-width: 100%;
             min-height: 100vh;
-            padding: 20px 16px 32px;
+            padding: 20px 16px 80px;
         }
         
         .header {
-            padding: 48px 0 24px;
+            padding: 48px 0 32px;
             text-align: center;
         }
         
         .main-title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             font-family: 'Lora', serif;
             color: #ffffff;
             letter-spacing: 0.5px;
+            line-height: 1.3;
         }
         
         .lessons-list {
@@ -52,36 +55,39 @@
         
         .lesson-item {
             background: #000000;
-            border: 1px solid #222222;
-            padding: 12px 16px;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: transform 0.15s ease, opacity 0.15s ease;
+            transition: all 0.2s ease;
         }
         
         .lesson-item:active {
-            transform: scale(0.97);
-            opacity: 0.6;
+            transform: scale(0.98);
+            opacity: 0.7;
+            border-color: #444;
         }
         
         .lesson-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            flex: 1;
         }
         
         .lesson-number {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             background: #ffffff;
             color: #000000;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
             flex-shrink: 0;
         }
@@ -92,13 +98,14 @@
             color: #ffffff;
             font-family: 'Lora', serif;
             letter-spacing: 0.3px;
+            line-height: 1.4;
         }
         
         .chevron {
             width: 20px;
             height: 20px;
             flex-shrink: 0;
-            opacity: 0.4;
+            opacity: 0.5;
         }
         
         /* Detail View */
@@ -113,7 +120,6 @@
             z-index: 100;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            transition: background 0.3s ease, color 0.3s ease;
         }
         
         .lesson-detail.active {
@@ -129,8 +135,7 @@
             border-bottom-color: #e5e5e5;
         }
         
-        .lesson-detail.light-mode .back-button,
-        .lesson-detail.light-mode .theme-toggle {
+        .lesson-detail.light-mode .header-button {
             background: #000000;
             color: #ffffff;
         }
@@ -150,7 +155,7 @@
         .lesson-detail.light-mode .lesson-text p,
         .lesson-detail.light-mode .lesson-text ul,
         .lesson-detail.light-mode .lesson-text ol {
-            color: #333333;
+            color: #444444;
         }
         
         .lesson-detail.light-mode .lesson-text strong {
@@ -167,17 +172,17 @@
             position: sticky;
             top: 0;
             background: #000000;
-            padding: 16px;
-            border-bottom: 1px solid #222222;
+            padding: 12px 16px;
+            border-bottom: 1px solid #2a2a2a;
             z-index: 10;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
         
-        .back-button {
-            width: 36px;
-            height: 36px;
+        .header-button {
+            width: 40px;
+            height: 40px;
             background: #ffffff;
             color: #000000;
             border: none;
@@ -186,33 +191,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.15s ease;
+            transition: transform 0.2s ease;
         }
         
-        .back-button:active {
-            transform: scale(0.9);
-        }
-        
-        .theme-toggle {
-            width: 36px;
-            height: 36px;
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.15s ease;
-        }
-        
-        .theme-toggle:active {
+        .header-button:active {
             transform: scale(0.9);
         }
         
         .lesson-content {
-            padding: 24px 20px;
+            padding: 24px 20px 80px;
             max-width: 100%;
         }
         
@@ -221,7 +208,7 @@
             font-weight: 700;
             font-family: 'Lora', serif;
             color: #ffffff;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             letter-spacing: 0.3px;
             line-height: 1.3;
         }
@@ -231,12 +218,12 @@
             max-height: 240px;
             object-fit: cover;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
         .lesson-text {
             color: #cccccc;
-            line-height: 1.7;
+            line-height: 1.8;
             font-size: 16px;
         }
         
@@ -245,13 +232,23 @@
             font-weight: 700;
             font-family: 'Lora', serif;
             color: #ffffff;
-            margin-top: 24px;
-            margin-bottom: 12px;
+            margin-top: 28px;
+            margin-bottom: 14px;
             letter-spacing: 0.3px;
         }
         
+        .lesson-text h3 {
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Lora', serif;
+            color: #ffffff;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            letter-spacing: 0.2px;
+        }
+        
         .lesson-text p {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             color: #cccccc;
         }
         
@@ -261,47 +258,48 @@
         }
         
         .lesson-text ul, .lesson-text ol {
-            margin-left: 20px;
-            margin-bottom: 16px;
+            margin-left: 24px;
+            margin-bottom: 18px;
             color: #cccccc;
         }
         
         .lesson-text li {
-            margin-bottom: 8px;
-            line-height: 1.6;
+            margin-bottom: 10px;
+            line-height: 1.7;
         }
         
         .verse {
             background: #1a1a1a;
-            border-left: 3px solid #ffffff;
-            padding: 16px;
-            margin: 16px 0;
+            border-left: 4px solid #ffffff;
+            padding: 18px;
+            margin: 20px 0;
             font-style: italic;
             color: #ffffff;
-            line-height: 1.7;
+            line-height: 1.8;
+            border-radius: 0 8px 8px 0;
         }
         
         @media (max-width: 375px) {
             .container {
-                padding: 16px 12px 28px;
+                padding: 16px 12px 60px;
             }
             
             .header {
-                padding: 40px 0 20px;
+                padding: 40px 0 24px;
             }
             
             .main-title {
-                font-size: 24px;
+                font-size: 23px;
             }
             
             .lesson-item {
-                padding: 10px 14px;
+                padding: 14px;
             }
             
             .lesson-number {
-                width: 28px;
-                height: 28px;
-                font-size: 13px;
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
             }
             
             .lesson-title {
@@ -309,7 +307,7 @@
             }
             
             .lesson-content {
-                padding: 20px 16px;
+                padding: 20px 16px 60px;
             }
             
             .lesson-content h1 {
@@ -321,7 +319,11 @@
             }
             
             .lesson-text h2 {
-                font-size: 18px;
+                font-size: 19px;
+            }
+            
+            .lesson-text h3 {
+                font-size: 17px;
             }
         }
         
@@ -344,12 +346,12 @@
 
     <div id="lesson-detail" class="lesson-detail">
         <div class="detail-header">
-            <button class="back-button" onclick="showMainView()">
+            <button class="header-button" onclick="showMainView()" aria-label="Hiverina">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
             </button>
-            <button class="theme-toggle" onclick="toggleTheme()">
+            <button class="header-button" onclick="toggleTheme()" aria-label="Hanova theme">
                 <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="5"/>
                     <line x1="12" y1="1" x2="12" y2="3"/>
@@ -481,203 +483,56 @@
                 content: `<h2>Votoatiny Lesona 12</h2><p>Apetraho eto ny votoatiny...</p>`
             },
             {
-    id: 13,
-    title: "Fifandraisana amin'ny CORNERSTONECONNECTIONS",
-    image: "images/lesson13.jpg",
-    content: `
-        <h2>LESONA 13</h2>
-        <p><strong>Desambra 272025</strong></p>
-        
-        <h2>Tantara ao amin'ny Soratra Masina</h2>
-        <p>Matio 28:15-20; Lioka 24:50-53; Asan'ny Apostoly 1:9-12</p>
-        
-        <div class="verse">
-            "Ary nibanjina ny lanitra izy ireo raha nandeha Jesosy, ary nisy roa
-            lahy niakanjo fotsy tampoka nitsangana teo anilany. Ry lehilahy
-            Gallila, nahoana no mijanona eto mijery ny lanitra hianareo? Izany
-            Jesosy izany dia ho avy tahaka ny nahitanareo Azy niakatra ho any
-            an-danitra." (Asan'ny Apostoly 1:10, 11, NW)
-        </div>
-        
-        <h2>Fanehoan-kevitra</h2>
-        <p>The Desire of Ages (na Hem Manetry tena), toko faha-86, 87</p>
-        
-        <h2>Fiantsoana mpiasan'ny fanovana</h2>
-        <p>Vato fehizoroconnections</p>
-        
-        <h2>Jiro</h2>
-        <div class="verse">
-            "Efa nitsangana teo amin'izao tontolo izao i Kristy nandritra ny telo
-            amby telopolo taona; efa niaritra ny fanaratsiana sy ny
-            fanaratsiana ary ny fanesoana Azy Izy; nolavina sy nohomboana
-            tamin'ny hazo fijaliana Izy. Ankehitriny, rehefa hiakatra ho eo
-            amin'ny seza fiandrianan'ny voninahiny Izy, rehefa mandinika ny
-            tsy fankasitrahana ny olona izay tonga hamonjy azy,-tsy hiala
-            amin'izy ireo ve Izy? ankasitrahana, ary aiza ny anjely tsy manan-ota
-            miandry hanao ny didiny, Tsia, ny fampanantenany ho an'ireo
-            olon-tiana izay navelany teto an-tany dia ny hoe: 'Izaho momba
-            anareo mandrakariva ambara-pahatongan'ny fahataperan'izao
-            tontolo izao'" (The Desire of Ages, p. 830).
-        </div>
-        
-        <h2>Inona ny hevitrao?</h2>
-        <p>Mpanaraka tsara ve ianao? Sa mirona ho mpitarika kokoa ianao?</p>
-        <p>Laharana avy amin'ny 1 ("Tsy izaho mihitsy izany") ka hatramin'ny
-        10 ("Izaho tanteraka izany") aorian'ireto fanambarana manaraka
-        ireto:</p>
-        
-        <ul>
-            <li>Miantehitra amin'Andriamanitra amin'ny zavatra rehetra aho.</li>
-            <li>Nilaza tamiko ny namako fa tena mahay manaraka ny torolalana
-            aho.</li>
-            <li>Raha mahatsapa aho fa miantso ahy Andriamanitra hanao zavatra
-            dia ataoko tsy misy fisalasalana izany.</li>
-            <li>Mangataka torohevitra amin'ny ray aman-dreniko na olon-dehibe
-            hafa aho</li>
-        </ul>
-        
-        <p>Mino aho fa Andriamanitra dia mampahafantatra ny sitrapony  
-        amin'ny alalan'ny Fanahiny.</p>
-        
-        <p>Afa-po aho amin'ny maha-mpanohana ny ekipa iray.</p>
-        
-        <p>Aleoko mitaiza irery toy izay eo anatrehan'ny vahoaka betsaka</p>
-        
-        <p>Mino aho fa ny fanjakan'Andriamanitra dia miorina amin'ny  
-        alalan'ny fifandraisana manokana—namana iray isaky ny mandeha.</p>
-        
-        <p>Tsy manahy na inona na inona aho. Aleoko mihira ao anaty  
-        amboarampeo toy izay mihira irery.</p>
-        
-        <h2>Ao amin'ny Tantara</h2>
-        <div class="verse">
-            "Ary nibanjina ny lanitra izy ireo raha nandeha Izy, ary nisy roa lahy
-            niakanjo fotsy tampoka nitsangana teo anilany nanao hoe: Ry
-            lehilahy Gallila, nahoana ianareo no mijanona eto mijery ny lanitra?
-            Iny Jesosy izay nakarina niala taminareo ho any an-danitra iny, dia
-            mbola hiverina tahaka ny nahitanareo Azy niakatra ho any
-            an-danitra.
-        </div>
-        
-        <div class="verse">
-            "Dia ny mpianatra iraika ambin'ny folo lahy
-            dia nankany Gallila, tany amin'ilay tendrombohitra nasain'i Jesosy
-            halehany. Ary nony nahita Azy ireo, dia nitsaoka Azy; fa ny sasany
-            nisalasala. Dia nanatona azy Jesosy ka nanao hoe: Efa nomena Ahy
-            ny fahefana rehetra any an-danitra sy ety an-tany. Koa mandehana
-            hianareo, dia ataovy mpianatra ny firenena rehetra, manao batisa
-            azy ho amin'ny anaran'ny Ray sy ny Zanaka ary ny Fanahy Masina,
-            sady mampianatra azy hitandrina izay rehetra nandidiako anareo.
-            Ary Izaho momba anareo mandrakariva ambara-pahatongan'ny
-            fahataperan'izao tontolo izao".
-        </div>
-        
-        <div class="verse">
-            "Ary rehefa nitondra azy nivoaka ho any amin'ny manodidina an'i
-            Betania Izy, dia nanandratra ny tanany ka nitso-drano azy; ary raha
-            mbola nitso-drano azy Izy, dia nandoo azy ka nakarina ho any
-            an-danitra; ary niankohoka teo anatrehany izy ireo, dia niverina
-            tany Jerosalema tamin'ny fifaliana lehibe; ary nijanona tsy
-            an-kijanona izy ireo." (Matio 28:16-20; Lioka 24:50-53; Asan'ny Apostoly 1:9-11)
-        </div>
-        
-        <h2>Miala ny Tantara - Fanazavana</h2>
-        
-        <h3>Matio 28:16-20</h3>
-        <p>Mariho fa alohan'ny hanoberan'i Jesosy ny mpianany amin'ny Iraka
-        Lehibe, dia nampahatsiahy azy ireo Izy fa efa nomena Ahy ny
-        fahefana rehetra (andininy 18). Nahoana araka ny eritreritrao no
-        nanao izany Izy?</p>
-        
-        <h3>Asan'ny Apostoly 1:9-12</h3>
-        <p>Inona no toe-tsaina tsapanao amin'ny fanontanian'ny anjely hoe:
-        "Nahoana ianao no mijanona eto mijery ny lanitra?"</p>
-        <ul>
-            <li>a. fiaraha-miory</li>
-            <li>b. te hahafanta-javatra</li>
-            <li>c. fahatsoram-po</li>
-            <li>d. Izy rehetra eo ambony ireo</li>
-        </ul>
-        
-        <h3>Lioka 24:51, 52</h3>
-        <p>Holazainao ho tsara na ratsy ve ity andalana ity? Nahoana?</p>
-        
-        <h2>Andinin-teny fanampiny</h2>
-        <div class="verse">
-            "Aoka ho mahatoky hatramin'ny fahafatesana ianao, dia homeko
-            fiainana ho satro-boninahitry ny mpandresy ianao" (Apokalypsy 2:10).
-        </div>
-        
-        <div class="verse">
-            "Hianareo no vavolombeloko, hoy Jehovah, sy Mpanompoko izay
-            nofidiko, mba ho fantatrareo sy hinoanareo Ahy ary ho azonareo
-            tsara fa Izaho no Izy." (Isaia 43:10).
-        </div>
-        
-        <div class="verse">
-            "Izao no fitiavana an'Andriamanitra, dia ny hitandremany ny didiny.
-            Ary tsy mavesatra ny didiny, fa izay rehetra naterak'Andriamanitra
-            dia maharesy izao tontolo izao." (1 Jaona 5:3, 4).
-        </div>
-        
-        <div class="verse">
-            "Matokia an'i Jehovah amin'ny fonao rehetra, fa aza miankina
-            amin'ny fahalalanao, fa maneke Azy amin'ny alehanao rehetra, fa
-            Izy handamina ny lalanao." (Ohabolana 3:5, 6).
-        </div>
-        
-        <div class="verse">
-            "Ianao no fiereko, miaro ahy amin'ny fahoriana Hianao, ary mihira
-            famonjena no manodidina ahy." (Salamo 32:7, MN).
-        </div>
-        
-        <h2>Fanazavana fanampiny</h2>
-        <div class="verse">
-            "Mampianatra antsika Izy mba hijery ny fanahy mahantra rehetra
-            ho rahalahintsika, ary izao tontolo izao ho toy ny sahantsika".
-            - Ellen G. White, The Desire of Ages, p. 823
-        </div>
-        
-        <h2>Connecting to Life</h2>
-        <p><strong>SABATA</strong></p>
-        <p>Vakio ny Isaia 43:10.</p>
-        <p>Ampidiro ny hevitrao avy amin'ny fizarana Inona no Heverinao</p>
-        
-        <p><strong>ALAHADY</strong></p>
-        <p>Vakio ny Apokalypsy 2:10.</p>
-        <p>Avereno jerena ireo toromarika nomen'i Jesosy ny mpanara-dia Azy
-        tamin'ny niakarany tany an-danitra.</p>
-        
-        <p><strong>ALATSINAINY</strong></p>
-        <p>Vakio ny Asan'ny Apostoly 1:9-11.</p>
-        <p>Manontania tena: Inona no fitaomana ataoko amin'ny hafa?</p>
-        
-        <p><strong>TALATA</strong></p>
-        <p>Vakio ny 1 Jaona 5:3, 4.</p>
-        <p>Mandosira any amin'ny toerana mangina ary saintsaino ny fitiavan'Andriamanitra anao.</p>
-        
-        <p><strong>ALAROBIA</strong></p>
-        <p>Vakio ireto andininy ireto: Matio 5:14-16, Marka 1:17, Asan'ny Apostoly 1:8, 2 Timoty 4:1-8, Lioka 9:23-27</p>
-        
-        <p><strong>ALAKAMISY</strong></p>
-        <p>Vakio ny Ohabolana 3:5, 6.</p>
-        <div class="verse">
-            "Ho mpitsikilo kintana ve ianao sa ho mpitsikilo fiovana? Asain'i Jesosy misafidy ny ho witness ho Azy androany. Ahoana no havalinao?"
-        </div>
-        
-        <p><strong>ZOMA</strong></p>
-        <p>Vakio ny Salamo 32:7.</p>
-        <div class="verse">
-            "Tena tsapanao ve ny fanatrehan'i Kristy manokana? Raha eny,
-            amin'ny fomba ahoana? Ahoana no hamalianao ny antsony mba
-            hifandraisana tsy tapaka Aminy?"
-        </div>
-        
-        <h2>Famakiana amin'ity herinandro ity*</h2>
-        <p>The Desire of Ages na (Mahery fo Manetry tena), toko faha-86; 87.</p>
-    `
-}
-             
+                id: 13,
+                title: "Fifandraisana amin'ny CORNERSTONECONNECTIONS",
+                image: "images/lesson13.jpg",
+                content: `
+                    <h2>LESONA 13</h2>
+                    <p><strong>Desambra 27, 2025</strong></p>
+                    
+                    <h2>Tantara ao amin'ny Soratra Masina</h2>
+                    <p>Matio 28:15-20; Lioka 24:50-53; Asan'ny Apostoly 1:9-12</p>
+                    
+                    <div class="verse">
+                        "Ary nibanjina ny lanitra izy ireo raha nandeha Jesosy, ary nisy roa lahy niakanjo fotsy tampoka nitsangana teo anilany. Ry lehilahy Gallila, nahoana no mijanona eto mijery ny lanitra hianareo? Izany Jesosy izany dia ho avy tahaka ny nahitanareo Azy niakatra ho any an-danitra." (Asan'ny Apostoly 1:10, 11, NW)
+                    </div>
+                    
+                    <h2>Fanehoan-kevitra</h2>
+                    <p>The Desire of Ages (na Mahery tena Manetry tena), toko faha-86, 87</p>
+                    
+                    <h2>Jiro</h2>
+                    <div class="verse">
+                        "Efa nitsangana teo amin'izao tontolo izao i Kristy nandritra ny telo amby telopolo taona; efa niaritra ny fanaratsiana sy ny fanaratsiana ary ny fanesoana Azy Izy; nolavina sy nohomboana tamin'ny hazo fijaliana Izy. Ankehitriny, rehefa hiakatra ho eo amin'ny seza fiandrianan'ny voninahiny Izy, rehefa mandinika ny tsy fankasitrahana ny olona izay tonga hamonjy azy,-tsy hiala amin'izy ireo ve Izy? Tsia, ny fampanantenany ho an'ireo olon-tiana izay navelany teto an-tany dia ny hoe: 'Izaho momba anareo mandrakariva ambara-pahatongan'ny fahataperan'izao tontolo izao'" (The Desire of Ages, p. 830).
+                    </div>
+                    
+                    <h2>Ao amin'ny Tantara</h2>
+                    <div class="verse">
+                        "Dia ny mpianatra iraika ambin'ny folo lahy dia nankany Gallila, tany amin'ilay tendrombohitra nasain'i Jesosy halehany. Ary nony nahita Azy ireo, dia nitsaoka Azy; fa ny sasany nisalasala. Dia nanatona azy Jesosy ka nanao hoe: Efa nomena Ahy ny fahefana rehetra any an-danitra sy ety an-tany. Koa mandehana hianareo, dia ataovy mpianatra ny firenena rehetra, manao batisa azy ho amin'ny anaran'ny Ray sy ny Zanaka ary ny Fanahy Masina, sady mampianatra azy hitandrina izay rehetra nandidiako anareo. Ary Izaho momba anareo mandrakariva ambara-pahatongan'ny fahataperan'izao tontolo izao."
+                    </div>
+                    
+                    <h2>Andinin-teny fanampiny</h2>
+                    <div class="verse">
+                        "Aoka ho mahatoky hatramin'ny fahafatesana ianao, dia homeko fiainana ho satro-boninahitry ny mpandresy ianao" (Apokalypsy 2:10).
+                    </div>
+                    
+                    <div class="verse">
+                        "Hianareo no vavolombeloko, hoy Jehovah, sy Mpanompoko izay nofidiko, mba ho fantatrareo sy hinoanareo Ahy ary ho azonareo tsara fa Izaho no Izy." (Isaia 43:10).
+                    </div>
+                    
+                    <div class="verse">
+                        "Izao no fitiavana an'Andriamanitra, dia ny hitandremany ny didiny. Ary tsy mavesatra ny didiny, fa izay rehetra naterak'Andriamanitra dia maharesy izao tontolo izao." (1 Jaona 5:3, 4).
+                    </div>
+                    
+                    <h2>Connecting to Life</h2>
+                    <p><strong>SABATA:</strong> Vakio ny Isaia 43:10.</p>
+                    <p><strong>ALAHADY:</strong> Vakio ny Apokalypsy 2:10.</p>
+                    <p><strong>ALATSINAINY:</strong> Vakio ny Asan'ny Apostoly 1:9-11.</p>
+                    <p><strong>TALATA:</strong> Vakio ny 1 Jaona 5:3, 4.</p>
+                    <p><strong>ALAROBIA:</strong> Vakio ireto andininy ireto: Matio 5:14-16, Marka 1:17.</p>
+                    <p><strong>ALAKAMISY:</strong> Vakio ny Ohabolana 3:5, 6.</p>
+                    <p><strong>ZOMA:</strong> Vakio ny Salamo 32:7.</p>
+                `
+            }
         ];
 
         function renderLessonsList() {
@@ -713,7 +568,6 @@
             
             const contentArea = document.getElementById('lesson-content-area');
             contentArea.innerHTML = `
-                <img src="${lesson.image}" alt="" class="lesson-image" onerror="this.style.display='none'">
                 <h1>${lesson.title}</h1>
                 <div class="lesson-text">
                     ${lesson.content}
@@ -747,4 +601,4 @@
         renderLessonsList();
     </script>
 </body>
-    </html> 
+</html>
