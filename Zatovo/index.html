@@ -63,6 +63,7 @@
             justify-content: space-between;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-decoration: none;
         }
         
         .lesson-item:active {
@@ -108,177 +109,6 @@
             opacity: 0.5;
         }
         
-        /* Detail View */
-        .lesson-detail {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            z-index: 100;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .lesson-detail.active {
-            display: block;
-        }
-        
-        .lesson-detail.light-mode {
-            background: #ffffff;
-        }
-        
-        .lesson-detail.light-mode .detail-header {
-            background: #ffffff;
-            border-bottom-color: #e5e5e5;
-        }
-        
-        .lesson-detail.light-mode .header-button {
-            background: #000000;
-            color: #ffffff;
-        }
-        
-        .lesson-detail.light-mode .lesson-content h1 {
-            color: #000000;
-        }
-        
-        .lesson-detail.light-mode .lesson-text {
-            color: #333333;
-        }
-        
-        .lesson-detail.light-mode .lesson-text h2 {
-            color: #000000;
-        }
-        
-        .lesson-detail.light-mode .lesson-text p,
-        .lesson-detail.light-mode .lesson-text ul,
-        .lesson-detail.light-mode .lesson-text ol {
-            color: #444444;
-        }
-        
-        .lesson-detail.light-mode .lesson-text strong {
-            color: #000000;
-        }
-        
-        .lesson-detail.light-mode .verse {
-            background: #f5f5f5;
-            border-left-color: #000000;
-            color: #000000;
-        }
-        
-        .detail-header {
-            position: sticky;
-            top: 0;
-            background: #000000;
-            padding: 12px 16px;
-            border-bottom: 1px solid #2a2a2a;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .header-button {
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
-        }
-        
-        .header-button:active {
-            transform: scale(0.9);
-        }
-        
-        .lesson-content {
-            padding: 24px 20px 80px;
-            max-width: 100%;
-        }
-        
-        .lesson-content h1 {
-            font-size: 24px;
-            font-weight: 700;
-            font-family: 'Lora', serif;
-            color: #ffffff;
-            margin-bottom: 24px;
-            letter-spacing: 0.3px;
-            line-height: 1.3;
-        }
-        
-        .lesson-image {
-            width: 100%;
-            max-height: 240px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 24px;
-        }
-        
-        .lesson-text {
-            color: #cccccc;
-            line-height: 1.8;
-            font-size: 16px;
-        }
-        
-        .lesson-text h2 {
-            font-size: 20px;
-            font-weight: 700;
-            font-family: 'Lora', serif;
-            color: #ffffff;
-            margin-top: 28px;
-            margin-bottom: 14px;
-            letter-spacing: 0.3px;
-        }
-        
-        .lesson-text h3 {
-            font-size: 18px;
-            font-weight: 600;
-            font-family: 'Lora', serif;
-            color: #ffffff;
-            margin-top: 24px;
-            margin-bottom: 12px;
-            letter-spacing: 0.2px;
-        }
-        
-        .lesson-text p {
-            margin-bottom: 18px;
-            color: #cccccc;
-        }
-        
-        .lesson-text strong {
-            font-weight: 600;
-            color: #ffffff;
-        }
-        
-        .lesson-text ul, .lesson-text ol {
-            margin-left: 24px;
-            margin-bottom: 18px;
-            color: #cccccc;
-        }
-        
-        .lesson-text li {
-            margin-bottom: 10px;
-            line-height: 1.7;
-        }
-        
-        .verse {
-            background: #1a1a1a;
-            border-left: 4px solid #ffffff;
-            padding: 18px;
-            margin: 20px 0;
-            font-style: italic;
-            color: #ffffff;
-            line-height: 1.8;
-            border-radius: 0 8px 8px 0;
-        }
-        
         @media (max-width: 375px) {
             .container {
                 padding: 16px 12px 60px;
@@ -305,26 +135,6 @@
             .lesson-title {
                 font-size: 15px;
             }
-            
-            .lesson-content {
-                padding: 20px 16px 60px;
-            }
-            
-            .lesson-content h1 {
-                font-size: 22px;
-            }
-            
-            .lesson-text {
-                font-size: 15px;
-            }
-            
-            .lesson-text h2 {
-                font-size: 19px;
-            }
-            
-            .lesson-text h3 {
-                font-size: 17px;
-            }
         }
         
         @media (min-width: 768px) {
@@ -336,269 +146,142 @@
     </style>
 </head>
 <body>
-    <div id="main-view" class="container">
+    <div class="container">
         <div class="header">
             <h1 class="main-title">LESONA KRISTIANINA</h1>
         </div>
         
-        <div class="lessons-list" id="lessons-list"></div>
-    </div>
-
-    <div id="lesson-detail" class="lesson-detail">
-        <div class="detail-header">
-            <button class="header-button" onclick="showMainView()" aria-label="Hiverina">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-            </button>
-            <button class="header-button" onclick="toggleTheme()" aria-label="Hanova theme">
-                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/>
-                    <line x1="12" y1="1" x2="12" y2="3"/>
-                    <line x1="12" y1="21" x2="12" y2="23"/>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                    <line x1="1" y1="12" x2="3" y2="12"/>
-                    <line x1="21" y1="12" x2="23" y2="12"/>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                </svg>
-                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
-        </div>
-        <div id="lesson-content-area" class="lesson-content"></div>
-    </div>
-
-    <script>
-        const lessonsData = [
-            {
-                id: 1,
-                title: "Ny Fitiavan'Andriamanitra",
-                image: "images/lesson1.jpg",
-                content: `
-                    <h2>Tanjona</h2>
-                    <p>Hianatra ny amin'ny fitiavan'Andriamanitra tsy misy fetra ho antsika.</p>
-                    
-                    <h2>Andinin-tsoratra fototra</h2>
-                    <div class="verse">
-                        "Fa toy izao no nitiavan'Andriamanitra izao tontolo izao: nomeny ny Zanani-lahy Tokana, mba tsy ho very izay rehetra mino Azy, fa hanana fiainana mandrakizay." - Jaona 3:16
-                    </div>
-                    
-                    <h2>Fampianarana</h2>
-                    <p>Andriamanitra dia tia antsika tena tia. Ny fitiavany dia:</p>
-                    <ul>
-                        <li><strong>Tsy misy fetra:</strong> Tsy misy mahafetra ny fitiavan'Andriamanitra</li>
-                        <li><strong>Mandrakizay:</strong> Tsy miova izay fitiavany</li>
-                        <li><strong>Manala ny heloka:</strong> Namela ny Zanany mba hamonjy antsika</li>
-                    </ul>
-                    
-                    <p>Ity lesona ity dia mampiseho antsika fa na dia mpanota aza isika, dia tian'Andriamanitra ihany isika ary nanome ny Zanany Jesosy Kristy mba hamonjy antsika.</p>
-                `
-            },
-            {
-                id: 2,
-                title: "Ny Vavaka",
-                image: "images/lesson2.jpg",
-                content: `
-                    <h2>Tanjona</h2>
-                    <p>Hahafantatra ny maha-zava-dehibe ny vavaka eo amin'ny fiainantsika kristianina.</p>
-                    
-                    <h2>Andinin-tsoratra fototra</h2>
-                    <div class="verse">
-                        "Mivavaha mandrakariva." - 1 Tesaloniana 5:17
-                    </div>
-                    
-                    <h2>Fampianarana</h2>
-                    <p>Ny vavaka dia firesahana amin'Andriamanitra. Afaka miteny aminy isika:</p>
-                    <ul>
-                        <li>Rehefa sambatra isika</li>
-                        <li>Rehefa malahelo isika</li>
-                        <li>Rehefa mila fanampiana isika</li>
-                        <li>Mba hisaotra Azy</li>
-                    </ul>
-                    
-                    <p>Tsy maintsy mivavaka lalandava isika satria izany no fomba fifandraisantsika amin'Andriamanitra.</p>
-                `
-            },
-            {
-                id: 3,
-                title: "Lesona 3",
-                image: "images/lesson3.jpg",
-                content: `<h2>Votoatiny Lesona 3</h2><p>Apetraho eto ny votoatiny ho an'ny lesona fahatelo.</p>`
-            },
-            {
-                id: 4,
-                title: "Lesona 4",
-                image: "images/lesson4.jpg",
-                content: `<h2>Votoatiny Lesona 4</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 5,
-                title: "Lesona 5",
-                image: "images/lesson5.jpg",
-                content: `<h2>Votoatiny Lesona 5</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 6,
-                title: "Lesona 6",
-                image: "images/lesson6.jpg",
-                content: `<h2>Votoatiny Lesona 6</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 7,
-                title: "Lesona 7",
-                image: "images/lesson7.jpg",
-                content: `<h2>Votoatiny Lesona 7</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 8,
-                title: "Lesona 8",
-                image: "images/lesson8.jpg",
-                content: `<h2>Votoatiny Lesona 8</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 9,
-                title: "Lesona 9",
-                image: "images/lesson9.jpg",
-                content: `<h2>Votoatiny Lesona 9</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 10,
-                title: "Lesona 10",
-                image: "images/lesson10.jpg",
-                content: `<h2>Votoatiny Lesona 10</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 11,
-                title: "Lesona 11",
-                image: "images/lesson11.jpg",
-                content: `<h2>Votoatiny Lesona 11</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 12,
-                title: "Lesona 12",
-                image: "images/lesson12.jpg",
-                content: `<h2>Votoatiny Lesona 12</h2><p>Apetraho eto ny votoatiny...</p>`
-            },
-            {
-                id: 13,
-                title: "Fifandraisana amin'ny CORNERSTONECONNECTIONS",
-                image: "images/lesson13.jpg",
-                content: `
-                    <h2>LESONA 13</h2>
-                    <p><strong>Desambra 27, 2025</strong></p>
-                    
-                    <h2>Tantara ao amin'ny Soratra Masina</h2>
-                    <p>Matio 28:15-20; Lioka 24:50-53; Asan'ny Apostoly 1:9-12</p>
-                    
-                    <div class="verse">
-                        "Ary nibanjina ny lanitra izy ireo raha nandeha Jesosy, ary nisy roa lahy niakanjo fotsy tampoka nitsangana teo anilany. Ry lehilahy Gallila, nahoana no mijanona eto mijery ny lanitra hianareo? Izany Jesosy izany dia ho avy tahaka ny nahitanareo Azy niakatra ho any an-danitra." (Asan'ny Apostoly 1:10, 11, NW)
-                    </div>
-                    
-                    <h2>Fanehoan-kevitra</h2>
-                    <p>The Desire of Ages (na Mahery tena Manetry tena), toko faha-86, 87</p>
-                    
-                    <h2>Jiro</h2>
-                    <div class="verse">
-                        "Efa nitsangana teo amin'izao tontolo izao i Kristy nandritra ny telo amby telopolo taona; efa niaritra ny fanaratsiana sy ny fanaratsiana ary ny fanesoana Azy Izy; nolavina sy nohomboana tamin'ny hazo fijaliana Izy. Ankehitriny, rehefa hiakatra ho eo amin'ny seza fiandrianan'ny voninahiny Izy, rehefa mandinika ny tsy fankasitrahana ny olona izay tonga hamonjy azy,-tsy hiala amin'izy ireo ve Izy? Tsia, ny fampanantenany ho an'ireo olon-tiana izay navelany teto an-tany dia ny hoe: 'Izaho momba anareo mandrakariva ambara-pahatongan'ny fahataperan'izao tontolo izao'" (The Desire of Ages, p. 830).
-                    </div>
-                    
-                    <h2>Ao amin'ny Tantara</h2>
-                    <div class="verse">
-                        "Dia ny mpianatra iraika ambin'ny folo lahy dia nankany Gallila, tany amin'ilay tendrombohitra nasain'i Jesosy halehany. Ary nony nahita Azy ireo, dia nitsaoka Azy; fa ny sasany nisalasala. Dia nanatona azy Jesosy ka nanao hoe: Efa nomena Ahy ny fahefana rehetra any an-danitra sy ety an-tany. Koa mandehana hianareo, dia ataovy mpianatra ny firenena rehetra, manao batisa azy ho amin'ny anaran'ny Ray sy ny Zanaka ary ny Fanahy Masina, sady mampianatra azy hitandrina izay rehetra nandidiako anareo. Ary Izaho momba anareo mandrakariva ambara-pahatongan'ny fahataperan'izao tontolo izao."
-                    </div>
-                    
-                    <h2>Andinin-teny fanampiny</h2>
-                    <div class="verse">
-                        "Aoka ho mahatoky hatramin'ny fahafatesana ianao, dia homeko fiainana ho satro-boninahitry ny mpandresy ianao" (Apokalypsy 2:10).
-                    </div>
-                    
-                    <div class="verse">
-                        "Hianareo no vavolombeloko, hoy Jehovah, sy Mpanompoko izay nofidiko, mba ho fantatrareo sy hinoanareo Ahy ary ho azonareo tsara fa Izaho no Izy." (Isaia 43:10).
-                    </div>
-                    
-                    <div class="verse">
-                        "Izao no fitiavana an'Andriamanitra, dia ny hitandremany ny didiny. Ary tsy mavesatra ny didiny, fa izay rehetra naterak'Andriamanitra dia maharesy izao tontolo izao." (1 Jaona 5:3, 4).
-                    </div>
-                    
-                    <h2>Connecting to Life</h2>
-                    <p><strong>SABATA:</strong> Vakio ny Isaia 43:10.</p>
-                    <p><strong>ALAHADY:</strong> Vakio ny Apokalypsy 2:10.</p>
-                    <p><strong>ALATSINAINY:</strong> Vakio ny Asan'ny Apostoly 1:9-11.</p>
-                    <p><strong>TALATA:</strong> Vakio ny 1 Jaona 5:3, 4.</p>
-                    <p><strong>ALAROBIA:</strong> Vakio ireto andininy ireto: Matio 5:14-16, Marka 1:17.</p>
-                    <p><strong>ALAKAMISY:</strong> Vakio ny Ohabolana 3:5, 6.</p>
-                    <p><strong>ZOMA:</strong> Vakio ny Salamo 32:7.</p>
-                `
-            }
-        ];
-
-        function renderLessonsList() {
-            const listContainer = document.getElementById('lessons-list');
-            listContainer.innerHTML = '';
-            
-            lessonsData.forEach(lesson => {
-                const lessonDiv = document.createElement('div');
-                lessonDiv.className = 'lesson-item';
-                lessonDiv.onclick = () => showLesson(lesson.id);
-                
-                lessonDiv.innerHTML = `
-                    <div class="lesson-left">
-                        <div class="lesson-number">${lesson.id}</div>
-                        <span class="lesson-title">${lesson.title}</span>
-                    </div>
-                    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18L15 12L9 6"/>
-                    </svg>
-                `;
-                
-                listContainer.appendChild(lessonDiv);
-            });
-        }
-
-        function showLesson(lessonId) {
-            const lesson = lessonsData.find(l => l.id === lessonId);
-            if (!lesson) return;
-            
-            document.getElementById('main-view').style.display = 'none';
-            const detailView = document.getElementById('lesson-detail');
-            detailView.className = 'lesson-detail active';
-            
-            const contentArea = document.getElementById('lesson-content-area');
-            contentArea.innerHTML = `
-                <h1>${lesson.title}</h1>
-                <div class="lesson-text">
-                    ${lesson.content}
+        <div class="lessons-list">
+            <a href="lesona1.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">1</div>
+                    <span class="lesson-title">Ny Fitiavan'Andriamanitra</span>
                 </div>
-            `;
-            
-            detailView.scrollTop = 0;
-        }
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
 
-        function showMainView() {
-            document.getElementById('main-view').style.display = 'block';
-            document.getElementById('lesson-detail').className = 'lesson-detail';
-        }
-        
-        function toggleTheme() {
-            const detailView = document.getElementById('lesson-detail');
-            const sunIcon = document.querySelector('.sun-icon');
-            const moonIcon = document.querySelector('.moon-icon');
-            
-            if (detailView.classList.contains('light-mode')) {
-                detailView.classList.remove('light-mode');
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            } else {
-                detailView.classList.add('light-mode');
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            }
-        }
+            <a href="lesona2.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">2</div>
+                    <span class="lesson-title">Ny Vavaka</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
 
-        renderLessonsList();
-    </script>
+            <a href="lesona3.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">3</div>
+                    <span class="lesson-title">Lesona 3</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona4.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">4</div>
+                    <span class="lesson-title">Lesona 4</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona5.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">5</div>
+                    <span class="lesson-title">Lesona 5</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona6.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">6</div>
+                    <span class="lesson-title">Lesona 6</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona7.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">7</div>
+                    <span class="lesson-title">Lesona 7</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona8.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">8</div>
+                    <span class="lesson-title">Lesona 8</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona9.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">9</div>
+                    <span class="lesson-title">Lesona 9</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona10.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">10</div>
+                    <span class="lesson-title">Lesona 10</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona11.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">11</div>
+                    <span class="lesson-title">Lesona 11</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona12.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">12</div>
+                    <span class="lesson-title">Lesona 12</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <a href="lesona13.html" class="lesson-item">
+                <div class="lesson-left">
+                    <div class="lesson-number">13</div>
+                    <span class="lesson-title">Fifandraisana amin'ny CORNERSTONECONNECTIONS</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+        </div>
+    </div>
 </body>
-</html>
+                </html> 
