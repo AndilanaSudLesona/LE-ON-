@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <title>Ny Fitiavan'Andriamanitra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        
+        body.light-mode {
+            background: #ffffff;
+        }
+        
+        body.light-mode .detail-header {
+            background: #ffffff;
+            border-bottom-color: #e5e5e5;
+        }
+        
+        body.light-mode .header-button {
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        body.light-mode .lesson-content h1 {
+            color: #000000;
+        }
+        
+        body.light-mode .lesson-text {
+            color: #333333;
+        }
+        
+        body.light-mode .lesson-text h2,
+        body.light-mode .lesson-text h3 {
+            color: #000000;
+        }
+        
+        body.light-mode .lesson-text p,
+        body.light-mode .lesson-text ul,
+        body.light-mode .lesson-text ol {
+            color: #444444;
+        }
+        
+        body.light-mode .lesson-text strong {
+            color: #000000;
+        }
+        
+        body.light-mode .verse {
+            background: #f5f5f5;
+            border-left-color: #000000;
+            color: #000000;
+        }
+        
+        .detail-header {
+            position: sticky;
+            top: 0;
+            background: #000000;
+            padding: 12px 16px;
+            border-bottom: 1px solid #2a2a2a;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .header-button {
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        
+        .header-button:active {
+            transform: scale(0.9);
+        }
+        
+        .lesson-content {
+            padding: 24px 20px 80px;
+            max-width: 100%;
+        }
+        
+        .lesson-content h1 {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Lora', serif;
+            color: #ffffff;
+            margin-bottom: 24px;
+            letter-spacing: 0.3px;
+            line-height: 1.3;
+        }
+        
+        .lesson-text {
+            color: #cccccc;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .lesson-text h2 {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Lora', serif;
+            color: #ffffff;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            letter-spacing: 0.3px;
+        }
+        
+        .lesson-text h3 {
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Lora', serif;
+            color: #ffffff;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            letter-spacing: 0.2px;
+        }
+        
+        .lesson-text p {
+            margin-bottom: 18px;
+            color: #cccccc;
+        }
+        
+        .lesson-text strong {
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .lesson-text ul, .lesson-text ol {
+            margin-left: 24px;
+            margin-bottom: 18px;
+            color: #cccccc;
+        }
+        
+        .lesson-text li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        
+        .verse {
+            background: #1a1a1a;
+            border-left: 4px solid #ffffff;
+            padding: 18px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #ffffff;
+            line-height: 1.8;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        @media (max-width: 375px) {
+            .lesson-content {
+                padding: 20px 16px 60px;
+            }
+            
+            .lesson-content h1 {
+                font-size: 22px;
+            }
+            
+            .lesson-text {
+                font-size: 15px;
+            }
+            
+            .lesson-text h2 {
+                font-size: 19px;
+            }
+            
+            .lesson-text h3 {
+                font-size: 17px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .lesson-content {
+                max-width: 480px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-header">
+        <button class="header-button" onclick="toggleTheme()" aria-label="Hanova theme">
+            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="lesson-content">
+        <h1>Ny Fitiavan'Andriamanitra</h1>
+        
+        <div class="lesson-text">
+            <h2>Tanjona</h2>
+            <p>Hianatra ny amin'ny fitiavan'Andriamanitra tsy misy fetra ho antsika.</p>
+            
+            <h2>Andinin-tsoratra fototra</h2>
+            <div class="verse">
+                "Fa toy izao no nitiavan'Andriamanitra izao tontolo izao: nomeny ny Zanani-lahy Tokana, mba tsy ho very izay rehetra mino Azy, fa hanana fiainana mandrakizay." - Jaona 3:16
+            </div>
+            
+            <h2>Fampianarana</h2>
+            <p>Andriamanitra dia tia antsika tena tia. Ny fitiavany dia:</p>
+            <ul>
+                <li><strong>Tsy misy fetra:</strong> Tsy misy mahafetra ny fitiavan'Andriamanitra</li>
+                <li><strong>Mandrakizay:</strong> Tsy miova izay fitiavany</li>
+                <li><strong>Manala ny heloka:</strong> Namela ny Zanany mba hamonjy antsika</li>
+            </ul>
+            
+            <p>Ity lesona ity dia mampiseho antsika fa na dia mpanota aza isika, dia tian'Andriamanitra ihany isika ary nanome ny Zanany Jesosy Kristy mba hamonjy antsika.</p>
+            
+            <h2>Fanontaniana ho dinihina</h2>
+            <p>1. Ahoana no ahafantaranao fa tia anao Andriamanitra?</p>
+            <p>2. Inona no fomba hanehoana ny fitiavana an'Andriamanitra?</p>
+            <p>3. Ahoana no fomba hahalalaovanao ny fitiavan'Andriamanitra isan'andro?</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+            
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.add('light-mode');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme
+        window.addEventListener('load', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+            
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+  </html>
