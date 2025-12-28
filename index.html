@@ -75,33 +75,16 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
-            gap: 16px;
+            justify-content: center;
             padding: 0 24px;
         }
 
-        .app-icon {
-            font-size: 48px;
-            line-height: 1;
-            animation: float 3s ease-in-out infinite;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 48px;
-            width: 48px;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-
         .app-info {
-            flex: 1;
-            min-width: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
+            text-align: center;
             height: 100%;
         }
 
@@ -529,21 +512,13 @@
             margin: 0 auto;
         }
 
-        /* Fanitsiana mba hifandanjan'ny logo sy soratra */
         @media (max-width: 374px) {
             .header {
                 height: 72px;
             }
             
             .header-content {
-                gap: 12px;
                 padding: 0 16px;
-            }
-            
-            .app-icon {
-                font-size: 40px;
-                height: 40px;
-                width: 40px;
             }
             
             .app-title {
@@ -567,12 +542,6 @@
             .header-content {
                 padding: 0 20px;
             }
-            
-            .app-icon {
-                font-size: 44px;
-                height: 44px;
-                width: 44px;
-            }
         }
 
         @media (max-width: 375px) {
@@ -582,12 +551,6 @@
             
             .header-content {
                 padding: 0 20px;
-            }
-
-            .app-icon {
-                font-size: 42px;
-                height: 42px;
-                width: 42px;
             }
 
             .app-title {
@@ -629,12 +592,6 @@
                 height: 84px;
             }
             
-            .app-icon {
-                font-size: 48px;
-                height: 48px;
-                width: 48px;
-            }
-            
             .content {
                 padding: calc(env(safe-area-inset-top) + 84px) 24px 32px;
             }
@@ -660,7 +617,6 @@
     <div class="app-container" id="menu">
         <header class="header">
             <div class="header-content">
-                <div class="app-icon">📖</div>
                 <div class="app-info">
                     <h1 class="app-title">Lesona SDA</h1>
                     <p class="app-subtitle">École du Sabbat</p>
@@ -894,4 +850,4 @@
         }
     </script>
 </body>
-</html>
+    </html> 
