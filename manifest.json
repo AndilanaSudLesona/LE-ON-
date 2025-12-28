@@ -1,157 +1,141 @@
 {
-  "name": "SDA Lesona - Seventh-day Adventist Lessons",
-  "short_name": "SDA Lesona",
-  "description": "Application pour apprendre les leçons de l'École du Sabbat de manière interactive et hors ligne",
+  "name": "Lesona SDA - École du Sabbat",
+  "short_name": "Lesona SDA",
+  "description": "Application éducative pour l'École du Sabbat - Leçons en malgache pour LEHIBE, TANORA ZOKINY et ZATOVO",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "theme_color": "#2196F3",
   "background_color": "#FFFFFF",
-  "lang": "fr-MG",
+  "theme_color": "#FFFFFF",
+  "lang": "mg",
   "dir": "ltr",
-  "categories": ["education", "lifestyle", "books"],
-  
-  "icons": [
-    {
-      "src": "/icons/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+  "prefer_related_applications": false,
+  "categories": [
+    "education",
+    "books",
+    "lifestyle",
+    "reference"
   ],
-  
-  "shortcuts": [
-    {
-      "name": "Leçon du jour",
-      "short_name": "Aujourd'hui",
-      "description": "Ouvrir la leçon du jour",
-      "url": "/?shortcut=today",
-      "icons": [
-        {
-          "src": "/icons/shortcut-today.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Toutes les leçons",
-      "short_name": "Leçons",
-      "description": "Voir toutes les leçons disponibles",
-      "url": "/?shortcut=lessons",
-      "icons": [
-        {
-          "src": "/icons/shortcut-lessons.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
-    }
-  ],
-  
   "screenshots": [
     {
-      "src": "/screenshots/screenshot-1.png",
-      "sizes": "540x720",
+      "src": "/images/screenshot-home.png",
+      "sizes": "540x960",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Page d'accueil avec liste des leçons"
+      "platform": "narrow",
+      "label": "Page d'accueil avec les trois catégories de leçons"
     },
     {
-      "src": "/screenshots/screenshot-2.png",
-      "sizes": "540x720",
+      "src": "/images/screenshot-lesson.png",
+      "sizes": "540x960",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Vue de lecture d'une leçon"
-    },
-    {
-      "src": "/screenshots/screenshot-wide-1.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Page d'accueil sur tablette"
+      "platform": "narrow",
+      "label": "Affichage d'une leçon en mode lecture"
     }
   ],
-  
-  "related_applications": [],
-  "prefer_related_applications": false,
-  
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "LEHIBE",
+      "short_name": "Lehibe",
+      "description": "Accès direct aux leçons pour adultes",
+      "url": "/?lesson=lehibe",
+      "icons": [
+        {
+          "src": "/images/lehibe.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    },
+    {
+      "name": "TANORA ZOKINY",
+      "short_name": "Tanora",
+      "description": "Accès direct aux leçons pour jeunes adultes",
+      "url": "/?lesson=tanora",
+      "icons": [
+        {
+          "src": "/images/tanora.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    },
+    {
+      "name": "ZATOVO",
+      "short_name": "Zatovo",
+      "description": "Accès direct aux leçons pour adolescents",
+      "url": "/?lesson=zatovo",
+      "icons": [
+        {
+          "src": "/images/zatovo.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    }
+  ],
   "serviceworker": {
     "src": "/service-worker.js",
     "scope": "/",
     "update_via_cache": "none"
   },
-  
-  "display_override": [
-    "window-controls-overlay",
-    "standalone",
-    "minimal-ui",
-    "browser"
-  ],
-  
-  "launch_handler": {
-    "client_mode": "navigate-existing"
-  },
-  
-  "protocol_handlers": [],
-  
+  "related_applications": [],
+  "iarc_rating_id": "",
   "share_target": {
     "action": "/share",
-    "method": "POST",
-    "enctype": "multipart/form-data",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
     "params": {
       "title": "title",
       "text": "text",
       "url": "url"
     }
   },
-  
+  "protocol_handlers": [
+    {
+      "protocol": "web+lesona",
+      "url": "/?lesson=%s"
+    }
+  ],
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
   "edge_side_panel": {
     "preferred_width": 400
   },
-  
-  "file_handlers": []
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }
