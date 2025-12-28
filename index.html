@@ -56,6 +56,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 20px 24px;
+            padding-top: calc(env(safe-area-inset-top) + 20px);
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
             position: fixed;
             top: 0;
@@ -105,7 +106,7 @@
 
         .content {
             flex: 1;
-            padding: 100px 24px 32px;
+            padding: calc(env(safe-area-inset-top) + 100px) 24px 32px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -511,6 +512,7 @@
         @media (max-width: 375px) {
             .header {
                 padding: 16px 20px;
+                padding-top: calc(env(safe-area-inset-top) + 16px);
             }
 
             .app-icon {
@@ -522,7 +524,7 @@
             }
 
             .content {
-                padding: 90px 20px 28px;
+                padding: calc(env(safe-area-inset-top) + 90px) 20px 28px;
             }
 
             .lesson-card {
@@ -808,4 +810,3 @@
     </script>
 </body>
 </html>
- 
