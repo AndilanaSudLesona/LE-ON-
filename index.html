@@ -75,8 +75,9 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             padding: 0 24px;
+            position: relative;
         }
 
         .app-info {
@@ -87,6 +88,9 @@
             text-align: center;
             height: 100%;
             padding-bottom: 16px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .app-title {
@@ -106,6 +110,123 @@
             letter-spacing: 0.3px;
             line-height: 1.2;
             margin-top: 2px;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+            padding-bottom: 16px;
+            margin-left: auto;
+            position: relative;
+        }
+
+        .language-toggle {
+            position: relative;
+        }
+
+        .language-btn-main {
+            padding: 8px;
+            border: none;
+            background: transparent;
+            color: #4A5568;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .language-btn-main svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .language-btn-main:hover {
+            background: #F7FAFC;
+        }
+
+        .language-btn-main:active {
+            transform: scale(0.95);
+        }
+
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            min-width: 160px;
+            z-index: 1000;
+        }
+
+        .language-dropdown.show {
+            display: block;
+            animation: dropdownFade 0.2s ease;
+        }
+
+        @keyframes dropdownFade {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: #2D3748;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .language-option:hover {
+            background: #F7FAFC;
+        }
+
+        .language-option.active {
+            background: #EDF2F7;
+            color: #6C63FF;
+        }
+
+        .language-option .flag {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .language-option .lang-name {
+            flex: 1;
+        }
+
+        .language-option .checkmark {
+            opacity: 0;
+            color: #6C63FF;
+            font-size: 18px;
+        }
+
+        .language-option.active .checkmark {
+            opacity: 1;
         }
 
         .content {
@@ -523,11 +644,11 @@
             }
             
             .app-title {
-                font-size: 21px;
+                font-size: 20px;
             }
             
             .app-subtitle {
-                font-size: 13px;
+                font-size: 12px;
             }
             
             .content {
@@ -555,7 +676,7 @@
             }
 
             .app-title {
-                font-size: 22px;
+                font-size: 21px;
             }
 
             .content {
@@ -590,11 +711,11 @@
             }
             
             .header {
-                height: 84px;
+                height: 100px;
             }
             
             .content {
-                padding: calc(env(safe-area-inset-top) + 84px) 24px 32px;
+                padding: calc(env(safe-area-inset-top) + 100px) 24px 32px;
             }
         }
 
@@ -622,6 +743,28 @@
                     <h1 class="app-title">Lesona SDA</h1>
                     <p class="app-subtitle">École du Sabbat</p>
                 </div>
+                <div class="language-selector">
+                    <div class="language-toggle">
+                        <button class="language-btn-main" id="languageBtn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014 6.5h2V4h-6V2h-2v2H2v2h10c-.55 1.77-1.41 3.41-2.55 4.86-.58-.67-1.09-1.37-1.54-2.11H5.98c.56 1.06 1.24 2.07 2.02 3.03L4.5 16.5 6 18l4.5-4.5 2.59 2.59-1.09 1.09 2 2 5-5-2.09-2.09-2.04 2.04z" fill="currentColor"/>
+                                <path d="M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <button class="language-option active" data-lang="mg">
+                                <span class="flag">🇲🇬</span>
+                                <span class="lang-name">Malagasy</span>
+                                <span class="checkmark">✓</span>
+                            </button>
+                            <button class="language-option" data-lang="en">
+                                <span class="flag">🇬🇧</span>
+                                <span class="lang-name">English</span>
+                                <span class="checkmark">✓</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -633,7 +776,7 @@
                 </div>
 
                 <div class="lessons-list">
-                    <a href="https://sabbath-school.adventech.io/resources/mg/ss/2026-01" class="lesson-card" data-lesson="lehibe">
+                    <a href="#" class="lesson-card" data-lesson="lehibe" data-url-mg="https://sabbath-school.adventech.io/resources/mg/ss/2025-04" data-url-en="https://sabbath-school.adventech.io/resources/en/ss/2026-01">
                         <div class="lesson-image-container">
                             <img src="images/lehibe.png" alt="LEHIBE" class="lesson-image">
                         </div>
@@ -649,7 +792,7 @@
                         </svg>
                     </a>
 
-                    <a href="https://sabbath-school.adventech.io/resources/mg/ss/2026-01-cq" class="lesson-card" data-lesson="tanora">
+                    <a href="#" class="lesson-card" data-lesson="tanora" data-url-mg="https://sabbath-school.adventech.io/resources/mg/ss/2025-04-cq" data-url-en="https://sabbath-school.adventech.io/resources/en/ss/2026-01-cq">
                         <div class="lesson-image-container">
                             <img src="images/tanora.png" alt="TANORA ZOKINY" class="lesson-image">
                         </div>
@@ -665,7 +808,7 @@
                         </svg>
                     </a>
 
-                    <a href="https://AndilanaSudLesona.github.io/SDA/Zatovo/" class="lesson-card" data-lesson="zatovo">
+                    <a href="#" class="lesson-card" data-lesson="zatovo" data-url-mg="https://AndilanaSudLesona.github.io/SDA/Zatovo/" data-url-en="https://sabbath-school.adventech.io/resources/en/ss/2026-01-cc">
                         <div class="lesson-image-container">
                             <img src="images/zatovo.png" alt="ZATOVO" class="lesson-image">
                         </div>
@@ -707,13 +850,52 @@
         <p>Misy version vaovao. Cliquer mba hanovana izao.</p>
         <button id="btnUpdate">Mettre à jour</button>
     </div>
-
     <script>
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const cards = document.querySelectorAll('.lesson-card');
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const languageOptions = document.querySelectorAll('.language-option');
         
+        let currentLanguage = localStorage.getItem('selectedLanguage') || 'mg';
         let swRegistration = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLanguageUI(currentLanguage);
+        });
+
+        languageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!languageDropdown.contains(e.target) && e.target !== languageBtn) {
+                languageDropdown.classList.remove('show');
+            }
+        });
+
+        languageOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const lang = this.dataset.lang;
+                currentLanguage = lang;
+                localStorage.setItem('selectedLanguage', lang);
+                updateLanguageUI(lang);
+                languageDropdown.classList.remove('show');
+            });
+        });
+
+        function updateLanguageUI(lang) {
+            languageOptions.forEach(option => {
+                if (option.dataset.lang === lang) {
+                    option.classList.add('active');
+                } else {
+                    option.classList.remove('active');
+                }
+            });
+        }
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', async () => {
@@ -801,7 +983,8 @@
         cards.forEach(card => {
             card.addEventListener('click', async function(e) {
                 e.preventDefault();
-                const url = this.getAttribute('href');
+                
+                const url = currentLanguage === 'mg' ? this.dataset.urlMg : this.dataset.urlEn;
                 const lessonKey = 'lesson_visited_' + this.dataset.lesson;
                 
                 loadingOverlay.classList.add('active');
@@ -832,7 +1015,7 @@
         window.addEventListener('beforeunload', () => {
             if (iframe.src) {
                 const currentCard = Array.from(cards).find(card => 
-                    iframe.src.startsWith(card.getAttribute('href'))
+                    iframe.src.startsWith(card.dataset.urlMg) || iframe.src.startsWith(card.dataset.urlEn)
                 );
                 if (currentCard) {
                     const lessonKey = 'lesson_visited_' + currentCard.dataset.lesson;
@@ -851,4 +1034,4 @@
         }
     </script>
 </body>
-    </html> 
+</html>
