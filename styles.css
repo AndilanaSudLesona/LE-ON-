@@ -96,10 +96,10 @@ body {
     margin-top: 2px;
 }
 
-/* Language Selector */
+/* Language Selector - REPOSITIONNÉ */
 .language-selector {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-end;
     height: 100%;
     padding-bottom: 16px;
@@ -262,22 +262,22 @@ body {
 .lessons-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     animation: fadeInUp 0.8s ease-out;
 }
 
-/* Lesson Card */
+/* Lesson Card - DIMENSIONS RÉDUITES */
 .lesson-card {
     background: #FFFFFF;
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
+    gap: 14px;
+    padding: 14px;
     text-decoration: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
-    border-radius: 20px;
+    border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
     overflow: hidden;
 }
@@ -305,8 +305,8 @@ body {
 }
 
 .lesson-image-container {
-    width: 110px;
-    height: 110px;
+    width: 80px;
+    height: 80px;
     flex-shrink: 0;
     position: relative;
 }
@@ -316,7 +316,7 @@ body {
     height: 100%;
     object-fit: cover;
     background: linear-gradient(135deg, #F7FAFC 0%, #EDF2F7 100%);
-    border-radius: 16px;
+    border-radius: 12px;
     transition: transform 0.3s ease;
 }
 
@@ -330,16 +330,16 @@ body {
 }
 
 .lesson-title {
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 700;
     color: #1A202C;
     letter-spacing: -0.3px;
     line-height: 1.3;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .lesson-meta {
-    font-size: 13px;
+    font-size: 12px;
     color: #A0AEC0;
     font-weight: 500;
     display: flex;
@@ -361,8 +361,8 @@ body {
 }
 
 .lesson-arrow {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     opacity: 0.3;
     transition: all 0.3s ease;
@@ -649,6 +649,20 @@ iframe {
     .content {
         padding: calc(env(safe-area-inset-top) + 90px) 16px 28px;
     }
+    
+    .lesson-card {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .lesson-image-container {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .lesson-title {
+        font-size: 15px;
+    }
 }
 
 @media (min-width: 375px) and (max-width: 767px) {
@@ -679,18 +693,18 @@ iframe {
     }
 
     .lesson-card {
-        padding: 16px;
-        gap: 16px;
-        border-radius: 16px;
+        padding: 12px;
+        gap: 12px;
+        border-radius: 14px;
     }
 
     .lesson-image-container {
-        width: 96px;
-        height: 96px;
+        width: 72px;
+        height: 72px;
     }
 
     .lesson-title {
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .welcome-title {
@@ -722,3 +736,4 @@ iframe {
         transition-duration: 0.01ms !important;
     }
 }
+ 
