@@ -25,17 +25,17 @@ const translations = {
         
         // Install prompt
         installTitle: "📱 Installer Lesona SDA",
-        installDescription: "Installer l'application mba hahafahana mampiasa offline tsara kokoa",
+        installDescription: "Installer l'application mba hahafahana mampiasa offline",
         installButton: "Installer",
         dismissButton: "Aoriana",
         
         // Update notification
-        updateTitle: "🔄 Mise à jour disponible",
-        updateDescription: "Misy version vaovao. Cliquer mba hanovana izao.",
+        updateTitle: "🔄 Mise à jour",
+        updateDescription: "Misy version vaovao.",
         updateButton: "Mettre à jour",
         
         // Footer
-        footer: "© 2025 Lesona SDA • Tous droits réservés",
+        footer: "© 2025 Lesona SDA",
         
         // Language names
         languageMalagasy: "Malagasy",
@@ -67,17 +67,17 @@ const translations = {
         
         // Install prompt
         installTitle: "📱 Install SDA Lessons",
-        installDescription: "Install the app for better offline access and experience",
+        installDescription: "Install the app for better offline access",
         installButton: "Install",
         dismissButton: "Later",
         
         // Update notification
         updateTitle: "🔄 Update Available",
-        updateDescription: "A new version is available. Click to update now.",
+        updateDescription: "A new version is available.",
         updateButton: "Update",
         
         // Footer
-        footer: "© 2025 SDA Lessons • All rights reserved",
+        footer: "© 2025 SDA Lessons",
         
         // Language names
         languageMalagasy: "Malagasy",
