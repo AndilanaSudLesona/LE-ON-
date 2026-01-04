@@ -40,7 +40,7 @@
         document.querySelector('.app-title').textContent = t.appTitle;
         document.querySelector('.app-subtitle').textContent = t.appSubtitle;
         
-        // Welcome section
+        // Welcome section (even if hidden)
         document.querySelector('.welcome-title').textContent = t.welcomeTitle;
         document.querySelector('.welcome-description').textContent = t.welcomeDescription;
         
@@ -286,3 +286,4 @@
         init();
     }
 })();
+ 
