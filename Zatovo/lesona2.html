@@ -140,18 +140,12 @@
 
         .header-image {
             width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #1e40af 100%);
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
             border-radius: 8px;
             margin: 2em 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5em;
-            font-weight: 600;
-            text-align: center;
-            padding: 20px;
+            display: block;
         }
 
         .highlight {
@@ -243,8 +237,7 @@
             }
 
             .header-image {
-                height: 180px;
-                font-size: 1.2em;
+                max-height: 250px;
             }
         }
     </style>
@@ -270,9 +263,7 @@
     <div class="container">
         <h1>ILAY FANOMEZANA NAMPANANTENAINA</h1>
 
-        <div class="header-image">
-            Lesona 2: Ny Filatsahan'ny Fanahy Masina
-        </div>
+        <img src="images/lesona2.png" alt="Lesona 2" class="header-image">
 
         <div class="section">
             <h3>Tantara fototra</h3>
@@ -479,3 +470,4 @@
     </script>
 </body>
 </html>
+ 
