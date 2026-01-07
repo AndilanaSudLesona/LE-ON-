@@ -36,10 +36,6 @@
     function updateAllTranslations(lang) {
         const t = translations[lang];
         
-        // Header
-        document.querySelector('.app-title').textContent = t.appTitle;
-        document.querySelector('.app-subtitle').textContent = t.appSubtitle;
-        
         // Welcome section (even if hidden)
         document.querySelector('.welcome-title').textContent = t.welcomeTitle;
         document.querySelector('.welcome-description').textContent = t.welcomeDescription;
@@ -285,5 +281,4 @@
     } else {
         init();
     }
-})();
- 
+})(); 
