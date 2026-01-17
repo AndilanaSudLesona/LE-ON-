@@ -29,22 +29,23 @@
         .container {
             max-width: 100%;
             min-height: 100vh;
-            padding: 16px 16px 80px; /* Reduced top padding since header is removed */
+            padding: 20px 16px 80px;
         }
         
         .header {
-            padding: 48px 0 32px;
+            padding: 32px 0 24px;
             text-align: center;
         }
         
         .main-title {
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 700;
             font-family: 'Lora', serif;
-            color: #ffffff;
+            color: #8B4513; /* Brown color */
             letter-spacing: 0.5px;
             line-height: 1.3;
-            margin-bottom: 8px;
+            margin-bottom: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .subtitle {
@@ -173,10 +174,11 @@
         .lesson-title {
             font-size: 16px;
             font-weight: 600;
-            color: #ffffff;
+            color: #ffffff; /* White for visibility */
             font-family: 'Lora', serif;
             letter-spacing: 0.3px;
             line-height: 1.4;
+            display: block; /* Ensure it displays */
         }
         
         .lesson-item.disabled .lesson-title {
@@ -240,6 +242,9 @@
 </head>
 <body>
     <div class="container">
+        <div class="header">
+            <h1 class="main-title">LESONA HO AN'NY ZATOVO</h1>
+        </div>
         
         <div class="intro-section">
             <a href="introduction.html" class="intro-link">
@@ -247,7 +252,7 @@
                     <div class="intro-label"></div>
                     <div class="intro-title">Fampidirana</div>
                 </div>
-                <svg class="intro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <svg class="intro-icon" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="1.5">
                     <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                 </svg>
             </a>
@@ -261,7 +266,7 @@
                     <div class="lesson-number">1</div>
                     <span class="lesson-title">Teny farany sy vavolombelona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -271,7 +276,7 @@
                     <div class="lesson-number">2</div>
                     <span class="lesson-title">Ilay fanomezana nampanantenaina</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -281,7 +286,7 @@
                     <div class="lesson-number">3</div>
                     <span class="lesson-title">Maneho an'i Jesosy</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -291,7 +296,7 @@
                     <div class="lesson-number">4</div>
                     <span class="lesson-title">Ny fahitsian-toetra</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -301,7 +306,7 @@
                     <div class="lesson-number">5</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -311,7 +316,7 @@
                     <div class="lesson-number">6</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -321,7 +326,7 @@
                     <div class="lesson-number">7</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -331,7 +336,7 @@
                     <div class="lesson-number">8</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -341,7 +346,7 @@
                     <div class="lesson-number">9</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -351,7 +356,7 @@
                     <div class="lesson-number">10</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -361,7 +366,7 @@
                     <div class="lesson-number">11</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -371,7 +376,7 @@
                     <div class="lesson-number">12</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
@@ -381,7 +386,7 @@
                     <div class="lesson-number">13</div>
                     <span class="lesson-title">Tsy mbola vonona</span>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
                     <path d="M9 18L15 12L9 6"/>
                 </svg>
             </a>
