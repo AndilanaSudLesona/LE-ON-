@@ -4,7 +4,6 @@
     
     // DOM Elements
     const loadingOverlay = document.getElementById('loadingOverlay');
-    const loadingText = document.getElementById('loadingText');
     const cards = document.querySelectorAll('.lesson-card');
     const languageBtn = document.getElementById('languageBtn');
     const languageDropdown = document.getElementById('languageDropdown');
@@ -15,8 +14,6 @@
     const installPrompt = document.getElementById('installPrompt');
     const btnInstall = document.getElementById('btnInstall');
     const btnDismiss = document.getElementById('btnDismiss');
-    const updateNotification = document.getElementById('updateNotification');
-    const btnUpdate = document.getElementById('btnUpdate');
     
     // State
     let currentLanguage = localStorage.getItem('selectedLanguage') || 'mg';
@@ -46,25 +43,11 @@
         lessonTitles[1].textContent = t.lessons.youth;
         lessonTitles[2].textContent = t.lessons.young;
         
-        // Status text
-        document.querySelectorAll('.lesson-meta span:last-child').forEach(span => {
-            span.textContent = t.ready;
-        });
-        
-        // Loading overlay
-        document.querySelector('.loading-overlay h2').textContent = t.loading;
-        loadingText.textContent = t.loadingLesson;
-        
         // Install prompt
         document.querySelector('.install-prompt h3').textContent = t.installTitle;
         document.querySelector('.install-prompt p').textContent = t.installDescription;
         btnInstall.textContent = t.installButton;
         btnDismiss.textContent = t.dismissButton;
-        
-        // Update notification
-        document.querySelector('.update-notification h3').textContent = t.updateTitle;
-        document.querySelector('.update-notification p').textContent = t.updateDescription;
-        btnUpdate.textContent = t.updateButton;
         
         // Footer
         document.querySelector('.footer p').textContent = t.footer;
@@ -100,9 +83,6 @@
         // Install buttons
         btnInstall.addEventListener('click', handleInstallClick);
         btnDismiss.addEventListener('click', handleDismissClick);
-        
-        // Update button
-        btnUpdate.addEventListener('click', handleUpdateClick);
     }
     
     // Language Button Click Handler
@@ -151,7 +131,6 @@
         const lessonKey = 'lesson_visited_' + this.dataset.lesson;
         
         loadingOverlay.classList.add('active');
-        loadingText.textContent = translations[currentLanguage].loadingLesson;
         
         iframe.src = url;
         
@@ -203,8 +182,6 @@
                 swRegistration = await navigator.serviceWorker.register('/service-worker.js');
                 console.log('✓ Service Worker registered');
                 
-                checkForUpdates();
-                
                 navigator.serviceWorker.addEventListener('message', (event) => {
                     if (event.data && event.data.action === 'cached') {
                         console.log('✓ Resource cached:', event.data.url);
@@ -214,34 +191,6 @@
                 console.error('✗ Service Worker error:', error);
             }
         }
-    }
-    
-    // Check for Updates
-    function checkForUpdates() {
-        if (!swRegistration) return;
-        
-        swRegistration.addEventListener('updatefound', () => {
-            const newWorker = swRegistration.installing;
-            
-            newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                    showUpdateNotification();
-                }
-            });
-        });
-    }
-    
-    // Show Update Notification
-    function showUpdateNotification() {
-        updateNotification.classList.add('show');
-    }
-    
-    // Update Click Handler
-    function handleUpdateClick() {
-        if (swRegistration && swRegistration.waiting) {
-            swRegistration.waiting.postMessage({ action: 'skipWaiting' });
-        }
-        window.location.reload();
     }
     
     // Setup Install Prompt
