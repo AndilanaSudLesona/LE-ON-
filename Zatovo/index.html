@@ -19,7 +19,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: #000000;
+            background: transparent; /* Transparent for Android WebView */
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
@@ -29,7 +29,7 @@
         .container {
             max-width: 100%;
             min-height: 100vh;
-            padding: 20px 16px 80px;
+            padding: 16px 16px 80px; /* Reduced top padding since header is removed */
         }
         
         .header {
@@ -57,9 +57,11 @@
         .intro-section {
             margin: 24px 0 32px;
             padding: 20px;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
+            background: rgba(255, 255, 255, 0.08); /* Semi-transparent white */
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         
         .intro-link {
@@ -82,7 +84,7 @@
         
         .intro-label {
             font-size: 12px;
-            color: #888888;
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 8px;
@@ -100,7 +102,7 @@
         
         .section-title {
             font-size: 13px;
-            color: #666666;
+            color: rgba(255, 255, 255, 0.5); /* Better contrast */
             text-transform: uppercase;
             letter-spacing: 1.5px;
             margin: 32px 0 16px;
@@ -110,31 +112,34 @@
         .lessons-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px; /* Better spacing */
         }
         
         .lesson-item {
-            background: #000000;
-            border: 1px solid #1a1a1a;
-            border-radius: 12px;
-            padding: 16px;
+            background: rgba(255, 255, 255, 0.05); /* Semi-transparent */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px; /* More rounded */
+            padding: 16px 18px; /* Better padding */
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         
         .lesson-item:active {
             transform: scale(0.98);
-            opacity: 0.7;
-            border-color: #2a2a2a;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
         }
         
         .lesson-item.disabled {
-            opacity: 0.4;
+            opacity: 0.35;
             pointer-events: none;
+            background: rgba(255, 255, 255, 0.02);
         }
         
         .lesson-left {
@@ -145,9 +150,9 @@
         }
         
         .lesson-number {
-            width: 36px;
-            height: 36px;
-            background: #ffffff;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.95); /* Brighter white */
             color: #000000;
             border-radius: 50%;
             display: flex;
@@ -156,11 +161,13 @@
             font-size: 15px;
             font-weight: 700;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
         }
         
         .lesson-item.disabled .lesson-number {
-            background: #1a1a1a;
-            color: #444444;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.3);
+            box-shadow: none;
         }
         
         .lesson-title {
@@ -173,7 +180,7 @@
         }
         
         .lesson-item.disabled .lesson-title {
-            color: #444444;
+            color: rgba(255, 255, 255, 0.3);
             font-style: italic;
         }
         
@@ -233,10 +240,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1 class="main-title">LESONA HO AN'NY ZATOVO</h1>
-            <p class="subtitle">15-18 taona</p>
-        </div>
         
         <div class="intro-section">
             <a href="introduction.html" class="intro-link">
