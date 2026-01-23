@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fampidirana - Lesona Zatovo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #ffffff;
             --text-color: #1a1a1a;
             --secondary-color: #4a4a4a;
-            --accent-color: #2563eb;
+            --accent-color: #8B4513;
             --border-color: #e5e5e5;
             --highlight-bg: #f8f9fa;
         }
@@ -21,7 +18,7 @@
             --bg-color: #1a1a1a;
             --text-color: #e5e5e5;
             --secondary-color: #a8a8a8;
-            --accent-color: #60a5fa;
+            --accent-color: #A0522D;
             --border-color: #333333;
             --highlight-bg: #2a2a2a;
         }
@@ -30,48 +27,25 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Lora', 'Georgia', serif;
-            line-height: 1.8;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
             transition: background-color 0.3s ease, color 0.3s ease;
-            padding: 20px;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 80px;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
+        /* FIXED BACK BUTTON */
         .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--accent-color);
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            margin-bottom: 32px;
-            transition: opacity 0.2s ease;
-        }
-
-        .back-button:hover {
-            opacity: 0.7;
-        }
-
-        .back-button svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .theme-toggle {
             position: fixed;
             top: 20px;
-            right: 20px;
+            left: 20px;
             background: var(--highlight-bg);
             border: 1px solid var(--border-color);
             border-radius: 50%;
@@ -83,381 +57,243 @@
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 1000;
+            text-decoration: none;
         }
 
-        .theme-toggle:hover {
+        .back-button:hover {
             transform: scale(1.1);
+            background: var(--accent-color);
         }
 
-        .theme-toggle svg {
+        .back-button:hover svg {
+            stroke: white;
+        }
+
+        .back-button svg {
             width: 24px;
             height: 24px;
-            fill: var(--text-color);
             stroke: var(--text-color);
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
 
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-            color: var(--accent-color);
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .main-title {
+            font-size: 2.2em;
             font-weight: 700;
-        }
-
-        h2 {
-            font-size: 1.8em;
-            margin-top: 1.5em;
-            margin-bottom: 0.8em;
             color: var(--accent-color);
-            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            margin-bottom: 10px;
         }
 
-        h3 {
-            font-size: 1.4em;
-            margin-top: 1.2em;
-            margin-bottom: 0.6em;
+        .subtitle {
+            font-size: 1.1em;
             color: var(--secondary-color);
-            font-weight: 600;
+            font-weight: 400;
+            margin-top: 5px;
         }
 
-        p {
-            margin-bottom: 1.2em;
+        .intro-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .intro-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .intro-content {
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .intro-content p {
+            margin-bottom: 15px;
             text-align: justify;
         }
 
-        .intro-quote {
-            font-style: italic;
-            color: var(--secondary-color);
-            margin: 2em 0;
-            padding: 1.5em;
-            background: var(--highlight-bg);
-            border-left: 4px solid var(--accent-color);
-            border-radius: 4px;
-            font-size: 1.1em;
-            line-height: 1.6;
+        .features-list {
+            margin: 25px 0;
+            padding-left: 20px;
         }
 
-        .section {
-            margin: 2em 0;
+        .features-list li {
+            margin-bottom: 12px;
+            color: var(--text-color);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
         }
 
         .highlight {
             background-color: var(--highlight-bg);
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
-        }
-
-        strong {
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .next-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--accent-color);
-            color: white;
-            padding: 14px 28px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 2em;
-            transition: all 0.2s ease;
-        }
-
-        .next-button:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .next-button svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .abbreviations-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-            margin-top: 1.5em;
-        }
-
-        .abbr-item {
-            padding: 12px 16px;
-            background: var(--highlight-bg);
-            border-radius: 6px;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        .abbr-item strong {
+            padding: 3px 6px;
+            border-radius: 4px;
             color: var(--accent-color);
-            margin-right: 6px;
+            font-weight: 500;
+        }
+
+        .quote-box {
+            margin: 25px 0;
+            padding: 20px;
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--secondary-color);
+            font-size: 0.9em;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
             .container {
-                padding: 20px 10px;
+                padding: 70px 15px 30px;
             }
 
-            h1 {
-                font-size: 2em;
+            .main-title {
+                font-size: 1.8em;
             }
 
-            h2 {
-                font-size: 1.5em;
+            .intro-section {
+                padding: 20px;
             }
 
-            h3 {
-                font-size: 1.2em;
-            }
-
-            .theme-toggle {
+            .back-button {
                 width: 45px;
                 height: 45px;
                 top: 15px;
-                right: 15px;
+                left: 15px;
             }
 
-            .abbreviations-grid {
-                grid-template-columns: 1fr;
+            .back-button svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .container {
+                padding: 65px 12px 25px;
+            }
+
+            .main-title {
+                font-size: 1.6em;
+            }
+
+            .intro-section {
+                padding: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg id="sunIcon" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="5" fill="none"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    <!-- FIXED BACK BUTTON -->
+    <a href="index.html" class="back-button" aria-label="Return to main page">
+        <svg viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
-        <svg id="moonIcon" viewBox="0 0 24 24" style="display: none;">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none"/>
-        </svg>
-    </button>
+    </a>
 
     <div class="container">
-        <a href="index.html" class="back-button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M15 18L9 12L15 6"/>
-            </svg>
-            Hiverina
-        </a>
-
-        <h1>Fampidirana</h1>
-
-        <div class="intro-quote">
-            "Tantara. Marina. Azo itokiana."
+        <div class="header">
+            <h1 class="main-title">FAMPIDIRANA</h1>
+            <p class="subtitle">Lesona ho an'ny zatovo 15-18 taona</p>
         </div>
 
-        <div class="section">
-            <h2>Tonga soa eto amin'ny lesona ho an'ny zatovo</h2>
+        <div class="intro-section">
+            <h2 class="intro-title">Tongasoa eto amin'ny Lesona</h2>
             
-            <p>Tena faly izahay mandray anao eto amin'ity programa fianarana ity! Ny lesona ireto dia natao manokana ho an'ny zatovo 15-18 taona, mba hanampiana anao hahalala bebe kokoa ny Baiboly sy ny fifandraisanao amin'Andriamanitra.</p>
-        </div>
-
-        <div class="section">
-            <h2>Inona no ho hitanao amin'ity lesona ity?</h2>
-            
-            <p>Isan-kerinandro, hahita zavatra vaovao ianao:</p>
-
-            <p><strong>Tantara avy amin'ny Baiboly</strong> — Hianatra momba ny olona tena misy sy ny traikefa niainany tamin'Andriamanitra ianao.</p>
-
-            <p><strong>Fanontaniana manitatra ny saina</strong> — Handinika lalina kokoa ny hevitrao manokana sy ny finoanao ianao.</p>
-
-            <p><strong>Fampiharana isan'andro</strong> — Hahita fomba hampiharina ny lesona eo amin'ny fiainanao andavanandro ianao.</p>
-
-            <p><strong>Andininy azo tsaroana</strong> — Andalan-tSoratra Masina tsara izay hanampy anao mandritra ny herinandro.</p>
-        </div>
-
-        <div class="section">
-            <h2>Ahoana no fampiasana ity boky ity?</h2>
-            
-            <p>Tsotra sy mora ny fomba fampiasana azy:</p>
-
-            <p><strong>1. Vakio ny tantara fototra</strong> — Isan-kerinandro, misy tantara avy amin'ny Baiboly izay vakianao.</p>
-
-            <p><strong>2. Saino ny fanontaniana</strong> — Misy fanontaniana hanampy anao hieritreritra lalina kokoa.</p>
-
-            <p><strong>3. Ampiharaina amin'ny fiainanao</strong> — Isan'andro, misy fampiharana kely hahafahanao mampihatra ny lesona.</p>
-
-            <p><strong>4. Mizarà amin'ny hafa</strong> — Resaho amin' ny namanao na ny fianakavianao ny lesona nianaranao!</p>
-        </div>
-
-        <div class="section">
-            <h2>Jereo ny ao amin'ny lesona tsirairay</h2>
-            
-            <p>Ny lesona tsirairay dia ahitana:</p>
-
-            <p><span class="highlight">Tantara fototra</span> — Ny tantara lehibe amin'ny herinandro</p>
-
-            <p><span class="highlight">Andininy fototra</span> — Andalan-tSoratra Masina(manampy anao hitadidy raha hatao tsinjery)</p>
-
-            <p><span class="highlight">Indray Mihelatra</span> — Fanazavana bebe kokoa avy amin' ny bokin' ny Fanahin' ny Faminaniana</p>
-
-            <p><span class="highlight">Ny Hevitrao?</span> — Fanontaniana hampieritreritra anao</p>
-
-            <p><span class="highlight">Tontolon'ny Tantara</span> — Ny tantara feno avy amin'ny Baiboly</p>
-
-            <p><span class="highlight">Fampiharana</span> — Fomba hampihatra ny lesona isan'andro (Sabata → Zoma)</p>
-        </div>
-
-        <div class="section">
-            <h2>Fanafohezan-Teny Ampiasaina Mandritra Ny Fianarana</h2>
-            
-            <div class="abbreviations-grid">
-                <div class="abbr-item">
-                    <strong>and.:</strong> andininy
+            <div class="intro-content">
+                <p>Ireo lesona ireo dia natao ho an'ny zatovo eo amin'ny 15 ka hatramin'ny 18 taona, mba hanampy anao <span class="highlight">hitombo amin'ny finoana</span> sy <span class="highlight">hahatakatra kokoa ny tenin'Andriamanitra</span>.</p>
+                
+                <p>Isan-kerinandro dia hisy lesona vaovao hianaranao izay mifantoka amin'ny lohahevitra manokana. Ny lesona tsirairay dia ahitana:</p>
+                
+                <ul class="features-list">
+                    <li><strong>Tantara fototra</strong> avy amin'ny Baiboly</li>
+                    <li><strong>Andininy fototra</strong> hampiharana</li>
+                    <li><strong>Fanazavana</strong> avy amin'ny Vavolombelona Mahery</li>
+                    <li><strong>Fanontaniana</strong> hampirisika fisaintsainana</li>
+                    <li><strong>Fampiharana</strong> isan'andro</li>
+                </ul>
+                
+                <p>Ny tanjona'ity programa fianarana ity dia ny <span class="highlight">hanome anao fitaovana</span> hitsangana ho mpino mahery sy mahatoky, ary <span class="highlight">hanome anao fanantenana</span> ho an'ny fiainanao andavanandro.</p>
+                
+                <div class="quote-box">
+                    <p>"Ny teny fikasana nomen'Andriamanitra ho an'ny zatovo dia mafy orina tahaka ny vatolampy, ary ny Tompo dia tsy hanadino ny teny fikasany."</p>
                 </div>
-                <div class="abbr-item">
-                    <strong>Apôk.:</strong> Apôkalipsy, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>Asa.:</strong> Asan'ny Apôstôly, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>b.:</strong> boky (volume)
-                </div>
-                <div class="abbr-item">
-                    <strong>Deo.:</strong> Deoterônômia, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>Efes.:</strong> Epistily ho an'ny Efesianina, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>EGW:</strong> Ellen Gould White (Ramatoa)
-                </div>
-                <div class="abbr-item">
-                    <strong>Ezek.:</strong> Ezekiela, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>Mpits.:</strong> Mpitsara, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>Eks.:</strong> Eksôdôsy, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>Gen.:</strong> Genesisy, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>GC:</strong> The Great Controversy / Hery Mifanandrina, EGW
-                </div>
-                <div class="abbr-item">
-                    <strong>Gal.:</strong> Galatianina, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>HM:</strong> Hery Mifanandrina / The Great Controversy, EGW
-                </div>
-                <div class="abbr-item">
-                    <strong>Hôs.:</strong> Hôseà, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>IFM:</strong> Ilay Fitiavana Mandesy / The Desire of Ages, EGW
-                </div>
-                <div class="abbr-item">
-                    <strong>Isa.:</strong> Isaià, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>Jak.:</strong> Jakôba, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>Jao.:</strong> Jaona, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>Jer.:</strong> Jeremia, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>Lev.:</strong> Levitikôsy, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>Lio.:</strong> Lioka, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>Kôr.:</strong> Kôrintianina, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>Mat.:</strong> Matio, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>Ohab.:</strong> Ohabolana, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>Pet.:</strong> Petera, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>Rôm.:</strong> Rômanina, TV
-                </div>
-                <div class="abbr-item">
-                    <strong>Sal.:</strong> Salamo, TT
-                </div>
-                <div class="abbr-item">
-                    <strong>t.:</strong> takila
-                </div>
-                <div class="abbr-item">
-                    <strong>tt.:</strong> takila roa fara fahakeliny
-                </div>
-                <div class="abbr-item">
-                    <strong>TT:</strong> Testamenta Taloha
-                </div>
-                <div class="abbr-item">
-                    <strong>TV:</strong> Testamenta Vaovao
-                </div>
-                <div class="abbr-item">
-                    <strong>VM:</strong> Vavolombelona Mahery
-                </div>
-            </div>
-
-            <div class="intro-quote" style="margin-top: 2em;">
-                "Fa hahazo hery hianareo amin'ny hilatsahan'ny Fanahy Masina aminareo, ary ho vavolombeloko any Jerosalema sy eran'i Jodia sy Samaria ary hatramin'ny faran'ny tany." — Asa 1:8
+                
+                <p><strong>Aza adino:</strong> Ny lesona tsirairay dia natao ho anao. Aza matahotra mangataka fanampiana raha mila izany. Andramo hampiharina ny zavatra ianaranao amin'ny fiainanao andavanandro.</p>
             </div>
         </div>
 
-        <a href="lesona1.html" class="next-button">
-            Manomboha ny Lesona 1
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 18L15 12L9 6"/>
-            </svg>
-        </a>
+        <div class="footer-note">
+            <p>"Fa izaho no Tompon'ny vara, hianareo no sampana. Izay mitoetra amiko, ary Izaho aminy, dia mamoa be." - Joany 15:5</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">© Lesona ho an'ny Zatovo - Fanjakana Mahagaga</p>
+        </div>
     </div>
 
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const sunIcon = document.getElementById('sunIcon');
-        const moonIcon = document.getElementById('moonIcon');
         const html = document.documentElement;
-
+        
         // Initialize with light theme
         let currentTheme = 'light';
         html.setAttribute('data-theme', currentTheme);
 
-        themeToggle.addEventListener('click', function() {
-            if (currentTheme === 'light') {
-                currentTheme = 'dark';
-                html.setAttribute('data-theme', 'dark');
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            } else {
-                currentTheme = 'light';
-                html.setAttribute('data-theme', 'light');
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            }
-        });
+        // Optional: You can add theme toggle if needed
+        // const themeToggle = document.createElement('button');
+        // themeToggle.className = 'theme-toggle';
+        // themeToggle.innerHTML = '🌙';
+        // themeToggle.style.position = 'fixed';
+        // themeToggle.style.top = '20px';
+        // themeToggle.style.right = '20px';
+        // document.body.appendChild(themeToggle);
+        
+        // themeToggle.addEventListener('click', function() {
+        //     if (currentTheme === 'light') {
+        //         currentTheme = 'dark';
+        //         html.setAttribute('data-theme', 'dark');
+        //         themeToggle.innerHTML = '☀️';
+        //     } else {
+        //         currentTheme = 'light';
+        //         html.setAttribute('data-theme', 'light');
+        //         themeToggle.innerHTML = '🌙';
+        //     }
+        // });
     </script>
 </body>
 </html>
- 
