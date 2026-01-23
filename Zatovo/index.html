@@ -19,7 +19,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: transparent; /* Transparent for Android WebView */
+            background: transparent;
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
@@ -29,98 +29,107 @@
         .container {
             max-width: 100%;
             min-height: 100vh;
-            padding: 16px 16px 80px; /* Reduced padding since header removed */
+            padding: 20px 16px 80px;
         }
         
         .header {
-            padding: 32px 0 24px;
+            padding: 24px 0 20px;
             text-align: center;
         }
         
         .main-title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             font-family: 'Lora', serif;
-            color: #8B4513; /* Brown color */
+            color: #8B4513;
             letter-spacing: 0.5px;
             line-height: 1.3;
-            margin-bottom: 0;
+            margin-bottom: 8px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .subtitle {
-            font-size: 14px;
+            font-size: 13px;
             color: #888888;
             font-weight: 400;
-            margin-top: 8px;
-        }
-        
-        .intro-section {
-            margin: 24px 0 32px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.08); /* Semi-transparent white */
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        .intro-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .intro-link:active {
-            transform: scale(0.98);
-            opacity: 0.7;
-        }
-        
-        .intro-content {
-            flex: 1;
-        }
-        
-        .intro-label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
-        .intro-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            font-family: 'Lora', serif;
-            letter-spacing: 0.3px;
-            line-height: 1.4;
+            margin-top: 4px;
         }
         
         .section-title {
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.5); /* Better contrast */
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin: 32px 0 16px;
+            margin: 20px 0 16px;
             font-weight: 600;
         }
         
         .lessons-list {
             display: flex;
             flex-direction: column;
-            gap: 10px; /* Better spacing */
+            gap: 10px;
         }
         
-        .lesson-item {
-            background: rgba(255, 255, 255, 0.05); /* Semi-transparent */
+        /* STYLE FOR INTRODUCTION ITEM */
+        .introduction-item {
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px; /* More rounded */
-            padding: 16px 18px; /* Better padding */
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            margin-bottom: 5px;
+        }
+        
+        .introduction-item:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .introduction-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1;
+        }
+        
+        .introduction-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(139, 69, 19, 0.9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(139, 69, 19, 0.3);
+        }
+        
+        .introduction-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #8B4513;
+            font-family: 'Lora', serif;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+        }
+        
+        /* STYLE FOR LESSON ITEMS */
+        .lesson-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 16px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -153,7 +162,7 @@
         .lesson-number {
             width: 38px;
             height: 38px;
-            background: rgba(255, 255, 255, 0.95); /* Brighter white */
+            background: rgba(255, 255, 255, 0.95);
             color: #000000;
             border-radius: 50%;
             display: flex;
@@ -162,7 +171,7 @@
             font-size: 15px;
             font-weight: 700;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
         
         .lesson-item.disabled .lesson-number {
@@ -174,15 +183,15 @@
         .lesson-title {
             font-size: 16px;
             font-weight: 600;
-            color: #8B4513; /* Brown color for lesson titles */
+            color: #8B4513;
             font-family: 'Lora', serif;
             letter-spacing: 0.3px;
             line-height: 1.4;
-            display: block; /* Ensure it displays */
+            display: block;
         }
         
         .lesson-item.disabled .lesson-title {
-            color: rgba(139, 69, 19, 0.3); /* Brown with low opacity */
+            color: rgba(139, 69, 19, 0.3);
             font-style: italic;
         }
         
@@ -193,41 +202,33 @@
             opacity: 0.5;
         }
         
-        .intro-icon {
-            width: 40px;
-            height: 40px;
-            flex-shrink: 0;
-            opacity: 0.8;
-        }
-        
         @media (max-width: 375px) {
             .container {
                 padding: 16px 12px 60px;
             }
             
             .header {
-                padding: 40px 0 24px;
+                padding: 20px 0 16px;
             }
             
             .main-title {
-                font-size: 23px;
+                font-size: 18px;
             }
             
-            .intro-section {
-                padding: 16px;
-            }
-            
-            .lesson-item {
+            .lesson-item,
+            .introduction-item {
                 padding: 14px;
             }
             
-            .lesson-number {
+            .lesson-number,
+            .introduction-icon {
                 width: 32px;
                 height: 32px;
                 font-size: 14px;
             }
             
-            .lesson-title {
+            .lesson-title,
+            .introduction-title {
                 font-size: 15px;
             }
         }
@@ -242,10 +243,24 @@
 </head>
 <body>
     <div class="container">
+        <!-- REMOVED: "LESONA HO AN'NY ZATOVO" header -->
         
-        <div class="section-title">Lesona 1-13</div>
+        <!-- INTRODUCTION ITEM - Aligns with lessons -->
+        <div class="section-title">Fampidirana sy Lesona</div>
         
         <div class="lessons-list">
+            <!-- INTRODUCTION -->
+            <a href="introduction.html" class="introduction-item">
+                <div class="introduction-left">
+                    <div class="introduction-icon">i</div>
+                    <span class="introduction-title">Fampidirana</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
+                    <path d="M9 18L15 12L9 6"/>
+                </svg>
+            </a>
+
+            <!-- LESONA 1 -->
             <a href="lesona1.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">1</div>
@@ -256,6 +271,7 @@
                 </svg>
             </a>
 
+            <!-- LESONA 2 -->
             <a href="lesona2.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">2</div>
@@ -266,6 +282,7 @@
                 </svg>
             </a>
 
+            <!-- LESONA 3 -->
             <a href="lesona3.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">3</div>
@@ -276,6 +293,7 @@
                 </svg>
             </a>
 
+            <!-- LESONA 4 -->
             <a href="lesona4.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">4</div>
@@ -286,6 +304,7 @@
                 </svg>
             </a>
 
+            <!-- LESONA 5 -->
             <a href="lesona5.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">5</div>
@@ -296,6 +315,7 @@
                 </svg>
             </a>
 
+            <!-- LESONA 6-13 (Disabled for now) -->
             <a href="lesona6.html" class="lesson-item disabled">
                 <div class="lesson-left">
                     <div class="lesson-number">6</div>
@@ -379,4 +399,3 @@
     </div>
 </body>
 </html>
- 
