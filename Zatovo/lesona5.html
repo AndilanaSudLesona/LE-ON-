@@ -138,14 +138,50 @@
             font-weight: 500;
         }
 
+        /* NEW: Hero section with image and title overlay */
+        .hero-section {
+            position: relative;
+            margin: 2em 0 3em;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
         .header-image {
             width: 100%;
             height: auto;
             max-height: 400px;
             object-fit: cover;
-            border-radius: 8px;
-            margin: 2em 0;
             display: block;
+        }
+
+        .hero-title-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+            padding: 60px 30px 30px;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            color: white;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 10px;
+            font-style: italic;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
         }
 
         .highlight {
@@ -291,8 +327,27 @@
                 right: 15px;
             }
 
+            .hero-title {
+                font-size: 2em;
+                padding: 40px 20px 20px;
+            }
+            
             .header-image {
-                max-height: 250px;
+                max-height: 300px;
+            }
+            
+            .hero-title-overlay {
+                padding: 40px 20px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8em;
+            }
+            
+            .hero-subtitle {
+                font-size: 1em;
             }
         }
     </style>
@@ -316,9 +371,14 @@
     </button>
 
     <div class="container">
-        <h1>HERY, FAHARETANA, TANJONA</h1>
-
-        <img src="images/lesona5.png" alt="Lesona 5" class="header-image">
+        <!-- HERO SECTION WITH IMAGE AND TITLE OVERLAY -->
+        <div class="hero-section">
+            <img src="images/lesona5.png" alt="Lesona 5" class="header-image">
+            <div class="hero-title-overlay">
+                <h1 class="hero-title">HERY, FAHARETANA, TANJONA</h1>
+                <div class="hero-subtitle">Lesona fahadimy</div>
+            </div>
+        </div>
 
         <div class="section">
             <h3>Tantara fototra</h3>
@@ -414,7 +474,7 @@
             </div>
 
             <div class="verse">
-                <p>"Fa Izaho mahalala ny hevitra iheverako anareo hoy Jehovah, dia hevitry ny hanatonga fiadanana, fa tsy loza, mba hanome anareo fanantenana ny amin'ny farany." <span class="reference">Jer. 29:11</span></p>
+                <p>"Fa Izaho mahalala ny hevitra iheveriko anareo hoy Jehovah, dia hevitry ny hanatonga fiadanana, fa tsy loza, mba hanome anareo fanantenana ny amin'ny farany." <span class="reference">Jer. 29:11</span></p>
             </div>
         </div>
 
