@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesona 5 - Hery, Faharetana, Tanjona</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --secondary-color: #4a4a4a;
+            --accent-color: #8B4513;
+            --border-color: #e5e5e5;
+            --highlight-bg: #f8f9fa;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e5e5e5;
+            --secondary-color: #a8a8a8;
+            --accent-color: #A0522D;
+            --border-color: #333333;
+            --highlight-bg: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-color);
+            stroke: var(--text-color);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            margin-top: 1.2em;
+            margin-bottom: 0.6em;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            text-align: justify;
+        }
+
+        .verse {
+            font-style: italic;
+            color: var(--secondary-color);
+            margin: 1.5em 0;
+            padding: 1em;
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+        }
+
+        .section {
+            margin: 2em 0;
+        }
+
+        .quote {
+            margin: 1.5em 0;
+            padding: 1.2em;
+            background: var(--highlight-bg);
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        .reference {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .header-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 2em 0;
+            display: block;
+        }
+
+        .highlight {
+            background-color: var(--highlight-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .info-box {
+            background: var(--highlight-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1.5em 0;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .question-list {
+            margin-left: 1.5em;
+        }
+
+        .question-list p {
+            margin-bottom: 0.8em;
+            position: relative;
+            padding-left: 1.2em;
+        }
+
+        .question-list p:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        em {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .day-section {
+            margin: 2em 0;
+            padding: 1.5em;
+            background: var(--highlight-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .day-section h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .ranking-list {
+            margin-left: 0;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ranking-list li {
+            margin-bottom: 0.5em;
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        .ranking-list li:before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .story-box {
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+
+        .rating-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1em 0;
+        }
+
+        .rating-option {
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-option:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .rating-option.selected {
+            background: var(--accent-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .header-image {
+                max-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg id="sunIcon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" fill="none"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg id="moonIcon" viewBox="0 0 24 24" style="display: none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none"/>
+        </svg>
+    </button>
+
+    <div class="container">
+        <h1>HERY, FAHARETANA, TANJONA</h1>
+
+        <img src="images/lesona5.png" alt="Lesona 5" class="header-image">
+
+        <div class="section">
+            <h3>Tantara fototra</h3>
+            <p><strong>Asa. 5:12 - 6:7</strong></p>
+            <p><strong>Fanampim-panazavana:</strong> VM, Toko 8,9</p>
+        </div>
+
+        <div class="section">
+            <h3>Andininy Fototra</h3>
+            <div class="verse">
+                <p>"Sambatra hianareo, raha haratsian'ny olona sy enjehiny ary asiany izay teny ratsy rehetra hitenenany lainga anareo noho ny amiko." <span class="reference">Mat. 5:11</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Indray Mihelatra</h3>
+            <div class="quote">
+                <p>"Niharihary ny tsy fahombiazan'ireo mpitari-ka teo amin'ny Jiosy tamin'ny tsy nahatante-rahany ny fikasan Andriamanitra ho an'ny vahoaka nofidiny. Nasehon'ireo nametrahan'i Jehovah ny fahamarinana fa tsy nahatoky tamin'izay nankinina taminy izy ka nifidy olon-kafa Andriamanitra hanao ny asany. Jamba ireto mpitarika ireto, ka ankehitriny izy nanome vahana an'izay nolazainy fa fahatezerana ara-drariny, tamin'ireo izay nandà ny foto-pinoana nankamamian'izy ireo. Izy nekeny ny hoe mety ho tsy nahazo mazava Isara ny teny anie ny tenany, na hoe diso ny fandraisany na ny fampiharany ny Soratra Masina. Toy ny olona very saina ny fihetsiny." <span class="reference">(VM, t. 72)</span></p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>Fantatrao Ve?</h3>
+            <p>"Nampisaraka ny maro tamin'ny namana teto an-tany ny fanomezana-tsiny sy ny fanenjehana fa tsy nampisaraka azy mihitsy tamin'ny fitiavani Kristy. Mamy indrindra ny fitiavan'ny Mpamonjy ireo fanahy sedrain'ny tafiotra, indrindra rehefa ianjadian'ny fanomezana-tsiny noho ny fahamarinana izy ireo." <span class="reference">(VM, t. 77)</span></p>
+        </div>
+
+        <div class="section">
+            <h3>Ny Hevitrao?</h3>
+            <p>Vakio ireto fanambarana ireto ary amin'ny tsirairay avy amin'izy ireo, dia mifidiana iray amin'ireto valin-teny ireto: (1) Manaiky Tanteraka, (2) Manaiky, (3) Mandà, na (4) Mandà Tanteraka:</p>
+            
+            <ul class="ranking-list">
+                <li>Tsy manan-tahotra aho amin'ny fotoana rehetra izay izaràko amin'ny hafa ny fanandramako mikasika an'i Jesosy.</li>
+                <li>Mahafinaritra ahy ny manambara amin'ny hafa ny momba an' Andriamanitra amin'ny fotoana rehetra.</li>
+                <li>Fantatro ny zavatra tena voafehiko sy izay ilàko fanampiana.</li>
+                <li>Ireo namako tsy kristianina dia afaka milaza fa tia an'Andriamanitra aho na inona na inona toe-javatra mahazo ahy.</li>
+            </ul>
+            
+            <div class="rating-options">
+                <div class="rating-option" data-value="4">Manaiky Tanteraka</div>
+                <div class="rating-option" data-value="3">Manaiky</div>
+                <div class="rating-option" data-value="2">Mandà</div>
+                <div class="rating-option" data-value="1">Mandà Tanteraka</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>TONTOLON'NY TANTARA</h2>
+            
+            <h4>Asa 5:17-29</h4>
+            <p>"Ary nitsangana ny mpisombamin'ny namany rehetra izay antokon'ny Sadoseo), fa feno fialonana izy, dia nisambotra ny Apostoly izy ka nanao azy tao an-trano-maizina. Fa nisy anjelin'ny Tompo namoha ny varavaran'ny trano-maizina nony alina, dia nitondra azy nivoaka ka nanao hoe: Mandehana, ka mitsangàna, ary mitoria amin'ny vahoaka eo an-kianjan'ny tempoly ny teny rehetra milaza izany fiainana izany.</p>
+
+            <p>"Ary rehefa nandre izany izy, dia niditra maraina koa teo an-kianjan'ny tempoly ka nampianatra.</p>
+
+            <p>"Ary rehefa tonga ny mpisoronabe sy ny namany, dia nampiangona ny Synedriona sy ny loholona rehetra tamin'ny Zanak'Isiraely izy ka naniraka nankao amin'ny trano-maizina haka ny Apostoly. Fa nony tonga ny mpiandry raharaha, dia tsy nahita azy tao an-trano-maizina; dia niverina izy ka nilaza hoe: 'Ny trano-maizina dia hitanay mihidy tsara, ary ny mpiambina mitsangana eo am-baravarana; kanefa nony novahanay, dia tsy nahita olona tao izahay.' Ary ny lehiben'ny mpiambina ny tempoly sy ny lohan'ny mpisorona, rehefa nandre izany teny izany dia niroahana ny amin'ny izay ho faran'izany.</p>
+
+            <p>"Dia nisy tonga ka nilaza taminy hoe: Ireny lehilahy izay nataonareo tao an-trano-maizina ireny, dia indreo izy mitsangana eo an-kianjan'ny tempoly ka mampianatra ny olona.' Dia lasa ny lehiben'ny mpiambina sy ny mpiandry raharaha ka nitondra azy, nefa tsy nanao mahery, satria natahotra ny vahoaka izy, fandrao hotorahany vato.</p>
+
+            <p>"Ary rehefa nentiny, dia napetrany teo anatrehan'ny Synedriona ireo, ary ny mpisoronabe nanontany azy ka nanao hoe: 'Efa noraranay mafy dia mafy hianareo tsy hampianatra amin'zany anarana izany; kanjo, indro, efa nofenoinareo ny fampianaranareo Jerosalema, ka tianareo hankinina aminay ny ran'izany Lehilahy Izany.'</p>
+
+            <p>"Fa Petera sy ny Apostoly namaly ka nanao hoe: Andriamanitra no tokony hekena mihoatra noho ny olona.'"</p>
+        </div>
+
+        <div class="section">
+            <h2>FANONTANIANA AVY AMIN'NY TANTARA</h2>
+            
+            <div class="question-list">
+                <p>Nahoana ireo mpitari-pivavahana no "feno fialonana"?</p>
+                <p>Miseho eo amin'ny fiainanao koa ve izany fihetseham-po izany? Raha izany no izy, amin'ny fomba ahoana?</p>
+                <p>Nilaza mazava ny apôstôly fa "Andriamanitra no tokony hekena mihoatra noho ny olona." Inona no baiko mazavan' Andriamanitra ao amin'io andininy io? Inona baiko mazava avy amin'ny "olona"?</p>
+                <p>Inona ny sasany amin'ireo olana fototra izay natrehin'ny Apôstôly?</p>
+                <p>Ahoana no namahan' Andriamanitra azy ireny? Inona no ambaran'izany aminao momba an'Andriamanitra?</p>
+                <p>Inona no fihetsiky ny Apôstôly teo anatrehan'ireo olana nanjo azy? Toy izany koa ve ny fihetsiko eo anatrehan'ny olana eo amin'ny fiainako?</p>
+                <p>Inona no zavatra tokana azoko atao amin'ny fomba hafa manomboka anio ka hanova ny fomba famahako ny olana tonga eo anatrehako?</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Fanantitranterana</h3>
+            <div class="verse">
+                <p>"Fa tsy nomen'Andriamanitra fanahy osa isika, fa fanahy mahery sy fitiavana ary fahononan-tena. Koa aza menatra ny ho vavolombelon'ny Tompontsika, na ahy mpifatony hianao; fa aoka hianao ho mpiombona ny fahoriana noho ny flazantsara araka ny herin'Andriamanitra, Izay namonjy antsika sy niantso antsika tamin'ny fiantsoana masina, tsy araka ny asantsika, fa araka ny fikasany sy ny fahasoavany izay nomena antsika tao amin'i Kristy Jesosy hatry ny fon'ny fahagola;" <span class="reference">2 Tim. 1:7-9</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Fa tao aminy no nahariana ny zavatra rehetra any an-danitra sy ety ambonin'ny tany." <span class="reference">Kol. 1:16</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Fa ny fahorianay maivana, izay vetivety foana, dia mainka miasa fatratra indrindra ka mahatanteraka voninahitra mavesatra maharitra mandraka-riva ho anay, raha tsy mijery ny hita izahay, fa ny tsy hita; fa ny hita dia ho vetivety foana, fa ny tsy hita no haharitra mandrakizay." <span class="reference">2 Kor. 4:17, 18</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Ary tsy izany ihany, fa aoka isika hifaly amin'ny fahoriana aza, satria fantatsika fa ny fahoriana mahatonga faharetana; ary ny faharetana mahatonga fahatsaram-panahy voazaha toetra; ary ny fahatsaram-panahy voazaha toetra mahatonga fanantenana." <span class="reference">Rom. 5:3,4</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Fa Izaho mahalala ny hevitra iheverako anareo hoy Jehovah, dia hevitry ny hanatonga fiadanana, fa tsy loza, mba hanome anareo fanantenana ny amin'ny farany." <span class="reference">Jer. 29:11</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Fijery Hafa</h3>
+            <div class="quote">
+                <p>"Inona no herin'ireo niaritra fanenjehana ho an'i Kristy tamin'ny lasa? Ny firaisana amin'i Kristy, ny firaisana amin'ny Fanahy Masina, ny firaisana amin'Andriamanitra." <span class="reference">(VM, t. 77)</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>FAMPIHARANA</h2>
+
+            <div class="day-section">
+                <h3>SABATA</h3>
+                <p>Vakio ny 2 Kor. 4:17, 18.</p>
+                <p>Voalaza ao amin'ny Asa 5 fa "vao mainka nisy olona maro koa na lahy na vavy nino ny Tompo nanampy ho isany" (Asa 5:14). Na dia hitan'ny olona aza fa natao an-tranomaizina sy nokapohina noho ny amin'i Kristy ny apôstôly, dia mbola nino sy nanaiky an'i Kristy hatrany izy ireo. Nahoana?</p>
+                <p>Eo am-pieritreretana ny valin-teninao ao amin'ny fizaràna Ny Hevitrao? dia iza amin'ireo no heverinao fa antony tena manosika indrindra ny hafa hino sy hanaiky an'i Kristy? Hazavao.</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ALAHADY</h3>
+                <p>Vakio ny Rom. 5:3, 4.</p>
+                <p>Raha eo am-pamakiana ny tontolon'ny Tantara ianao ary mamaly ireo fanontaniana ao amin'ny fizaràna Fanontaniana avy amin'ny Tantara mba hanampy anao eo amin'ny fianaranao, dia mariho fa vao mainka nitombo ny fitiavana sy ny faharesen-dahatry ny mpianatra momba an'Andriamanitra, ka na dia nokapohina aza izy ireo, dia "niala teo anatrehan'ny Synedriona, sady faly, satria natao miendrika hitondra fahafaham-baraka ho voninahitr'izany anarana izany." (Asa 5:41). Inona no akon'ny fijoroan'izy ireo eo aminao androany?</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ALATSINAINY</h3>
+                <p>Vakio ny Mat. 5:11.</p>
+                <p>Misy olona sasany miantso ny Mat. 5:1-12 ho toetry ny finoana. Ny Andininy Fototra ato amin'ny lesona amin'ity herinandro ity no amintinan'i Jesosy izany. Inona no fahasambarana hitanao niseho satria ianao na olona hafa no "nenjehina noho ny fahamarinana"? Zarao amin'ny kilasy ny fanandramanao.</p>
+            </div>
+
+            <div class="day-section">
+                <h3>TALATA</h3>
+                <p>Vakio ny Asa. 6:1-7.</p>
+                <p>Vakio ny fanambaràna avy amin'ny Vavolombelona Mahery ao amin'ny fizaràna Indray Mihelatra amin'ny lesona amin'ity herinandro ity. Avy eo dia vakio ny Asa 6:1-7. Inona no azonao tsoahina avy amin'izany fa hitranga amin'izay mandàny drafitr'Andriamanitra sy ny fikasany ho azy ireo? Ahoana ny amin'ireo izay mahafantatra ny talentany ary mampiasa azy ireny ho an'ny asan' Andriamanitra? Talenta sy fahai-za-manao inona no anananao?</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ALAROBIA</h3>
+                <p>Eo am-pamakiana ireo andininy voasoratra ao amin'ny fizaràna Fanantitranterana ianao, dia iza amin'ireo andininy ireo no tena heverinao ho manana ny lanjany manokana androany? Nahoana no heverinao fa natao ho anao manokana io androany?</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ALAKAMISY</h3>
+                <p>Vakio ny 2 Tim. 1:7-9.</p>
+                <p>Moa ve ianao efa notsaraina na nesoina'ny hafa noho ny fanaovana ny marina? Mila herim-po ny fanaovana ny marina (na ny tsy fanaovana ny diso) eny fa na dia fantatrao aza fa mety hitondra anao amin'ny olana maro isan-karazany izany. Mila hery ny mamela ny heloka ireo izay maneho toetra tsy mety amintsika. Izany herim-po izany, izany hery izany, dia avy amin'Andriamanitra irery ihany. Tsy misy ifandraisany amin'ny harentsika izany na ny lazantsika. Ary tsy misy ifandraisany amin'ny tombontsoa manokana na ny hatsaran-tarehy. Izany rehetra izany dia avy amin'ny fanatrehan'ny Fanahy Masina izay ao anatintsika tsirairay avy izay mino!</p>
+                <p>Ahoana no hahafahanao mifandray amin'izany hery izany? Raharaha inona no azonao anampiana ireo fanaonao isan'andro mba hahafahanao mifandray tsy tapaka amin'ny herin' Andriamanitra?</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ZOMA</h3>
+                <p>Vakio ny Kol. 1:16 sy ny Jer. 29:11.</p>
+                <p>Rehefa mikatsaka an'Andriamanitra amin'ny fontsika manontolo isika, dia tsy tokony hanana ahiahy hoe manao ny marina ve isika na tsia na hoe karazana tanjona inona no tokony hotratrarintsika - tonga ho azy izany. Mba hisehoan'izany anefa, dia mila mameno ny fontsika sy ny saintsika amin'ilay loharanon-kery fara tampony isika, dia ny Fanahy Masina izany.</p>
+                <p>Inona ihany koa no mbola ilainao hifandraisana amin'ny herin' Andriamanitra? Ahoana no ataonao mba hahatonga Azy ho lohalaharana?</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <p><em>Ny andalan-teny vakina amin'ity herinandro ity: VM, toko 8,9.</em></p>
+            <p><em>Raha manaraka ity drafitra ity ianao dia hahavaky boky iray isan-taona fara fahakeliny, amin'ireo bokin'ny Fanahin'ny Faminaniana, andiany "Conflict of the Ages".</em></p>
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const html = document.documentElement;
+
+        // Initialize with light theme (no localStorage)
+        let currentTheme = 'light';
+        html.setAttribute('data-theme', currentTheme);
+
+        themeToggle.addEventListener('click', function() {
+            if (currentTheme === 'light') {
+                currentTheme = 'dark';
+                html.setAttribute('data-theme', 'dark');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                currentTheme = 'light';
+                html.setAttribute('data-theme', 'light');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        });
+
+        // Rating options functionality
+        const ratingOptions = document.querySelectorAll('.rating-option');
+        ratingOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                ratingOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // You could store the selected value if needed
+                const selectedValue = this.getAttribute('data-value');
+                console.log('Selected rating:', selectedValue);
+            });
+        });
+    </script>
+</body>
+</html>

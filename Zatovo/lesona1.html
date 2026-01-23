@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesona 1 - Teny Farany sy Vavolombelona</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --secondary-color: #4a4a4a;
+            --accent-color: #8B4513;
+            --border-color: #e5e5e5;
+            --highlight-bg: #f8f9fa;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e5e5e5;
+            --secondary-color: #a8a8a8;
+            --accent-color: #A0522D;
+            --border-color: #333333;
+            --highlight-bg: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .lesson-image {
+            width: 100%;
+            margin: 2em 0;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .lesson-image img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-color);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            margin-top: 1.2em;
+            margin-bottom: 0.6em;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            text-align: justify;
+        }
+
+        .verse {
+            font-style: italic;
+            color: var(--secondary-color);
+            margin: 1.5em 0;
+            padding: 1em;
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+        }
+
+        .section {
+            margin: 2em 0;
+        }
+
+        .quote {
+            margin: 1.5em 0;
+            padding: 1.2em;
+            background: var(--highlight-bg);
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        .reference {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 2em 0;
+        }
+
+        .highlight {
+            background-color: var(--highlight-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        em {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .header-image {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg id="sunIcon" viewBox="0 0 24 24" style="display: block;">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg id="moonIcon" viewBox="0 0 24 24" style="display: none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+    </button>
+
+    <div class="container">
+        <h1>Tantara. Marina. Azo itokiana</h1>
+        <h2>TENY FARANY SY VAVOLOMBELONA</h2>
+
+        <img src="images/lesona1.png" alt="Lesona 1" class="header-image">
+
+        <div class="section">
+            <h3>Tantara fototra. Asa. 1:1-11</h3>
+            <p><strong>Fanampim-panazavana:</strong> VM, Toko 1</p>
+        </div>
+
+        <div class="section">
+            <h3>Andininy fototra</h3>
+            <div class="verse">
+                <p>Fa hoy kosa Izy taminy: Tsy anareo ny hahalala ny andro na ny fotoana izay efa notendren'ny Ray amin'ny fahefany ihany. Fa hahazo hery hianareo amin'ny hilatsahan'ny Fanahy Masina aminareo, ary ho vavolombeloko any Jerosalema sy eran'i Jodia sy Samaria ary hatramin'ny faran'ny tany. <span class="reference">Asa 1:7,8</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Indray Mihelatra</h3>
+            <div class="quote">
+                <p>"Ny fiangonana no fitaovana notendren'Andriamanitra hilaza ny famonjena amin'ny olona. Nalamina ho amin'ny fanompoana izy, ary ny hitondra ny filazantsara ho an'izao tontolo izao no asa nanirahana azy. Hatramin'ny voalohany dia drafitra nataon'Andriamanitra ny haneho amin'izao tontolo izao ny fahafenoany sy ny fahampiany. Tokony haneho miharihary ny voninahiny ny mambra ao amin'ny fiangonana, dia izay nantsoiny hiala amin'ny maizina ho amin'ny fahazavany mahagaga." <span class="reference">(VM, t. 1, 11)</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Ny Hevitrao?</h3>
+            <p>Aiza araka ny hevitrao no faritra tena mila indrindra ny hanovana asa misionera? (Alaharo araka izay hitanao fa tena mila ny asan'ny filazantsara ireto: 1-izay tena mila indrindra, 7-izay tsy dia mila loatra.)</p>
+            
+            <p>Ny fiangonako</p>
+            <p>Ny mpifanolo-bodirindrina amiko</p>
+            <p>Ny sekoliko</p>
+            <p>Ny renivohitra</p>
+            <p>Ny any ambanivohitra</p>
+            <p>Faritra eto amin'izao tontolo izao izay misy vondron'olona maro tsy mahay mamaky teny</p>
+            <p>Ireo vondron'olona tsy tratra antso manerana izao tontolo izao izay tsy manana Baiboly</p>
+            
+            <p><strong>Inona no antony nandaharanao azy ireo toy izany?</strong></p>
+        </div>
+
+        <div class="section">
+            <h3>Fantatrao Ve?</h3>
+            <p>Misy fiteny 7360 karazana eto ambonin'ny tany amin'izao fotoana izao. Ankoatra izany, olona iray amin'ny dimy no mbola miandry ny handikana ny Baiboly amin'ny fiteniny. Olona miisa 167 tapitrisa izay mampiasa karazam-piteny 2014 no tsy manana ny Baiboly voadika amin'ny fiteniny.</p>
+        </div>
+
+        <div class="section">
+            <h2>TONTOLON'NY TANTARA</h2>
+            
+            <p>"Ry Teofilo, ilay boky voalohany dia nosoratako ny amin'izay nataon'i Jesosy sy nampianariny, hatramin'ny andro nampiakarana Azy, rehefa nodidiany tamin'ny Fanahy Masina ny Apôstôly izay nofidiny, sady niseho koa tamin'ny faman-tarana maro taorian'ny nijaliany fa velona Izy, ka niseho taminy efa-polo andro Izy ary nilaza ny amin'ny fanjakan'Andriamanitra.</p>
+
+            <p>"Ary raha niara-niangona teo aminy Jesosy, dia namepetra azy tsy hiala an'i Jerosalema, fa hiandry ny teny fikasan'ny Ray, izay efa renareo tamiko, hoy Izy; fa Jaona nanao batisa tamin'ny rano; fa hianareo kosa hatao batisa amin'ny Fanahy Masina, rehefa afaka andro vitsivitsy.</p>
+
+            <p>"Koa izay tafangona teo dia nanontany Azy hoe: Tompoko, amin'izao va no hampodianao ny fanjakana ho amin'ny Isiraely? Fa hoy kosa Izy taminy: Tsy anareo ny hahalala ny andro na ny fotoana izay efa notendren'ny Ray amin'ny fahefany ihany. Fa hahazo hery hianareo amin'ny hilatsahan'ny Fanahy Masina aminareo, ary ho vavolombeloko any Jerosalema sy eran'i Jodia sy Samaria ary hatramin'ny faran'ny tany.</p>
+
+            <p>"Ary rehefa nilaza izany Jesosy, dia nakarina Izy, raha mbola nijery izy ireo; ary nisy rahona nandray Azy, ka tsy hitan'ny masony intsony Izy. Ary raha mbola nandinika ny lanitra izy ireo tamin'ny nandehanan'i Jesosy, indro, nisy roa lahy teo anilany niakanjo akanjo fotsy, izay nanao hoe: Ry lehilahy Galiliana, nahoana no mijanona eto mijery ny lanitra hianareo? Iny Jesosy Izay nampiakarina niala taminareo ho any an-danitra iny dia mbola ho avy tahaka ny nahitanareo Azy niakatra ho any an-danitra.</p>
+
+            <p>"Ary izy ireo niverina tany Jerosalema, rehefa avy teo amin'ny tendrombohitra atao hoe Oliva, izay akaikin'i Jerosalema (araka izay mety haleha amin'ny Sabata). "Ary rehefa tafiditra izy, dia niakatra ho any an-trano ambony, izay fitoerany, dia Petera sy Jaona sy Jakoba sy Andrea, Filipo sy Tomasy, Bartolomeo sy Matio, Jakoba zanak'i Alfeo, sy Simona Zelota ary Jodasy, zanak'i Jakoba. Ireo rehetra ireo niray saina naharitra nivavaka mbamin'ny vehivavy sy Maria, renin'i Jesosy, ary ny rahalahiny." <span class="reference">Asa 1:1-14</span></p>
+        </div>
+
+        <div class="section">
+            <h2>Fanontaniana avy amin'ny TANTARA</h2>
+            
+            <p>Vakio ny tantara ary sorito izay manan-danja indrindra amin'io tantara io. Nahoana?</p>
+            
+            <p>Iza ilay olona antsoina hoe Teôfilo izay niantefan'ny bokin'ny Asan'ny Apôstôly? Ahoana no fanehoani Lioka ny fomba fijeriny mikasika ny nanoratany ny tantaran'ny fiangonan'ny Testamenta Vaovao?</p>
+            
+            <p>Ity tantara ity dia mirakitra ny teny farany izay nolazain'i Kristy mivantana tamin'ny mpianatra talohan'ny niakarany ho any an-danitra. Ampitahao amin'ireo teny farany nataony ao amin'ny Matio 28:19, 20 ireo teny ireo. Inona no mampitovy azy?</p>
+            
+            <p>Nahoana araka ny hevitrao ny mpianatra no nasaina niandry "ilay fanomezana nampanantenaina" tao Jerosalema? Inona izany fanomezana izany ary inona no zavatra fantatr'izy ireo momba ny tsy maintsy hiasany tsy misy ny fanatrehan'i Kristy ara-batana miaraka amin'izy ireo?</p>
+            
+            <p>Ahoana no hamaritanao/hanazavanao ny olona iray atao hoe "vavolombelona," ary inona no tokony hijoroany ireo ho vavolombelona?</p>
+            
+            <p>Nahoana araka ny hevitrao no tsy maintsy manomboka ao Jerosalema aloha izy ireo? Ahoana no maha-samy hafa an'i Jerosalema amin'i Jodia sy Samaria sy ny faran'ny tany?</p>
+        </div>
+
+        <div class="section">
+            <h3>Fanantitranterana:</h3>
+            <div class="verse">
+                <p>Koa mandeha hianareo, dia ataovy mpianatra ny firenena rehetra, manao batisa azy ho amin'ny anaran'ny Ray sy ny Zanaka ary ny Fanahy Masina sady mampianatra azy hitandrina izay rehetra nandidiako anareo; ary, indro, Izaho momba anareo mandrakariva ambara-pahatongan'ny fahataperan'izao tontolo izao. <span class="reference">Mat. 28:19, 20</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Fijery Hafa</h3>
+            <div class="quote">
+                <p>"Ary rehefa handeha izy, ny ilay demoniaka mba hihazo azy. Nefa tsy navelan'i Jesosy izy, fa hoy Izy taminy: Modia hany any an-tranonao ho any amin'ny havanao ka lazao aminy izay zavatra lehibe nataon'ny Tompo taminao sy ny namindrany fo taminao. Dia nandeha izy ka nitory tany Dekapolisy izay zavatra lehibe nataon'i Jesosy taminy, ka dia gaga ny olona rehetra." <span class="reference">Mar. 5:18-20</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Ary izao no teny renay taminy ka ambaranay aminareo: Andriamanitra dia mazava, ary tsy misy maizina akory ao aminy." <span class="reference">1 Jao. 1:5</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Ary izao no fanambarany: Fiainana mandrakizay no omen'Andriamanitra antsika, ary ao amin'ny Zanany izany fiainana izany. Izay manana ny Zanaka no manana ny fiainana; izay tsy manana ny Zanak'Andriamanitra no tsy manana ny fiainana. Izany no nosoratako aminareo, izay mino ny anaran'ny Zanak'Andriamanitra, mba ho fantatrareo fa manana fiainana mandrakizay hianareo." <span class="reference">1 Jao. 5:11-13</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Fa tsy menatra ny filazantsara aho; fa herin'Andriamanitra ho famonjena izay rehetra mino izany, amin'ny Jiosy aloha, dia vao amin'ny jentilisa koa." <span class="reference">Rôm. 1:16</span></p>
+            </div>
+
+            <div class="quote">
+                <p>"Tamin'ny fotoana rehetra dia nanana ny mpitiliny Jehovah, izay vavolombelona mahatoky teo amin'ny taranaka belona taminy." <span class="reference">(VM, t. 1, 13)</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Fampiharana</h2>
+
+            <h3>Sabata</h3>
+            <p>Vakio ary valio ny fampiasana hita ao amin'ny fizarana "Ny hevitrao" amin'ity herinandro ity. Inona no hitanao fa sahan-asa misionera lehibe indrindra tokony hanaovana fijoroana ho vavolombelona? Vakio ny iraka manipitory ny filazantsara nomena ao amin'ny Matio 28:19, 20 (jereo ny Fanantitranterana).</p>
+            
+            <p>Eo am-pamakiana io iraka io, inona no valin-teninao amin'ny tenin'i Kristy? Ahoana no fahitanao ny tenanao mamaly io antso io na manatanteraka io baiko io eo amin'ny fiainanao?</p>
+
+            <h3>Alahady</h3>
+            <p>Vakio ny fizarana "Tontolon'ny tantara" ary ampiasao ireo fanontaniana ao amin'ny fizarana "Fanontaniana avy amin'ny Tantara" mba hitarika ny fianaranao. Eo am-pamakiana sy famaliana ny fanontaniana, dia inona ireo lohahevitra fototra izay hitanao ao amin'ny tantara? Inona no heverinao ho sasantsasany amin'ireo fihetseham-po nifanesika tao amin'ny mpianatra rehefa nandre an'i Jesosy nanambara ireo teny ireo izy ary avy eo niakatra nankany an-danitra? Efa nisy fotoana ve teo amin'ny fiainanao ka nahatsapanao fa tena mazava sy azo tsapain-tanana tokoa ny zavatra iantsoan'Andriamanitra anao? Mety misy koa angamba ny fotoana sasany izay ahatsapanao fa toa lavitra loatra i Jesosy ka tsy azonao antoka hoe inona ny dingana manaraka. Ahoana no mety hampaherezan'ity tantara ity anao amin'ny fotoana izay hahatsapanao fa tsy hainao izay tokony hatao?</p>
+
+            <h3>Alatsinainy</h3>
+            <p>Vakio ny Mar. 5:18-20. Vakio ny Asa 1:7,8.</p>
+            
+            <p>Ny andininy fototra natao hotadidiana amin'ity herinandro ity dia hita ao amin'ny Asa 1:7, 8, manambara ny drafitry Andriamanitra mba hampitana ny Tantarany amin'izao tontolo izao. Alaivo sary an-tsaina ireo fihaikana natrehin'ireo mpianatra rehefa teo am-pieritreretana fa izy ireo dia ho vavolombelona ao Jerosalema. Inona no ho sandan'izany ho azy ireo? Mbola tena nahery vaika tokoa tamin'izany ireo lohandohany mpitondra na mpampianatra ny hevitra hahana misokatra mikasika an'i Kristy teo aminy, ankara-roan'ny finoana. Ny dingana manaraka dia ny fitondrana ny filazantsara ho any Jodia sy Samaria. Ny fijerin'ireo ny Samaritana anefa teo efa feno fankahalana. Iza no hihaino azy eo? Nahoana izy ireo no tokony hiraharaha izany? Ary ahoana no hahafahanireo ireo hitondra ny vaovao mahakasika an'i Kristy io ho any amin'ny faran'ny tany?</p>
+            
+            <p>Saintsaino ny mahakasika ny hoe ahoana no fomba fisehoana ireo dingana telo amin'ny asa fanompoana ireo amin'izao fotoana izao eo amin'ny tontolo misy anao. Inona no heverinao fa dingana mety ho feno fihaikana indrindra? Nahoana?</p>
+
+            <h3>Talata</h3>
+            <p>Vakio ny Isa. 43:10-12. Vakio ny fanambarana avy ao amin'ny "Vavolombelona Mahery" ao amin'ny fizarana "Indray Mihelatra" ary ampitahao amin'ny zavatra tsapan'ny olona mikasika ny fiangonana niezaka nanao izany. Ahoana no fihazonana ny fiangonanao io iraka io hialoha ireo adidy hafa ataony eo amin'ny fiaraha-monina misy azy? Iza no fantatrao ao amin'ny fiangonana fa feno hafanam-po amin'ny fijoroana ho vavolombelona amin'ny hafa? Eritrereto ny hitaona azy ireo hizara aminao ny fomba fizarany amin'ny fomba mahomby ny finoany amin'ny hafa toy izany.</p>
+
+            <h3>Alarobia</h3>
+            <p>Ny Fanantitranterana ao amin'ity lesona amin'ity herinandro ity dia mampanako ny antso ho tonga vavolombelona ho an'i Kristy eo amin'izao tontolo izao. Ny sasany dia tenin'ny Apostoly fa ny sasany kosa dia tena baiko avy amin'i Kristy mihitsy ary nomeny ireo olona mandray Azy ho Mpamonjy. Eo am-pamakinao ireo andalan-tSoratra Masina notsongaina ireo, iza amin'ireo no miteny aminao anio? Inona no heverinao fa ezahin'Andriamanitra hambara aminao manokana?</p>
+
+            <h3>Alakamisy</h3>
+            <p>Vakio ny 1 Jao. 1:5.</p>
+            
+            <p>Ny lesona amin'ity herinandro ity dia mahakasika ny tokony ho fahavononana hijoro ho vavolombelona ho an'i Kristy, Ilay nitsangana tamin'ny maty. Ny fahavononana hizara ny hoe midika inona aminao i Kristy dia fomba azo ampiharina mba hahavonona antsika mandrakariva amin'ny fotoana rehetra hahazoana izany. Ny fijoroanao ho vavolombelona dia azo ampanarahina fanontaniana tsotra telo: (1) Ahoana no nahafantaranao sy ny nanekenao an'i Kristy ho Mpamonjy ny tenanao manokana? (2) Nahoana no heverinao fa ny olona rehetra dia tokony hisafidy ny ho tonga mpanara-dia an'i Kristy? (3) Inona no fiovana entin'i Kristy eo amin'ny fiainanao ankehitriny?</p>
+            
+            <p>Tena zava-dehibe ihany koa ny misafidy andinin-tSoratra Masina hoentinao manohana ny hevitrao. Mitehiriza dika mitovy amin'ny fijoroanao ho vavolombelona ao anaty Baibolinao, ary aoka ianao ho vonona hizara izany amin'ny hafa rehefa misy ny fotoana hahafahana manao izany.</p>
+
+            <h3>Zoma</h3>
+            <p>Vakio ny Rôm. 1:16. Eritrereto ireo fanandramana efa renao nozarain'ny hafa izay milaza ny fomba nahavitany na ireo nijoro ho vavolombelona amin'ny hafa mahakasika ny fitiavan'izy ireo an'i Kristy. Ahoana no fiantraikan'ny tantaran'izy ireo eo aminao?</p>
+            
+            <p>Saintsaino ireo fotoana izay nanananao tombontsoa hizara ny finoanao an'i Kristy tamin'ny hafa. Ahoana no nanandramana-nao ny fitarihan'Andriamanitra anao ho eo amin'ny hafa? Ahoana araka ny hevitrao no mahatonga ny fizaranao ny finoanao an'i Kristy amin'ny hafa ho manatanjaka ny fiarahanao amin'Andriamanitra?</p>
+        </div>
+
+        <div class="section">
+            <p><em>Ny andalan-teny vakina amin'ity herinandro ity: VM, toko 1, 2, 3.</em></p>
+            <p><em>Raha manaraka ity drafitra ity ianao dia hahavaky boky iray isan-taona fara fahabetsany, amin'ireo bokin'ny Fanahin'ny Faminania na andiany "Conflict of the Ages."</em></p>
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        if (currentTheme === 'dark') {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            let theme = html.getAttribute('data-theme');
+            
+            if (theme === 'light') {
+                html.setAttribute('data-theme', 'dark');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>
