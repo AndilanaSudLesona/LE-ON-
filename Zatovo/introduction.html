@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fampidirana - Lesona Zatovo</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --secondary-color: #4a4a4a;
+            --accent-color: #8B4513;
+            --border-color: #e5e5e5;
+            --highlight-bg: #f8f9fa;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e5e5e5;
+            --secondary-color: #a8a8a8;
+            --accent-color: #A0522D;
+            --border-color: #333333;
+            --highlight-bg: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 80px;
+        }
+
+        /* FIXED BACK BUTTON */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+            background: var(--accent-color);
+        }
+
+        .back-button:hover svg {
+            stroke: white;
+        }
+
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-color);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .main-title {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            font-weight: 400;
+            margin-top: 5px;
+        }
+
+        .intro-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .intro-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .intro-content {
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .intro-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .features-list {
+            margin: 25px 0;
+            padding-left: 20px;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            color: var(--text-color);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: var(--highlight-bg);
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .quote-box {
+            margin: 25px 0;
+            padding: 20px;
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--secondary-color);
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 70px 15px 30px;
+            }
+
+            .main-title {
+                font-size: 1.8em;
+            }
+
+            .intro-section {
+                padding: 20px;
+            }
+
+            .back-button {
+                width: 45px;
+                height: 45px;
+                top: 15px;
+                left: 15px;
+            }
+
+            .back-button svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .container {
+                padding: 65px 12px 25px;
+            }
+
+            .main-title {
+                font-size: 1.6em;
+            }
+
+            .intro-section {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- FIXED BACK BUTTON -->
+    <a href="index.html" class="back-button" aria-label="Return to main page">
+        <svg viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">FAMPIDIRANA</h1>
+            <p class="subtitle">Lesona ho an'ny zatovo 15-18 taona</p>
+        </div>
+
+        <div class="intro-section">
+            <h2 class="intro-title">Tongasoa eto amin'ny Lesona</h2>
+            
+            <div class="intro-content">
+                <p>Ireo lesona ireo dia natao ho an'ny zatovo eo amin'ny 15 ka hatramin'ny 18 taona, mba hanampy anao <span class="highlight">hitombo amin'ny finoana</span> sy <span class="highlight">hahatakatra kokoa ny tenin'Andriamanitra</span>.</p>
+                
+                <p>Isan-kerinandro dia hisy lesona vaovao hianaranao izay mifantoka amin'ny lohahevitra manokana. Ny lesona tsirairay dia ahitana:</p>
+                
+                <ul class="features-list">
+                    <li><strong>Tantara fototra</strong> avy amin'ny Baiboly</li>
+                    <li><strong>Andininy fototra</strong> hampiharana</li>
+                    <li><strong>Fanazavana</strong> avy amin'ny Vavolombelona Mahery</li>
+                    <li><strong>Fanontaniana</strong> hampirisika fisaintsainana</li>
+                    <li><strong>Fampiharana</strong> isan'andro</li>
+                </ul>
+                
+                <p>Ny tanjona'ity programa fianarana ity dia ny <span class="highlight">hanome anao fitaovana</span> hitsangana ho mpino mahery sy mahatoky, ary <span class="highlight">hanome anao fanantenana</span> ho an'ny fiainanao andavanandro.</p>
+                
+                <div class="quote-box">
+                    <p>"Ny teny fikasana nomen'Andriamanitra ho an'ny zatovo dia mafy orina tahaka ny vatolampy, ary ny Tompo dia tsy hanadino ny teny fikasany."</p>
+                </div>
+                
+                <p><strong>Aza adino:</strong> Ny lesona tsirairay dia natao ho anao. Aza matahotra mangataka fanampiana raha mila izany. Andramo hampiharina ny zavatra ianaranao amin'ny fiainanao andavanandro.</p>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <p>"Ary raiso ny famonjena ho fiarovan-doha sy ny tenin'Andriamanitra ho sabatry ny Fanahy;
+" - Efesianina 6: 17</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">© Lesona ho an'ny Zatovo - By Finoana Ephraïm</p>
+        </div>
+    </div>
+
+    <script>
+        const html = document.documentElement;
+        
+        // Initialize with light theme
+        let currentTheme = 'light';
+        html.setAttribute('data-theme', currentTheme);
+
+        // Optional: You can add theme toggle if needed
+        // const themeToggle = document.createElement('button');
+        // themeToggle.className = 'theme-toggle';
+        // themeToggle.innerHTML = '🌙';
+        // themeToggle.style.position = 'fixed';
+        // themeToggle.style.top = '20px';
+        // themeToggle.style.right = '20px';
+        // document.body.appendChild(themeToggle);
+        
+        // themeToggle.addEventListener('click', function() {
+        //     if (currentTheme === 'light') {
+        //         currentTheme = 'dark';
+        //         html.setAttribute('data-theme', 'dark');
+        //         themeToggle.innerHTML = '☀️';
+        //     } else {
+        //         currentTheme = 'light';
+        //         html.setAttribute('data-theme', 'light');
+        //         themeToggle.innerHTML = '🌙';
+        //     }
+        // });
+    </script>
+</body>
+</html>
