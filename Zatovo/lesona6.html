@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesona 6 - Ilay Maritiora Kristianina Voalohany</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --secondary-color: #4a4a4a;
+            --accent-color: #8B4513;
+            --border-color: #e5e5e5;
+            --highlight-bg: #f8f9fa;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e5e5e5;
+            --secondary-color: #a8a8a8;
+            --accent-color: #A0522D;
+            --border-color: #333333;
+            --highlight-bg: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-color);
+            stroke: var(--text-color);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            margin-top: 1.2em;
+            margin-bottom: 0.6em;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            text-align: justify;
+        }
+
+        .verse {
+            font-style: italic;
+            color: var(--secondary-color);
+            margin: 1.5em 0;
+            padding: 1em;
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+        }
+
+        .section {
+            margin: 2em 0;
+        }
+
+        .quote {
+            margin: 1.5em 0;
+            padding: 1.2em;
+            background: var(--highlight-bg);
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        .reference {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .hero-section {
+            position: relative;
+            margin: 2em 0 3em;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-title-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+            padding: 60px 30px 30px;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            color: white;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 10px;
+            font-style: italic;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .highlight {
+            background-color: var(--highlight-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .info-box {
+            background: var(--highlight-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1.5em 0;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .question-list {
+            margin-left: 1.5em;
+        }
+
+        .question-list p {
+            margin-bottom: 0.8em;
+            position: relative;
+            padding-left: 1.2em;
+        }
+
+        .question-list p:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        em {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .day-section {
+            margin: 2em 0;
+            padding: 1.5em;
+            background: var(--highlight-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .day-section h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .ranking-list {
+            margin-left: 0;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ranking-list li {
+            margin-bottom: 0.5em;
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        .ranking-list li:before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .story-box {
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+
+        .rating-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1em 0;
+        }
+
+        .rating-option {
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-option:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .rating-option.selected {
+            background: var(--accent-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .bible-verse {
+            margin: 1em 0;
+            padding: 1em;
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--accent-color);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .hero-title {
+                font-size: 2em;
+                padding: 40px 20px 20px;
+            }
+            
+            .header-image {
+                max-height: 300px;
+            }
+            
+            .hero-title-overlay {
+                padding: 40px 20px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8em;
+            }
+            
+            .hero-subtitle {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg id="sunIcon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" fill="none"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg id="moonIcon" viewBox="0 0 24 24" style="display: none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none"/>
+        </svg>
+    </button>
+
+    <div class="container">
+        <!-- HERO SECTION WITH IMAGE AND TITLE OVERLAY -->
+        <div class="hero-section">
+            <img src="images/lesona6.png" alt="Ilay Maritiora Kristianina Voalohany" class="header-image">
+            <div class="hero-title-overlay">
+                <h1 class="hero-title">ILAY MARITIORA KRISTIANINA VOALOHANY</h1>
+                <div class="hero-subtitle">Lesona fahenina</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Tantara fototra</h3>
+            <p><strong>Asa. 6:8-15; 7:44-59</strong></p>
+            <p><strong>Fanampim-panazavana:</strong> VM, Toko 10,11</p>
+        </div>
+
+        <div class="section">
+            <h3>Andininy Fototra</h3>
+            <div class="verse">
+                <p>"Ary Stefana, feno fahasoavana sy hery, dia nanao fahagagana sy famantarana lehibe teo amin'ny vahoaka. Fa ny sasany, izay avy amin'ny synagoga atao hoe Synagogan'ny Libertina (...) dia nitsangana ka niady hevitra tamin'i Stefana. Fa tsy nahatohitra ny fahendrena sy ny Fanahy izay nitenenany ireo." <span class="reference">Asa. 6:8-10</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Indray Mihelatra</h3>
+            <div class="quote">
+                <p>"Raha nifanatrika tamin'ny mpitsara azy i Stefana hamaly ny fampangana azy ho niteny ratsy, dia namirapiratry ny fahamasinana ny tavany, ka 'izay rehetra nipetraka teo amin'ny Synedriona, raha nandinika an'i Stefana, dia nahita ny tarehiny tahaka ny tarehin anjely'. Maro tamin'ireo niban-jina io fahazavana io no toran-kovitra ka nanakona ny tavany, nefa tsy nihontsona ny tsy finoana sy ny hevitra mibahana tao an-tsain'ny mpañapaka mafy hatoka." <span class="reference">(VM, t. 88)</span></p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>Fantatrao Ve?</h3>
+            <p>"Ny fitoraham-bato dia famaizana nahatatra noho ny heloka maro samihafa teo amin'ny rafi-pitsarana jiosy tamin'ny andro fahiny. Ohatra, ao amin'ny lalàna nomen'Andriamanitra an'i Mosesy ho an'ny Isiraelita, ny iray amin'izy ireo dia manambara fa azo toraham-bato ny olona iray noho ny fitaomany ny olona ao amin'ny fianakaviany, na ny havany, na ny namany, hanompo andriamani-kafa (Deo. 13:6-8). Ary hambarino kely ity: ny fianakavian'ilay olo-meloka no hitora-bato azy voalohany. Izy ireo no manomboka ny fitoraham-bato ary miditra an-tsehatra koa avy eo ny fiangonana manontolo manampy azy ireo (and. 9). Moa ve tsy maneso ny hoe zavatra mifanohitra amin'izany indrindra no antony nitoraham-bato an'i Stefana - faniniana noho ny fiankohofana sandoka sy fanambarana fa i Jesôsy no Mesia, mendrika ny fiankohofana marina?"</p>
+        </div>
+
+        <div class="section">
+            <h3>Ny Hevitrao?</h3>
+            <p>Ireo olo-malaza eo amin'ny sehatry ny fampisehoana dia mitaraina matetika mikasika ny fanaraha-maso tsy misy fitsaharany avy amin'ireo "paparazzi" (mpaka sary matihanina). Ireo olo-malaza sasany aza moa dia nihevitra ny hiala tsy hiseho sehatra intsony mihitsy, kanefa vitsy ihany no tena manatanteraka izany. Raha olo-malaza fantabahoaka ianao, inona amin'ireto manaraka ireto no mahasanganehana anao indrindra:</p>
+            
+            <ul class="ranking-list">
+                <li>Olona manorisory, manaraka anao foana, mihaodihaody manodidina ny toeram-ponenanao?</li>
+                <li>Olona mikarokaroka ao anaty fitoeram-pakonao?</li>
+                <li>Mpaka sary manaraka anao 24/7?</li>
+                <li>Lohateny lehibe an-gazety manaparitaka lainga momba anao?</li>
+                <li>Mpankafy ny zava-bitanao mangataka tsy tapaka anao mba hametraka ny diam-peninao ('autographe') ao amin'ny karineny na ny kahieny?</li>
+            </ul>
+            
+            <div class="rating-options">
+                <div class="rating-option" data-value="1">Olona manorisory</div>
+                <div class="rating-option" data-value="2">Olona mikarokaroka</div>
+                <div class="rating-option" data-value="3">Mpaka sary 24/7</div>
+                <div class="rating-option" data-value="4">Lohateny lehibe an-gazety</div>
+                <div class="rating-option" data-value="5">Mpankafy mangataka autographe</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>TONTOLON'NY TANTARA</h2>
+            
+            <h4>Asa 6:8-15; 7:44-58</h4>
+            <p>"Ary Stefana, feno fahasoavana sy hery, dia nanao fahagagana sy famantarana lehibe teo amin'ny vahoaka. Fa ny sasany, izay avy amin'ny synagoga atao hoe Synagogan'ny Libertina sy ny Kyreniana sy ny Aleksandriana mbamin'izay avy any Kilikia sy Asia, dia nitsangana ka niady hevitra tamin'i Stefana. Fa tsy nahatohitra ny fahendrena sy ny Fanahy izay nitenenany ireo. Dia nisy olona nomeny vava hanao hoe: Efa renay niteny ratsy an'i Mosesy sy Andriamanitra ity.</p>
+
+            <p>"Ary nampitaitra ny olona sy ny loholona ary ny mpanora-dalàna izy, dia nankeo amin'i Stefana ka nisarika azy, dia nitondra azy ho eo amin'ny Synedriona; ary izy nanangana vavolombelona mandainga, izay nanao hoe: lo lehilahy io tsy mitsahatra miteny ratsy ity fitoerana masina ity sy ny lalàna; fa efa renay izy nilaza fa ilay Jesosy avy any Nazareta dia handrava ity fitoerana ity sy hanova ny fomba izay natolotri Mosesy antsika.</p>
+
+            <p>"Ary izay rehetra nipetraka teo amin'ny Synedriona, raha nandinika ani Stefana, dia nahita ny tarehiny tahaka ny tarehin'anjely!"</p>
+
+            <h4>Ny fiarovan-tenan'i Stefana (Asa 7:44-53)</h4>
+            <p>"Ny trano-lain'ny Vavolombelona dia teo amin'ny razantsika tany an-efitra, tahaka ny Voatendrin'izay niteny tamin'i Mosesy mba hanaovany azy araka ny endrika izay efa hitany. Izany koa dia noraisin'ny razantsika izay nandimby ireo, ka nentiny niditra niaraka tamin'i Josoa tamin'ny nahazoany ny tanin'ny firenena izay noroahin'Andriamanitra hiala teo anoloan'ny razantsika hatramin'ny androni Davida; izy nahita fitia teo anatrehan'Andriamanitra ka nangataka trano ho an'Andriamanitr'i Jakoba. Fa Solomona kosa no nanao trano ho Azy.</p>
+
+            <p>"Kanefa ny Avo Indrindra tsy mitoetra ao amin'izay nataon-tanan'olona; araka ny nolazain'ny mpaminany hoe: Ny lanitra no seza fiandrianako, ary ny tany no hitoeran-tongotro; koa trano manao ahoana no hataonareo ho Ahy? Ary manao ahoana no ho fitoeran fitsaharako? Tsy ny tanako va no nanao izao zavatra rehetra izao?"</p>
+
+            <p>"Ry olona mafy hatoka sady tsy voafora fo sy sofina, hianareo manohitra ny Fanahy Masina mandrakariva; tahaka ny nataon'ny razanareo ihany no ataonareo koa. Iza no mpaminany izay tsy nenjehin'ny razanareo? Eny, novonoiny aza izay naminany ny fihavian'ilay Marina; ary ankehitriny dia efa tonga mpamadika sy mpamono Azy hianareo, dia olona izay nahazo ny lalàna tamin'ny nandaharan'anjely azy, nefa tsy nankatò izany."</p>
+
+            <h4>Ny nitoraham-bato an'i Stefana (Asa 7:54-58)</h4>
+            <p>"Ary nony nandre izany izy ireo, dia lotika ny fony, ka nihidy vazana taminy izy. Fa Stefana, feno ny Fanahy Masina, dia nibanjina ny lanitra ka nahita ny voninahitr'Andriamanitra sy Jesosy nitsangana teo ankavanan'Andriamanitra. Dia nanao hoe: 'Indro, hitako ny lanitra misokatra ary ny Zanak'olona mitsangana eo ankavanan'Andriamanitra.'</p>
+
+            <p>"Ary ny olona niantso tamin'ny feo mahery sady nanentsin-tadiny ka indray mirodona taminy, dia nandroaka azy ho eny ivelan'ny tanàna ka nitora bato azy; ary ireo vavolombelona dia nametraka ny fitafiany teo anilan'ny tongotry ny zatovo anankiray atao hoe Saoly."</p>
+        </div>
+
+        <div class="section">
+            <h2>FANONTANIANA AVY AMIN'NY TANTARA</h2>
+            
+            <div class="question-list">
+                <p>Efa mba namaky io tantara io ve ianao talohan'izao? Lazalazao ny amin'ireo fihetseham-po sasany tsapanao ankehitriny, rehefa avy namaky ny tantara ianao.</p>
+                <p>Vakio hatramin'ny voalohany ka hatramin'ny farany ny tantara ao amin'ny Soratra Masina natokana ho amin'ity herinandro ity dia asio X eo amin'ny ampahany amin'ny tantara izay ahitanao fihenjanana.</p>
+                <p>Izay avy ireo olona mpandray anjara fototra ao amin'ity tantara ity? Nahoana ireo mpitondra fivavahana jiosy no very hevitra noho ny amin'ny lehilahy toa an'i Stefana izay nanao fahagagana mahatalanjona?</p>
+                <p>Aiza ho aiza no nidiran'i Jesôsy ao amin'ny tantara? Inona no hevitra fonosin'io fotoana io?</p>
+                <p>Inona ireo lesona anankiroa azonao sintonina avy amin'io sombin-tantara ao amin'ny Baiboly io?</p>
+                <p>Inona ireo fitoviana hitanao eo amin'ny nitoraham-bato an'i Stefana sy ny nanomboana an'i Jesôsy tamin'ny hazo fijaliana?</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Fanantitranterana</h3>
+            
+            <div class="verse">
+                <p>"Ary nahare feo avy tany an-danitra aho nanao hoe: Soraty: Sambatra ny maty, dia izay maty ao amin'ny Tompo hatramin'izao. Eny, hoy ny Fanahy, fa hitsahatra amin'izay nisasarany izy; fa ny asany manaraka azy." <span class="reference">Apôk. 14:13</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Nefa Izy dia voalefona noho ny fahadisoantsika sy notorotoroina noho ny helotsika, ny fampijaliana nahazoantsika fihavanana no namelezana Azy; ary ny dian-kapoka taminy no nahasitranana antsika." <span class="reference">Isa. 53:5</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Eny, izay rehetra te-ho velona amin'ny toe-panahy araka an'Andriamanitra, izay ao amin'i Kristy Jesosy, dia henjehina." <span class="reference">2Tim. 3:12</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Hoy Jesosy taminy: Izaho no fananganana ny maty sy fiainana; izay mino Ahy, na dia maty aza, dia ho velona indray:" <span class="reference">Jao. 11:25</span></p>
+            </div>
+
+            <div class="verse">
+                <p>"Izany teny izany efa nolazaiko taminareo mba hanananareo fiadanana amiko. Aty amin'izao tontolo izao no ahitanareo fahoriana; nefa matokia; Izaho efa naharesy izao tontolo izao." <span class="reference">Jao. 16:33</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Fijery Hafa</h3>
+            <div class="quote">
+                <p>"Latsaka lalina tao am-pon'izay nanatri-maso rehetra ny nahafatesan'i Stefana ho maritiora. (...) Fitsapana mahery vaika tamin'ny fiangonana ny fahafatesany, nefa ny vokany dia naharesy lahatra an'i Saoly, izay tsy afaka nikosoka tao an-tsainy ny finoana sy ny toetra mahatoky teo amin'ilay maritiora, ary ny voninahitra izay naharitra teo amin'ny endriny" <span class="reference">(VM, t. 90)</span></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>FAMPIHARANA</h2>
+
+            <div class="day-section">
+                <h3>SABATA</h3>
+                <p>Vakio ny 2 Tim. 3:12.</p>
+                <p>• Efa nofenoinao ve ny banga ao amin'ny fizaràna Ny Hevitrao? Raha ianao no olo-malaza, inona no fitondran-tena mety hahatezitra anao indrindra? Soa ihany fa tsy voatery hanahy angamba lanao hoe misy olona marary saina manorisory, manaraka anao foana, na voatery handroaka ireo mpitsindroka ny fakonao.</p>
+                <p>• Na izany aza, raha toa ka mpanara-dia an'i Kristy izay miaina amin-pinoana ny fiantsoana anao ianao, dia hiatrika fanoherana. Raiso ny Baibolinao ary vakio ny Jao. 15:18-27. Manorata fehezanteny roa amin'ny fomba filazanao azy manokana, manazava hoe nahoana izao tontolo izao no hanenjika ireo mpanara-dia an'i Kristy.</p>
+                <p>• I Stefana maritiora dia nahalala ireo tenin'i Jesôsy ireo. Fantany fa ny fitiavany an'i Jesôsy dia mety hamoizany ny ainy.</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ALAHADY</h3>
+                <p>Vakio ny Isa. 53:5.</p>
+                <p>• Rehefa avy mamaky ny fizaràna Tontolon'ny Tantara ianao, valio ireo fanontaniana ao amin'ny fizaràna Fanontaniana avy amin'ny Tantara. Mbola misy zavatra marobe mikasika ny fiarovan'i Stefana ny finoany. Vakio ny Asa. 7:1-53 mba hahafantaranao ny tantara sisa. Ary raha toa ka lava loatra izany, tsy voavaky indray mandeha, dia vakio ny ampahany amin'ny maraina ary vitao ny famakiana ny ampahany sisa amin'ny hariva.</p>
+                <p>• Vonona hiaro ny finoana izay lasa ninoany i Stefana. Ireo mpitarika jiosy sy ireo mpanara-dia azy ireo feno hatezerana dia tsy tonga tamin'ny faharomotana nitarika azy ireo hamono hahafaty raha tsy efa nifarana ny fiarovan-tenan'i Stefana. Inona no nambaran'i Stefana izay naharomotra azy ireo?</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ALATSINAINY</h3>
+                <p>Vakio ny Asa. 6:8-10.</p>
+                <p>• Ny Andininy Fototra tamin'ny Sabata dia mifantoka amin'ny zavatra nihalohalo nanodidian'i Stefana. Andeha anie hojerena e. Tia an'Andriamanitra izy, nanana laza tsara mpandaha-teny mandresy lahatra, ary nanao fahagagana maro tetsy an-danin'izany. Nanao ahoana, araka ny hevitrao, ny fihetsika nasetrin'ireo mpanohitra jiosy teo anatrehan'ireo tatitra momba ny asa mahatalanjona nataon'i Stefana tao Jerosalema?</p>
+                <p>• Araka ny voalaza ao amin'ny Andininy Fototra, iza no loharanon'ny fahendrena sy ny herin'i Stefana?</p>
+                <p>• Iza na inona no loharanon'ny fahendrenao? Raha fotoana kely fotsiny no laninao miaraka amin'Andriamanitra, moa ve ianao afaka milaza marina tokoa hoe Izy no loharanon'ny fahendrenao sy ny herinao?</p>
+            </div>
+
+            <div class="day-section">
+                <h3>TALATA</h3>
+                <p>Vakio ny Jao. 16:33.</p>
+                <p>• Apetraho eo amin'ny toerana voalaza ao amin'ny fanambaran'i EGW ao amin'ny fizaràna Indray Mihelatra amin'ity herinandro ity ny tenanao. Indro manodidina anao misy olona mitazana sy olona mpanakorontana. Indreo ireo mpitarika fa misavorovoro, mitakoritsika amin'izy samy izy, manopy ny masony any amin'ilay lehilahy tony mijoro manoloana azy ireo, amin'ny fijery mifono fahafatesana. Ny sasany tsy nahatanty nijery azy; ny hafa kosa mitoto tany amin'ny tongony raha mbola niteny izy. Mitadiava rakibolana dia jereo ny teny hoe "mamiratra". Adikao eto ambany ny famaritana azy:</p>
+                <p>• Raha toa ianao ka nanatrika olona nanana izany karazana hazavana namirapiratra izany nanodidina azy, moa ve te hanisy ratsy azy ianao? Nahoana ireo mpitarika jiosy no niroso hatrany tamin'ny faniriany hamono an'i Stefana? Inona no nanosika azy ireo hanao izany?</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ALAROBIA</h3>
+                <p>• Vakio ny fizaràna Fanantitranterana amin'ity herinandro ity. Mifidiana anankiray na mihoatra ny iray mba hotadidianao anio. Vakio ny Asa. 7:54-56. Iza no hitan'i Stefana rehefa niandrandra nijery ny lanitra izy?</p>
+                <p>• Nahoana, araka ny hevitrao, no navelan'Andriamanitra hahita io sary io i Stefana mialoha ny hahafatesany?</p>
+                <p>• Ampoizina fa nandre ny tenin'i Jesôsy hita ao amin'ny Jao. 11:25, ao amin'ny fizaràna Fanantitranterana - avy amin'ireo mpianatra na/sy avy amin'ireo mpanara-dia an'i Jesôsy hafa, i Stefana. Nino ny fitsanganan'i Jesôsy tamin'ny maty izy, fa ny fahitany an'i Jesôsy nitsangana teo ankavanan'Andriamanitra Ray dia nanamafy orina ny finoany. Fantany fa na dia efa ho faty aza izy, dia mbola hitsangana indray, indray andro any, tahaka ireo olona nahatoky rehetra, nanara-dia an'i Kristy.</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ALAKAMISY</h3>
+                <p>Vakio ny Jao. 11:25.</p>
+                <p>• Ny fitsarana sy ny famonoana an'i Stefana dia nampirongatra onjam-panenjehana ny vahoakan'Andriamanitra. Iray amin'ireo tompo marika, lohandohan'ny mpanatanteraka izany "fihazana mpamosavy" izany ny tovolahy iray antsoina hoe Saoly. Taty aoriana rehefa niova fo lasa mpanara-dia an'i Jesôsy izy, ary fantatra tamin'ny anarana hoe Paoly, dia tamin'alahelo fatratra no niresahany momba ny nampijaliany ireo mpanara-dia an'i Jesôsy. Vakio izay nolazain'i Paoly (Asa. 26:9-11).</p>
+                <p>• Tamin'izany fotoana izany, dia nino i Saoly fa nanatanteraka ny baikon'Andriamanitra izy tamin'ny nanenjehany ny Kristianina, kanefa raha ny marina dia nanohitra an'Andriamanitra izy. Miandany amin'Andriamanitra ve ianao? Ahoana no ahafahanao milaza izany?</p>
+            </div>
+
+            <div class="day-section">
+                <h3>ZOMA</h3>
+                <p>Vakio ny Apôk. 14:13.</p>
+                <p>• Tsy matimaty foana tsy akory i Stefana. Raha ny marina, ny fiainany dia nanome herim-po ireo mpino izay nenjehina tamin'ny androny, ka hatramin'izao fotoana izao. Ny fizaràna Fanantitranterana hita ao amin'ny Apôk. 14:13 dia mampahatsiahy antsika fa ny asa marin'ireo izay maty ao amin'ny Tompo dia hanaraka azy ireo.</p>
+                <p>• Saintsaino io fanontaniana io raha hamakivaky ny tontolo andro ianao anio. Inona no ho lova apetrakao? Inona no hahatsiarovana anao? Angataho Andriamanitra hanampy anao hamela marika eto an-tany ho voninahiny.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <p><em>Ny andalan-teny vakina amin'ity herinandro ity: VM, toko 10,11.</em></p>
+            <p><em>Raha manaraka ity drafitra ity ianao dia hahavaky boky iray isan-taona fara fahakeliny, amin'ireo bokin'ny Fanahin'ny Faminaniana, andiany "Conflict of the Ages".</em></p>
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const html = document.documentElement;
+
+        // Initialize with light theme (no localStorage)
+        let currentTheme = 'light';
+        html.setAttribute('data-theme', currentTheme);
+
+        themeToggle.addEventListener('click', function() {
+            if (currentTheme === 'light') {
+                currentTheme = 'dark';
+                html.setAttribute('data-theme', 'dark');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                currentTheme = 'light';
+                html.setAttribute('data-theme', 'light');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        });
+
+        // Rating options functionality
+        const ratingOptions = document.querySelectorAll('.rating-option');
+        ratingOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                ratingOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // You could store the selected value if needed
+                const selectedValue = this.getAttribute('data-value');
+                console.log('Selected rating:', selectedValue);
+            });
+        });
+    </script>
+</body>
+</html>
