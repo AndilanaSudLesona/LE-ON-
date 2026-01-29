@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#ffffff">
     <title>Lesona Zatovo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,8 +19,8 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: transparent;
-            color: #ffffff;
+            background: #ffffff;
+            color: #000000;
             min-height: 100vh;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -29,207 +29,158 @@
         .container {
             max-width: 100%;
             min-height: 100vh;
-            padding: 20px 16px 80px;
+            padding: 24px 20px 80px;
+            background: #ffffff;
         }
         
         .header {
-            padding: 24px 0 20px;
-            text-align: center;
+            padding: 16px 0 32px;
+            text-align: left;
         }
         
         .main-title {
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 32px;
+            font-weight: 600;
             font-family: 'Lora', serif;
             color: #8B4513;
-            letter-spacing: 0.5px;
-            line-height: 1.3;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .subtitle {
-            font-size: 13px;
-            color: #888888;
-            font-weight: 400;
-            margin-top: 4px;
-        }
-        
-        .section-title {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin: 20px 0 16px;
-            font-weight: 600;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 0;
         }
         
         .lessons-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 0;
         }
         
-        /* STYLE FOR INTRODUCTION ITEM */
-        .introduction-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            padding: 16px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            margin-bottom: 5px;
-        }
-        
-        .introduction-item:active {
-            transform: scale(0.98);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .introduction-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex: 1;
-        }
-        
-        .introduction-icon {
-            width: 38px;
-            height: 38px;
-            background: rgba(139, 69, 19, 0.9);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            font-weight: 700;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(139, 69, 19, 0.3);
-        }
-        
-        .introduction-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B4513;
-            font-family: 'Lora', serif;
-            letter-spacing: 0.3px;
-            line-height: 1.4;
-        }
-        
-        /* STYLE FOR LESSON ITEMS */
+        /* STYLE FOR ALL LESSON ITEMS */
         .lesson-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            padding: 16px 18px;
+            background: #ffffff;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 20px 0;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            align-items: flex-start;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s ease;
             text-decoration: none;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
         }
         
         .lesson-item:active {
-            transform: scale(0.98);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: #f9f9f9;
         }
         
         .lesson-item.disabled {
-            opacity: 0.35;
+            opacity: 0.4;
             pointer-events: none;
-            background: rgba(255, 255, 255, 0.02);
         }
         
         .lesson-left {
             display: flex;
-            align-items: center;
-            gap: 14px;
+            align-items: flex-start;
+            gap: 20px;
             flex: 1;
         }
         
         .lesson-number {
-            width: 38px;
-            height: 38px;
-            background: rgba(255, 255, 255, 0.95);
-            color: #000000;
+            width: 32px;
+            min-width: 32px;
+            height: 32px;
+            background: #f0f0f0;
+            color: #8B4513;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 600;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            margin-top: 2px;
+        }
+        
+        .lesson-item.introduction .lesson-number {
+            background: #f0f0f0;
+            color: #8B4513;
         }
         
         .lesson-item.disabled .lesson-number {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.3);
-            box-shadow: none;
+            background: #f5f5f5;
+            color: #cccccc;
+        }
+        
+        .lesson-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
         
         .lesson-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B4513;
+            font-size: 18px;
+            font-weight: 500;
+            color: #000000;
             font-family: 'Lora', serif;
-            letter-spacing: 0.3px;
-            line-height: 1.4;
+            letter-spacing: -0.2px;
+            line-height: 1.3;
             display: block;
         }
         
         .lesson-item.disabled .lesson-title {
-            color: rgba(139, 69, 19, 0.3);
-            font-style: italic;
+            color: #999999;
         }
         
-        .chevron {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            opacity: 0.5;
+        .lesson-dates {
+            font-size: 15px;
+            color: #999999;
+            font-weight: 400;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+        
+        .lesson-item.disabled .lesson-dates {
+            color: #cccccc;
+        }
+        
+        /* First item (Introduction) styling */
+        .lesson-item.introduction .lesson-number {
+            font-size: 14px;
+            font-style: italic;
         }
         
         @media (max-width: 375px) {
             .container {
-                padding: 16px 12px 60px;
+                padding: 20px 16px 60px;
             }
             
             .header {
-                padding: 20px 0 16px;
+                padding: 12px 0 24px;
             }
             
             .main-title {
-                font-size: 18px;
+                font-size: 28px;
             }
             
-            .lesson-item,
-            .introduction-item {
-                padding: 14px;
+            .lesson-item {
+                padding: 18px 0;
             }
             
-            .lesson-number,
-            .introduction-icon {
-                width: 32px;
-                height: 32px;
+            .lesson-number {
+                width: 28px;
+                min-width: 28px;
+                height: 28px;
                 font-size: 14px;
             }
             
-            .lesson-title,
-            .introduction-title {
-                font-size: 15px;
+            .lesson-title {
+                font-size: 17px;
+            }
+            
+            .lesson-dates {
+                font-size: 14px;
+            }
+            
+            .lesson-left {
+                gap: 16px;
             }
         }
         
@@ -243,157 +194,163 @@
 </head>
 <body>
     <div class="container">
-        <!-- REMOVED: "LESONA HO AN'NY ZATOVO" header -->
-        
-        <!-- INTRODUCTION ITEM - Aligns with lessons -->
-        <div class="section-title">Fampidirana sy Lesona</div>
+        <div class="header">
+            <h1 class="main-title">Lesona Zatovo</h1>
+        </div>
         
         <div class="lessons-list">
             <!-- INTRODUCTION -->
-            <a href="introduction.html" class="introduction-item">
-                <div class="introduction-left">
-                    <div class="introduction-icon">i</div>
-                    <span class="introduction-title">Fampidirana</span>
+            <a href="introduction.html" class="lesson-item introduction">
+                <div class="lesson-left">
+                    <div class="lesson-number">•</div>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Fampidirana</span>
+                        <span class="lesson-dates">sabotsy, desambra 27</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
             <!-- LESONA 1 -->
             <a href="lesona1.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">1</div>
-                    <span class="lesson-title">Teny farany sy vavolombelona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Teny farany sy vavolombelona</span>
+                        <span class="lesson-dates">Des. 27 - zan. 02</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
             <!-- LESONA 2 -->
             <a href="lesona2.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">2</div>
-                    <span class="lesson-title">Ilay fanomezana nampanantenaina</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Ilay fanomezana nampanantenaina</span>
+                        <span class="lesson-dates">Zan. 03 - zan. 09</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
             <!-- LESONA 3 -->
             <a href="lesona3.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">3</div>
-                    <span class="lesson-title">Maneho an'i Jesosy</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Maneho an'i Jesosy</span>
+                        <span class="lesson-dates">Zan. 10 - zan. 16</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
             <!-- LESONA 4 -->
             <a href="lesona4.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">4</div>
-                    <span class="lesson-title">Ny fahitsian-toetra</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Ny fahamarinana sy ianao</span>
+                        <span class="lesson-dates">Zan. 17 - zan. 23</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
             <!-- LESONA 5 -->
             <a href="lesona5.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">5</div>
-                    <span class="lesson-title">Hery, faharetana, tanjona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Hery, faharetana, tanjona</span>
+                        <span class="lesson-dates">Zan. 24 - zan. 30</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
-            <!-- LESONA 6-13 (Disabled for now) -->
+            <!-- LESONA 6 -->
             <a href="lesona6.html" class="lesson-item">
                 <div class="lesson-left">
                     <div class="lesson-number">6</div>
-                    <span class="lesson-title">Ilay maritiora kristianina voalohany</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Ilay maritiora kristianina voalohany</span>
+                        <span class="lesson-dates">Zan. 31 - feb. 06</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
+            <!-- LESONA 7 -->
             <a href="lesona7.html" class="lesson-item disabled">
                 <div class="lesson-left">
                     <div class="lesson-number">7</div>
-                    <span class="lesson-title">Tsy mbola vonona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Tsy mbola vonona</span>
+                        <span class="lesson-dates">Feb. 07 - feb. 13</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
+            <!-- LESONA 8 -->
             <a href="lesona8.html" class="lesson-item disabled">
                 <div class="lesson-left">
                     <div class="lesson-number">8</div>
-                    <span class="lesson-title">Tsy mbola vonona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Tsy mbola vonona</span>
+                        <span class="lesson-dates">Feb. 14 - feb. 20</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
+            <!-- LESONA 9 -->
             <a href="lesona9.html" class="lesson-item disabled">
                 <div class="lesson-left">
                     <div class="lesson-number">9</div>
-                    <span class="lesson-title">Tsy mbola vonona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Tsy mbola vonona</span>
+                        <span class="lesson-dates">Feb. 21 - feb. 27</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
+            <!-- LESONA 10 -->
             <a href="lesona10.html" class="lesson-item disabled">
                 <div class="lesson-left">
                     <div class="lesson-number">10</div>
-                    <span class="lesson-title">Tsy mbola vonona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Tsy mbola vonona</span>
+                        <span class="lesson-dates">Feb. 28 - mar. 06</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
+            <!-- LESONA 11 -->
             <a href="lesona11.html" class="lesson-item disabled">
                 <div class="lesson-left">
                     <div class="lesson-number">11</div>
-                    <span class="lesson-title">Tsy mbola vonona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Tsy mbola vonona</span>
+                        <span class="lesson-dates">Mar. 07 - mar. 13</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
+            <!-- LESONA 12 -->
             <a href="lesona12.html" class="lesson-item disabled">
                 <div class="lesson-left">
                     <div class="lesson-number">12</div>
-                    <span class="lesson-title">Tsy mbola vonona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Tsy mbola vonona</span>
+                        <span class="lesson-dates">Mar. 14 - mar. 20</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
 
+            <!-- LESONA 13 -->
             <a href="lesona13.html" class="lesson-item disabled">
                 <div class="lesson-left">
                     <div class="lesson-number">13</div>
-                    <span class="lesson-title">Tsy mbola vonona</span>
+                    <div class="lesson-content">
+                        <span class="lesson-title">Tsy mbola vonona</span>
+                        <span class="lesson-dates">Mar. 21 - mar. 27</span>
+                    </div>
                 </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
-                    <path d="M9 18L15 12L9 6"/>
-                </svg>
             </a>
         </div>
     </div>
